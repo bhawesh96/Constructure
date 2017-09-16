@@ -13,7 +13,6 @@ def main():
 
 @app.route('/logout')
 def logout():
-    session.clear()    
     return redirect('/')
 
 
@@ -22,4 +21,4 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run(debug=False,port=5005,use_evalex=False)
+    app.run(debug=True,port=5005,use_evalex=False)
