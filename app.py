@@ -4,7 +4,7 @@ import requests
 
 # from mysql.connector import MySQLConnection, Error
 
-from flask import Flask, render_template, redirect, json, request
+from flask import Flask, render_template, redirect, json, request, session
 from flaskext.mysql import MySQL
 
 mysql = MySQL()
@@ -51,7 +51,6 @@ def signUp():
         _reg = request.form['inputRegno']
         _college = request.form['inputCollege']
         _phone = request.form['inputPhone']
-        _flag = 0
         captcha_response = request.form['g-recaptcha-response']
 
         # validate the received values
@@ -67,12 +66,13 @@ def signUp():
             if not is_success_captcha:
                 return render_template("404.html",error = 'The captcha couldnt be verified')
             try:
-                flag = cursor.callproc('insert_player',[ _name, _reg, _email, _phone, _password, _college, _flag ])
-                print flag
-                if _flag == 0:
-                    return render_template('404.html',error = "not a unique player")
+                cursor.callproc('insert_player',(_name, _reg, _email, _phone, _password, _college))
+                data = cursor.fetchall()
+                if len(data) is 0:
+                    conn.commit()
+                    return render_template('signin.html',msg="reg success")
                 else:
-                    return render_template('signin.html', msg="reg successful")            
+                    return render_template('404.html', error="not unique")            
             except Exception as e:
                 return json.dumps({'errory':str(e)})
         else:
@@ -85,6 +85,45 @@ def signUp():
         conn.close()
 
 
+@app.route('/login',methods=['POST'])
+def rahul():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        _email = request.form['inputEmail']
+        _password = request.form['inputPassword']
+       # captcha_response = request.form['g-recaptcha-response']
+
+        # validate the received values
+        #if _name and _email and _password and _reg and _college and captcha_response:
+        if _email and _password:
+
+            
+            # All Good, let's call MySQL
+            #validate captcha from api
+            #r = requests.post('https://www.google.com/recaptcha/api/siteverify', data = {'secret':captcha_secret_key ,'response':captcha_response})
+            #is_success_captcha = r.json()['success']
+            
+            #if not is_success_captcha:
+            #    return render_template("404.html",error = 'The captcha couldnt be verified')
+            try:
+                data = cursor.callproc('validate_login',(_email, _password))
+                data = cursor.fetchall()
+                if len(data) > 0:
+                    conn.commit()
+                    return render_template('signin.html',msg="logged in")
+                else:
+                    return render_template('404.html', error="not validated")            
+            except Exception as e:
+                return json.dumps({'errory':str(e)})
+        else:
+            return render_template('404.html',error = "Enter all the values. Please :(")
+
+    except Exception as e:
+        return json.dumps({'errory':str(e)})
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.errorhandler(404)
 def page_not_found(e):
