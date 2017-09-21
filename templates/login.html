@@ -20,18 +20,16 @@
 		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
 		<div class="login-form">
 			<div class="sign-in-htm">
+			<form action="/login" method="POST">
 				<div class="group">
-					<label for="user" class="label">Username</label>
-					<input id="user" type="text" class="input">
+					<label for="user" class="label">Email</label>
+					<input id="user" type="text" class="input" name="inputEmail">
 				</div>
 				<div class="group">
 					<label for="pass" class="label">Password</label>
-					<input id="pass" type="password" class="input" data-type="password">
+					<input id="pass" type="password" class="input" data-type="password" name="inputPassword">
 				</div>
-				<div class="group">
-					<input id="check" type="checkbox" class="check" checked>
-					<label for="check"><span class="icon"></span> Keep me Signed in</label>
-				</div>
+				
 				<div class="group">
 					<input type="submit" class="button" value="Sign In">
 				</div>
@@ -40,6 +38,7 @@
 					<a href="#forgot">Forgot Password?</a>
 				</div>
 			</div>
+			</form>
 			<div class="sign-up-htm">
 			<form action="/signup" method="POST">
 				<div class="group">
@@ -62,7 +61,7 @@
 					<label for="pass" class="label">College</label>
 					<input id="pass" type="text" class="input" name='inputCollege'>
 				</div>
-				<!-- <div class="g-recaptcha" data-sitekey="6Le2lxoUAAAAAAn8ZAoymwmbDJKKkFu6gEC_IvGy"></div> -->
+				 <div class="g-recaptcha" data-sitekey="6Le2lxoUAAAAAAn8ZAoymwmbDJKKkFu6gEC_IvGy"></div>
 				<div class="group">
 					<input type="submit" class="button" value="Sign Up">
 				</div>
@@ -76,7 +75,7 @@
 	</div>
 </div>
   	<video autoplay loop id="video-background" muted plays-inline>
-  <source src="video/file.mp4" type="video/mp4">
+  <source src="../static/video/file.mp4" type="video/mp4">
 </video>
   
 </body>

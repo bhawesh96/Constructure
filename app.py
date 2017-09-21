@@ -31,12 +31,11 @@ def showSignUp():
 
 @app.route('/signin')
 def showSignIn():
-	return render_template('signin.html')
+        return render_template('signin.html')
 
 @app.route('/logout')
 def logout():
     return redirect('/')
-
 
 @app.route('/signup',methods=['POST'])
 def signUp():
@@ -54,12 +53,12 @@ def signUp():
         #if _name and _email and _password and _reg and _college and captcha_response:
         if _name and _email and _password and _reg and _college:
 
-            
+
             # All Good, let's call MySQL
             #validate captcha from api
             #r = requests.post('https://www.google.com/recaptcha/api/siteverify', data = {'secret':captcha_secret_key ,'response':captcha_response})
             #is_success_captcha = r.json()['success']
-            
+
             #if not is_success_captcha:
             #    return render_template("404.html",error = 'The captcha couldnt be verified')
 
@@ -69,7 +68,7 @@ def signUp():
             if len(data) is 0:
                 conn.commit()
                 print 'all good'
-                return render_template('signin.html')            
+                return render_template('signin.html', msg="thanks for signin up")
             else:
                 return json.dumps({'errorx':str(data[0])})
         else:
@@ -81,11 +80,50 @@ def signUp():
         cursor.close()
         conn.close()
 
+@app.route('/login',methods=['POST'])
+def loginHandler():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        _email = request.form['inputEmail']
+        _password = request.form['inputPassword']
+        #captcha_response = request.form['g-recaptcha-response']
 
+        # validate the received values
+        #if _name and _email and _password and _reg and _college and captcha_response:
+        if _email and _password:
+
+
+            # All Good, let's call MySQL
+            #validate captcha from api
+            #r = requests.post('https://www.google.com/recaptcha/api/siteverify', data = {'secret':captcha_secret_key ,'response':captcha_response})
+            #is_success_captcha = r.json()['success']
+
+            #if not is_success_captcha:
+            #    return render_template("404.html",error = 'The captcha couldnt be verified')
+
+            cursor.callproc('loginHandler',( _email, _password ))
+            data = cursor.fetchall()
+
+            if len(data) is 0:
+                conn.commit()
+                print 'all good'
+                return render_template('signin.html', msg="Logged in successfully")
+            else:
+                return json.dumps({'errorx':str(data[0])})
+        else:
+            return render_template('404.html',error = "Enter all the values. Please :(")
+
+    except Exception as e:
+        return json.dumps({'errory':str(e)})
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run(debug=True,port=5005,use_evalex=False)
+    app.run(debug=True,host='139.59.17.132',port=80,use_evalex=False)
+
