@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
+<head>
+<!-- meta data -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="This is the official website of Constructure hosted by IE-Civil">
+<meta name="author" content="Bhawesh">
+<meta name="keywords" content="constructure, techtatva, iecivil, civil, manipal, tech tatva, mit, online game">
+<!-- end mata data -->
+<title>{% block title %}{% endblock %}</title>
 
-    <title>{% block title %}{% endblock %}</title>
-    
-    <link rel="stylesheet" href="/static/css/theme.css" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet"> 
-  </head>
+<!-- link stylesheets -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/theme.css" type="text/css">
+{% block extStyle %}{% endblock %}
+<!-- end link stylesheets -->
 
-    <center><h2 style="color: red;">{%block heading%}{% endblock %}</h2></center>
-    
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <center>
-            <div class="level">
-    
-                  {% block content %}{% endblock %}
-    
-            </div>
-          </center>
-        </div>
-        <div class="col-md-3"></div>
-      </div>
-      <br>
-    </div>
+<!-- link javascript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+{% block extJS %}{% endblock %}
+<!-- end link javascript -->
+
+<!-- link font -->
+<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet"> 
+{% block extJS %}{% endblock %}
+<!-- end link font -->
+</head>
+
+<body>
+  {% block body %}{% endblock %}  
 </body>
 </html>

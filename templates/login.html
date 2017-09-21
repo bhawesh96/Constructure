@@ -16,8 +16,8 @@
 
   <div class="login-wrap">
 	<div class="login-html">
-		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+		<input id="tab-1" type="radio" name="tab" class="sign-in" {{signinCheck}}><label for="tab-1" class="tab">Sign In</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up" {{signupCheck}}><label for="tab-2" class="tab">Sign Up</label>
 		<div class="login-form">
 		<form action="/login" method="POST">
 			<div class="sign-in-htm">
@@ -65,7 +65,7 @@
 					<label for="pass" class="label">College</label>
 					<input id="pass" type="text" class="input" name='inputCollege'>
 				</div>
-				<div class="g-recaptcha" data-sitekey="6Le2lxoUAAAAAAn8ZAoymwmbDJKKkFu6gEC_IvGy"></div>
+				<div class="g-recaptcha" data-sitekey="6Lf0jTEUAAAAAJd0vmXTZ21rfxsZv_SEzvsocte3"></div>
 				<div class="group">
 					<input type="submit" class="button" value="Sign Up">
 				</div>
@@ -79,7 +79,7 @@
 	</div>
 </div>
   	<video autoplay loop id="video-background" muted plays-inline>
-  <source src="video/file.mp4" type="video/mp4">
+  <source src="../static/video/file.mp4" type="video/mp4">
 </video>
   
 </body>

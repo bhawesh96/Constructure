@@ -29,11 +29,11 @@ def main():
 
 @app.route('/login')
 def showSignUp():
-    return render_template('login.html')
+    return render_template('login.html', signinCheck="checked", signupCheck="")
 
-@app.route('/signin')
+@app.route('/signup')
 def showSignIn():
-    return render_template('signin.html')
+    return render_template('login.html', signinCheck="", signupCheck="checked")    
 
 @app.route('/logout')
 def logout():
@@ -54,10 +54,7 @@ def signUp():
         captcha_response = request.form['g-recaptcha-response']
 
         # validate the received values
-        #if _name and _email and _password and _reg and _college and captcha_response:
-        if _name and _email and _password and _reg and _college and _phone:
-
-            
+        if _name and _email and _password and _reg and _college and _phone and captcha_response:
             # All Good, let's call MySQL
             #validate captcha from api
             r = requests.post('https://www.google.com/recaptcha/api/siteverify', data = {'secret':captcha_secret_key ,'response':captcha_response})
@@ -70,7 +67,7 @@ def signUp():
                 data = cursor.fetchall()
                 if len(data) is 0:
                     conn.commit()
-                    return render_template('signin.html',msg="reg success")
+                    return render_template('login.html',signinCheck="checked", signupCheck="")
                 else:
                     return render_template('404.html', error="not unique")            
             except Exception as e:
