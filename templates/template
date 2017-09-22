@@ -1,0 +1,13 @@
+{% extends "theme.html" %}
+
+{% block title %}{% endblock %}
+
+{% block extStyle %}{% endblock %}
+
+{% block extJS %}{% endblock %}
+
+{% block font %}{% endblock %}
+
+{% block body %}{% endblock %}  
+
+{% block end-extJS %}{% endblock %}

@@ -2,8 +2,6 @@ import traceback, warnings
 warnings.filterwarnings("ignore")
 import requests
 
-# from mysql.connector import MySQLConnection, Error
-
 from flask import Flask, render_template, redirect, json, request, session
 from flaskext.mysql import MySQL
 
@@ -37,8 +35,22 @@ def showSignIn():
 
 @app.route('/logout')
 def logout():
+    session.clear()
     return redirect('/')
 
+@app.route('/rules')
+def rules():
+    if(session.get('user')):
+        return render_template('rules.html')
+    else:
+        return redirect('/signup')
+
+@app.route('/dashboard')
+def dashboard():
+    if(session.get('user')):
+        return render_template('dashboard.html', name=session['name'].split(' ')[0])
+    else:
+        return redirect('/signup')
 
 @app.route('/signup',methods=['POST'])
 def signUp():
@@ -83,7 +95,7 @@ def signUp():
 
 
 @app.route('/login',methods=['POST'])
-def rahul():
+def validateLogin():
     conn = mysql.connect()
     cursor = conn.cursor()
     try:
@@ -108,9 +120,13 @@ def rahul():
                 data = cursor.fetchall()
                 if len(data) > 0:
                     conn.commit()
-                    return render_template('signin.html',msg="logged in")
+                    session['user'] = str(data[0][1])
+                    session['name'] = str(data[0][1])
+                    session['email'] = str(data[0][3])
+                    return redirect('/dashboard')
                 else:
-                    return render_template('404.html', error="not validated")            
+                    print 'not validated'
+                    return render_template('404.html', msg="not validated")            
             except Exception as e:
                 return json.dumps({'errory':str(e)})
         else:

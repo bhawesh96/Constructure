@@ -1,40 +1,57 @@
-<!doctype html>
-<html lang="en" class="no-js">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "theme.html" %}
 
+{% block title %}Dashboard{% endblock %}
+
+{% block font %}{% endblock %}
+
+{% block extStyle %}
 	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700|Merriweather:400italic,400' rel='stylesheet' type='text/css'>
-
   	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
-	<script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
-
 	<link rel="stylesheet" href="../static/css/dash-reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="../static/css/dash-style.css"> <!-- Resource style -->
+{% endblock %}
+
+{% block extJS %}
+	<script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
 	<script src="../static/js/dash-modernizr.js"></script> <!-- Modernizr -->
-	<title>Dashboard</title>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Welcome {{name}}</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Dashboard</a></li>
+      <li><a href="/rules">Rules</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
 	<header>
 	<nav class="cd-stretchy-nav">
 		<a class="cd-nav-trigger" href="#0">
-			Menu
 			<span aria-hidden="true"></span>
 		</a>
 
 		<ul>
-			<li><a href="dashboard.html" class="active"><span>Home</span></a></li>
-			<li><a href="Rules.html"><span>Rules</span></a></li>
-			<li><a href="login.html"><span>Logout</span></a></li>
+			<li><a href="/dashboard" class="active"><span>Home</span></a></li>
+			<li><a href="/rules"><span>Rules</span></a></li>
+			<li><a href="/logout"><span>Logout</span></a></li>
 			
 		</ul>
 
 		<span aria-hidden="true" class="stretchy-nav-bg"></span>
 	</nav>
 </header>
-	<div class="projects-container">
+	<div class="projects-container" style="margin-top: -20px;">
 		<ul>
 			<li class="cd-single-project">
 				<div class="cd-title">
@@ -123,9 +140,10 @@
 		<a href="#0" class="cd-close">Close</a>
 		<a href="#0" class="cd-scroll">Scroll</a>
 	</div> <!-- .project-container -->
+{% endblock %}
+{% block end_extJS %}
 <script src="../static/js/dash-jquery-2.1.1.js"></script>
 <script src="../static/js/dash-main.js"></script> <!-- Resource jQuery -->
 <script src="../static/js/dash-jquery-2.1.4.js"></script>
 <script src="../static/js/dash-mainnav.js"></script>
-</body>
-</html>
+{% endblock %}
