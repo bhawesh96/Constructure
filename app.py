@@ -11,9 +11,14 @@ mysql = MySQL()
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'user2'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'passw'
-app.config['MYSQL_DATABASE_HOST'] = '139.59.171.32'
+# app.config['MYSQL_DATABASE_USER'] = 'user2'
+# app.config['MYSQL_DATABASE_PASSWORD'] = 'passw'
+# app.config['MYSQL_DATABASE_HOST'] = '139.59.17.132'
+# app.config['MYSQL_DATABASE_DB'] = 'civicq'
+
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'pass'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_DB'] = 'civicq'
 
 mysql.init_app(app)
@@ -23,10 +28,10 @@ app.secret_key = '8bf9547569cd5a638931a8639cf9f86237931e92'
 captcha_secret_key = '6Lf0jTEUAAAAAJKBTt9hO48cOOBX0dI1jWa-5x0a'
 
 @app.route('/home')
-@app.route('/')
 def main():
     return render_template('home.html')
 
+@app.route('/')
 @app.route('/login')
 def showSignUp():
     return render_template('login.html')
@@ -45,13 +50,15 @@ def signUp():
     conn = mysql.connect()
     cursor = conn.cursor()
     try:
-        _name = request.form['inputName']
+        _name = request.form['inputName'].decode()
         _email = request.form['inputEmail']
         _password = request.form['inputPassword']
         _reg = request.form['inputRegno']
         _college = request.form['inputCollege']
         _phone = request.form['inputPhone']
-        _flag = 0
+        _flag = '-99'
+        # _flag = _flag.encode('utf-8')
+        _flag = str(_flag).decode('utf-8')
         captcha_response = request.form['g-recaptcha-response']
 
         # validate the received values
@@ -64,13 +71,17 @@ def signUp():
             r = requests.post('https://www.google.com/recaptcha/api/siteverify', data = {'secret':captcha_secret_key ,'response':captcha_response})
             is_success_captcha = r.json()['success']
             
-            if not is_success_captcha:
-                return render_template("404.html",error = 'The captcha couldnt be verified')
+            # if not is_success_captcha:
+            #     return render_template("404.html",error = 'The captcha couldnt be verified')
             try:
-                flag = cursor.callproc('insert_player',[ _name, _reg, _email, _phone, _password, _college, _flag ])
-                print flag
-                if _flag == 0:
+                # flag = cursor.callproc('insert_player',[ _name, _reg, _email, _phone, _password, _college, _flag])
+                cursor.execute("call insert_player('" + _name + "','" + _reg + "','"+ _email + "','"+ _phone + "','"+ _password + "','"+ _college + "', @flag);")                
+                data = cursor.fetchall()
+                print data
+                if _flag == '0':
                     return render_template('404.html',error = "not a unique player")
+                elif _flag == '-99':
+                	return render_template('404.html',error="not able to call procedure")
                 else:
                     return render_template('signin.html', msg="reg successful")            
             except Exception as e:
