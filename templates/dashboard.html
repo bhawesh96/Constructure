@@ -11,15 +11,25 @@
 	<link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
 	<link rel="stylesheet" href="../static/css/dash-reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="../static/css/dash-style.css"> <!-- Resource style -->
-{% endblock %}
+<style type="text/css">
+	@media (max-width: 480px){
+		.mobile-hide {
+			display: none;
+		}
+.projects-container .cd-single-project::after{
+	width: 100%;
+}
 
+	}
+</style>
+{% endblock %}
 {% block extJS %}
 	<script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
 	<script src="../static/js/dash-modernizr.js"></script> <!-- Modernizr -->
 {% endblock %}
 
 {% block body %}
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse mobile-hide">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand">Welcome {{name}}</a>
