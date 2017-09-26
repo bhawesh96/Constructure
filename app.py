@@ -39,6 +39,20 @@ def showSignIn():
 def logout():
     return redirect('/')
 
+@app.route('/rules')
+def rules():
+    if(session.get('user_id')):
+        print session['curr_que_id']
+        return render_template('rules.html')
+    else:
+        return redirect('/signup')
+
+@app.route('/dashboard')
+def dashboard():
+    if(session.get('user_id')):
+        return render_template('dashboard.html', name=session['name'].split(' ')[0])
+    else:
+        return redirect('/signup')
 
 @app.route('/signup',methods=['POST'])
 def signUp():
@@ -92,7 +106,6 @@ def rahul():
        # captcha_response = request.form['g-recaptcha-response']
 
         # validate the received values
-        #if _name and _email and _password and _reg and _college and captcha_response:
         if _email and _password:
 
             
@@ -108,7 +121,11 @@ def rahul():
                 data = cursor.fetchall()
                 if len(data) > 0:
                     conn.commit()
-                    return render_template('signin.html',msg="logged in")
+                    session['user_id'] = str(data[0][0])
+                    session['name'] = str(data[0][1])
+                    session['email'] = str(data[0][3])
+                    session['curr_ques_id'] = str(data[0][8])
+                    return redirect('/dashboard')
                 else:
                     return render_template('404.html', error="not validated")            
             except Exception as e:
@@ -121,6 +138,90 @@ def rahul():
     finally:
         cursor.close()
         conn.close()
+
+def updateScore():
+    return update()
+
+def update():
+    if(session.get('user_id')):
+        go_to_dash  = True
+        # if(session['curr_ques_id'] == session['curr_ques_id']):
+        ro = session['curr_ques_id'].split('_')[0]
+        ques = session['curr_ques_id'].split('_')[1]
+        if(ro == '01' and ques == '25'):
+            ro = 02
+            ques = 01
+        elif(ro=='02' and ques == '20'):
+            ro = 03
+            ques = 01
+        elif(ro=='03' and ques == '20'):
+            ro = 04
+            ques = 01
+        elif(ro=='04' and ques == '20'):
+            ro = 05
+            ques = 01
+        elif(ro=='05' and ques == '20'):
+            ro = 06
+            ques = 01
+        else:
+            go_to_dash  = False
+        ques = int(ques) +1
+        ques = '%02d' % ques
+
+        session['curr_ques_id'] = ro + '_' + ques
+        conn = mysql.connect()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE players SET curr_ques_id= %s WHERE id = %s", (session['curr_ques_id'], session['user_id']))
+            conn.commit()
+        except:
+            pass
+        return go_to_dash
+            
+
+def getQuestion():
+    if(session.get('user_id')):
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            # cursor.execute("SELECT * FROM questions WHERE ques_id = (SELECT ques_id FROM players WHERE id = %s)", (session['user_id']))
+            cursor.execute("SELECT * FROM questions WHERE ques_id = %s", (session['curr_ques_id']))
+        except Exception as e:
+            print str(e)
+        data = cursor.fetchall()
+        for value in data:
+            session['curr_ques_id'] = value[0]
+            que = value[1]
+            op1 = value[3]
+            op2 = value[4]
+            op3 = value[5]
+            op4 = value[6]
+            session['curr_ans'] = value[7]
+            flag = value[8]
+        params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4}
+        return params
+
+@app.route('/question')
+def question():
+    if(session.get('user_id')):
+        params = getQuestion()
+    #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
+        return render_template('myque.html', params = params)
+    else:
+        redirect ('/signup')
+
+@app.route('/question', methods=['POST'])
+def validate():
+    if(session.get('user_id')):
+        _answer = request.form['choice']
+        if(_answer == session['curr_ans']):
+            updateScore()
+            return redirect ('/question')
+        else:
+            update()
+            return redirect ('/question')
+    else:
+        return redirect('/signup')
 
 @app.errorhandler(404)
 def page_not_found(e):
