@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html >
-<head>
-  <meta charset="UTF-8">
-  <title>Login Form</title>
+{% extends "theme.html" %}
   
+{% block title %}Login{% endblock %}
   
-  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+  {% block extJS %}
   <script src='https://www.google.com/recaptcha/api.js'></script>
-  <link rel="stylesheet" href="../static/css/style.css">
+  {% endblock %}
+  {% block extStyle %}
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+  {% endblock %}
 
-  
-</head>
-
-<body>
+{% block body %}
 
   <div class="login-wrap">
 	<div class="login-html">
@@ -34,9 +32,6 @@
 				</div>
 				<!-- <div class="g-recaptcha" data-sitekey="6Le2lxoUAAAAAAn8ZAoymwmbDJKKkFu6gEC_IvGy"></div> -->
 				<div class="hr"></div>
-				<div class="foot-lnk">
-					<a href="#forgot">Forgot Password?</a>
-				</div>
 			</form>
 			</div>
 			<div class="sign-up-htm">
@@ -71,9 +66,6 @@
 				</div>
 			</form>
 				<div class="hr"></div>
-				<div class="foot-lnk">
-					<label for="tab-1">Already Member?</a>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -82,5 +74,4 @@
   <source src="../static/video/file.mp4" type="video/mp4">
 </video>
   
-</body>
-</html>
+{% endblock %}}
