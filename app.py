@@ -124,6 +124,9 @@ def validateLogin():
                     session['name'] = str(data[0][1])
                     session['email'] = str(data[0][3])
                     session['curr_ques_id'] = str(data[0][8])
+                    ro = session['curr_ques_id'].split('_')[0]
+                    session['curr_round'] = int(ro) -1
+
                     return redirect('/dashboard')
                 else:
                     print 'not validated'
@@ -226,6 +229,7 @@ def getQuestion():
             session['point_wt'] = value[9]
             session['money_wt'] = value[10]
         params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4}
+        conn.close()
         return params
 
 @app.route('/question')
@@ -263,29 +267,142 @@ def choice():
     conn=mysql.connect()
     try:
         cursor=conn.cursor()
-        cursor.execute("SELECT * FROM scores WHERE id = %s", (session['curr_ques_id']))
+        cursor.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+
     except Exception as e:
+
         print str(e)
     data = cursor.fetchall()
+    print data
+    for value in data:
+        _money = value[2]
+        ansd_ques = value[3]
+    available_options = 0
+    
 
     if(session['curr_round'] == 1):
-        render_template('choice_R1.html')
+        if(ansd_ques >= 21):
+            available_options = 4
+        elif(ansd_ques >= 14):
+            available_options =3
+        elif(ansd_ques >= 7):
+            available_options =2
+        else:
+            available_options =1
+
+        render_template('choice_R1.html',  options = available_options)
+
     elif(session['curr_round'] == 2):
-        render_template('choice_R2.html')
+        if(_money >= 40):
+            available_options = 3
+        elif(_money >=30):
+            available_options = 2
+        elif(_money >= 22):
+            available_options = 1
+        render_template('choice_R2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 3):
         render_template('choice_R3_1.html')
     elif(session['curr_round'] == 4):
         render_template('choice_R4.html')
     elif(session['curr_round'] == 5):
         render_template('choice_R5.html')
-    else
+    else:
         return render_template('404.html',error = "some problem with round choice")
 
+@app.route('/choice',methods = ['POST'])
+def updateChoice():
+    if(session['curr_round'] == 1):
+        _answer = request.form['soil']
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor.execute("UPDATE players SET r1_res = %s", _answer)
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        reInitializeScore()
+        session['curr_round'] = 0
+        render_template('dashboard.html')
+    elif(session['curr_round'] == 2):
+        _answer = request.form['arch']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor2=conn.cursor()
 
+            cursor.execute("UPDATE players SET r1_res = %s", _answer)
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", session['user_id'])
+            data = cursor2.fetchall()
+            for value in data:
+                points = int(value[1])
+                money = int(value[2])
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        
+        
+        if(_answer == 'UrbanDesigner'):
+            money = money - 40
+            new_points = points + 4000 + money * 50 #round2 Judgement points
+            updatePoints(new_points)
+            reInitializeScore()
+            session['curr_round'] = 0
+            render_template('scenario_2_1.html')
+        elif(_answer == 'GreenDesignArchitect'):
+            money = money - 30
+            new_points = points + 3000 + money * 50 #round2 Judgement points
+            updatePoints(new_points)
+            reInitializeScore()
+            session['curr_round'] = 0
+            render_template('scenario_2_1.html')
 
+        elif(_answer == 'CommercialArchitect'):
+            money = money - 32
+            new_points = points + 1500 + money * 50 #round2 Judgement points
+            updatePoints(new_points)
+            reInitializeScore()
+            session['curr_round'] = 0
+            render_template('scenario_2_2.html')
+        else:
+            pass
+        render_template('404.html',error = "some error with scenario selection")
+    elif(session['curr_round'] == 3):
+        render_template('choice_R3_1.html')
+    elif(session['curr_round'] == 4):
+        render_template('choice_R4.html')
+    elif(session['curr_round'] == 5):
+        render_template('choice_R5.html')
+    else:
+        return render_template('404.html',error = "some problem with round choice")
+
+def updatePoints(new_Points):
+    conn = mysql.connect()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE scores SET points = %s WHERE id = %s",str(new_Points), session['user_id'])
+    except Exception as e:
+        print str(e)
+    finally:
+        conn.close()
+    returns
+
+def reInitializeScore():
+    conn=mysql.connect()
+    try:
+        cursor=conn.cursor()
+        cursor.execute("UPDATE scores SET money = '0', correctly_answered = '0' where id = %s", session['user_id'])
+    except Exception as e:
+        print str(e)
+    finally:
+        conn.close()
+    return
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html',error = 404)
 
 if __name__ == "__main__":
     app.run(debug=True,port=5005,use_evalex=False)

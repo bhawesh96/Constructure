@@ -20,7 +20,26 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
-<body>
+
+<body onload="available_options({{options}})">
+  <script type="text/javascript">
+  function available_options(options)
+  {
+    switch(options)
+    {
+      case 1:
+        document.getElementById('check1').disabled = true;
+      case 2:
+        document.getElementById('check3').disabled = true;
+      case 3:
+        document.getElementById('check2').disabled = true;      
+      default:
+        return;
+    }
+
+  }
+</script>
+
   <header>
   <nav class="cd-stretchy-nav">
     <a class="cd-nav-trigger" href="#0">
@@ -42,7 +61,7 @@
     <div class="col-md-10 col-md-offset-1">
       <div class="banner-text text-center">
         <h1>Make Selection:</h1>
-        <p>Your second choice decides the design of the castle you'll build. After the end of the second round, you have amassed {{}} Gold Dragons. Use them to select an architect with a specific specialization:
+        <p>Your second choice decides the design of the castle you'll build. After the end of the second round, you have amassed {{money}} Gold Dragons. Use them to select an architect with a specific specialization:
         </br>
         </br>
         Green Design Architect: Minimizes harmful effects on human health and the environment. Green architects attempt to safeguard air, water and earth by choosing eco-friendly building materials and construction practices. They continuously work on innovating effective green design methods that leave a minimal impact on the environment. These architects are knowledgeable in fields like aerodynamics, sun and shading, as well as properties of materials.
@@ -58,6 +77,8 @@
   </div>
 </section>
 <section id="works" class="works section no-padding">
+  <form action="/choice" method="POST">
+
   <div class="container-fluid">
     <div class="row no-gutter">
       <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_2/work-1.jpg" alt="">
@@ -70,7 +91,8 @@
         <!-- overlay --> 
         </a> 
         <div class"selection">
-         <input type="checkbox" class="checkbox" id="check1" />
+         <input type="radio" name="arch" class="radio" id="check1" value = "GreenDesignArchitect"/>
+          
        </div>  
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_2/work-2.jpg" alt="">
@@ -83,9 +105,9 @@
         <!-- overlay --> 
         </a> 
         <div class"selection">
-         <input type="checkbox" class="checkbox" id="check2" />
        </div>  
-      </div>
+         <input type="radio" name="arch" class="radio" id="check2" value = "CommercialArchitect"/>
+      </div>          
       <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_2/work-3.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
@@ -95,14 +117,17 @@
         </div>
         </a> 
           <div class"selection">
-         <input type="checkbox" class="checkbox" id="check3" />
        </div>  
-      </div>
+         <input type="radio" name="arch" class="radio" id="check3" value = "UrbanDesigner"/>
+      </div>          
     </div>
   </div>
      <div id="buttons">
-        <a href="dashboard.html" class="btn orange">Proceed</a>
+        <!-- <a href="dashboard.html" class="btn orange">Proceed</a> -->
+        <input type="submit" class ="btn orange" value="Finalize">
+
     </div>
+  </form>
 </section>
 <script src="../static/js/dash-jquery-2.1.4.js"></script>
 <script src="../static/js/dash-mainnav.js"></script>
