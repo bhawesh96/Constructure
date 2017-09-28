@@ -1,12 +1,16 @@
 {% extends "theme.html" %}
+  
+{% block title %}Login{% endblock %}
+  
+  {% block extJS %}
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  {% endblock %}
+  {% block extStyle %}
+  
+  {% endblock %}
 
-{% block title %}this is the title {% endblock %}
+{% block body %}
 
-{% block heading %} 404 {% endblock %}
-
-{% block content %}
-
-<h1>this is the content of 404 file</h1>
-<p style="color: red;">{{error}}</p>
-
+<p>{{msg}}</p>
+  
 {% endblock %}

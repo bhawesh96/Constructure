@@ -2,8 +2,6 @@ import traceback, warnings
 warnings.filterwarnings("ignore")
 import requests
 
-# from mysql.connector import MySQLConnection, Error
-
 from flask import Flask, render_template, redirect, json, request, session
 from flaskext.mysql import MySQL
 
@@ -37,12 +35,12 @@ def showSignIn():
 
 @app.route('/logout')
 def logout():
+    session.clear()
     return redirect('/')
 
 @app.route('/rules')
 def rules():
     if(session.get('user_id')):
-        print session['curr_que_id']
         return render_template('rules.html')
     else:
         return redirect('/signup')
@@ -98,7 +96,7 @@ def signUp():
 
 
 @app.route('/login',methods=['POST'])
-def rahul():
+def validateLogin():
     conn = mysql.connect()
     cursor = conn.cursor()
     try:
@@ -128,7 +126,8 @@ def rahul():
                     session['curr_ques_id'] = str(data[0][8])
                     return redirect('/dashboard')
                 else:
-                    return render_template('404.html', error="not validated")            
+                    print 'not validated'
+                    return render_template('404.html', msg="not validated")            
             except Exception as e:
                 return json.dumps({'errory':str(e)})
         else:
@@ -141,6 +140,22 @@ def rahul():
         conn.close()
 
 def updateScore():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+        data = cursor.fetchall()
+        score = '0'
+        money = '0'
+        for player in data:
+            score = int(session['point_wt']) + int(player[1])
+            money = int(session['money_wt']) + int(player[2])
+            session['correctly_answered'] = str(int(player[3])+1)
+            print 'error here'
+        cursor.execute("UPDATE scores SET points = %s, money = %s, correctly_answered = %s WHERE id = %s", (str(score), str(money), session['correctly_answered'], session['user_id']))
+        conn.commit()
+    except Exception as e:
+        print str(e)
     return update()
 
 def update():
@@ -150,25 +165,25 @@ def update():
         ro = session['curr_ques_id'].split('_')[0]
         ques = session['curr_ques_id'].split('_')[1]
         if(ro == '01' and ques == '25'):
-            ro = 02
+            ro = '02'
             ques = 01
         elif(ro=='02' and ques == '20'):
-            ro = 03
+            ro = '03'
             ques = 01
         elif(ro=='03' and ques == '20'):
-            ro = 04
+            ro = '04'
             ques = 01
         elif(ro=='04' and ques == '20'):
-            ro = 05
+            ro = '05'
             ques = 01
         elif(ro=='05' and ques == '20'):
-            ro = 06
+            ro = '06'
             ques = 01
         else:
             go_to_dash  = False
-        ques = int(ques) +1
+        ques = int(ques) + 1
         ques = '%02d' % ques
-
+        
         session['curr_ques_id'] = str(ro) + '_' + str(ques)
         conn = mysql.connect()
         try:
@@ -178,7 +193,6 @@ def update():
         except:
             pass
         return go_to_dash
-            
 
 def getQuestion():
     if(session.get('user_id')):
@@ -202,7 +216,9 @@ def getQuestion():
             op4 = value[6]
             session['curr_ans'] = value[7]
             flag = value[8]
-        params = {'que':que,'q_img':q_img, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4}
+            session['point_wt'] = value[9]
+            session['money_wt'] = value[10]
+        params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4}
         return params
 
 @app.route('/question')
@@ -219,11 +235,17 @@ def validate():
     if(session.get('user_id')):
         _answer = request.form['choice']
         if(_answer == session['curr_ans']):
-            updateScore()
-            return redirect ('/question')
+            go_to_dash = updateScore()
+            if(go_to_dash):
+                return redirect ('/dashboard')
+            else:
+                return redirect ('/question')
         else:
-            update()
-            return redirect ('/question')
+            go_to_dash = update()
+            if(go_to_dash):
+                return redirect ('/dashboard')
+            else:
+                return redirect ('/question')
     else:
         return redirect('/signup')
 
