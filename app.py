@@ -160,27 +160,34 @@ def updateScore():
 
 def update():
     if(session.get('user_id')):
-        go_to_dash  = True
+        go_to_new_round  = True
         # if(session['curr_ques_id'] == session['curr_ques_id']):
         ro = session['curr_ques_id'].split('_')[0]
         ques = session['curr_ques_id'].split('_')[1]
         if(ro == '01' and ques == '25'):
             ro = '02'
             ques = 01
+            session["curr_round"] = 1;
         elif(ro=='02' and ques == '20'):
             ro = '03'
             ques = 01
+            session["curr_round"] = 2;
         elif(ro=='03' and ques == '20'):
             ro = '04'
             ques = 01
+            session["curr_round"] = 3;
         elif(ro=='04' and ques == '20'):
             ro = '05'
             ques = 01
+            session["curr_round"] = 4;
+
         elif(ro=='05' and ques == '20'):
             ro = '06'
             ques = 01
+            session["curr_round"] = 5;
+
         else:
-            go_to_dash  = False
+            go_to_new_round  = False
         ques = int(ques) + 1
         ques = '%02d' % ques
         
@@ -192,7 +199,7 @@ def update():
             conn.commit()
         except:
             pass
-        return go_to_dash
+        return go_to_new_round
 
 def getQuestion():
     if(session.get('user_id')):
@@ -223,7 +230,9 @@ def getQuestion():
 
 @app.route('/question')
 def question():
-    if(session.get('user_id')):
+    if(session['curr_round'] != 0):
+        redirect('/choice')
+    elif(session.get('user_id')):
         params = getQuestion()
     #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
         return render_template('myque.html', params = params)
@@ -235,19 +244,44 @@ def validate():
     if(session.get('user_id')):
         _answer = request.form['choice']
         if(_answer == session['curr_ans']):
-            go_to_dash = updateScore()
-            if(go_to_dash):
-                return redirect ('/dashboard')
+            go_to_new_round = updateScore()
+            if(go_to_new_round):
+                return redirect ('/choice')
             else:
                 return redirect ('/question')
         else:
-            go_to_dash = update()
-            if(go_to_dash):
-                return redirect ('/dashboard')
+            go_to_new_round = update()
+            if(go_to_new):
+                return redirect ('/choice')
             else:
                 return redirect ('/question')
     else:
         return redirect('/signup')
+
+@app.route('/choice')
+def choice():
+    conn=mysql.connect()
+    try:
+        cursor=conn.cursor()
+        cursor.execute("SELECT * FROM scores WHERE id = %s", (session['curr_ques_id']))
+    except Exception as e:
+        print str(e)
+    data = cursor.fetchall()
+
+    if(session['curr_round'] == 1):
+        render_template('choice_R1.html')
+    elif(session['curr_round'] == 2):
+        render_template('choice_R2.html')
+    elif(session['curr_round'] == 3):
+        render_template('choice_R3_1.html')
+    elif(session['curr_round'] == 4):
+        render_template('choice_R4.html')
+    elif(session['curr_round'] == 5):
+        render_template('choice_R5.html')
+    else
+        return render_template('404.html',error = "some problem with round choice")
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):
