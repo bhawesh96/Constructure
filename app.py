@@ -169,24 +169,24 @@ def update():
         ques = session['curr_ques_id'].split('_')[1]
         if(ro == '01' and ques == '25'):
             ro = '02'
-            ques = 01
+            ques = 00
             session["curr_round"] = 1;
         elif(ro=='02' and ques == '20'):
             ro = '03'
-            ques = 01
+            ques = 00
             session["curr_round"] = 2;
         elif(ro=='03' and ques == '20'):
             ro = '04'
-            ques = 01
+            ques = 00
             session["curr_round"] = 3;
         elif(ro=='04' and ques == '20'):
             ro = '05'
-            ques = 01
+            ques = 00
             session["curr_round"] = 4;
 
         elif(ro=='05' and ques == '20'):
             ro = '06'
-            ques = 01
+            ques = 00
             session["curr_round"] = 5;
 
         else:
@@ -234,14 +234,15 @@ def getQuestion():
 
 @app.route('/question')
 def question():
+    print session['curr_round']
     if(session['curr_round'] != 0):
-        redirect('/choice')
+        return redirect ('/choice')
     elif(session.get('user_id')):
         params = getQuestion()
     #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
         return render_template('myque.html', params = params)
     else:
-        redirect ('/signup')
+        return redirect ('/signup')
 
 @app.route('/question', methods=['POST'])
 def validate():
@@ -276,9 +277,9 @@ def choice():
     print data
     for value in data:
         _money = value[2]
-        ansd_ques = value[3]
+        ansd_ques = int(value[3])
     available_options = 0
-    
+    print ansd_ques
 
     if(session['curr_round'] == 1):
         if(ansd_ques >= 21):
@@ -290,7 +291,7 @@ def choice():
         else:
             available_options =1
 
-        render_template('choice_R1.html',  options = available_options)
+        return render_template('choice_R1.html',  options = available_options)
 
     elif(session['curr_round'] == 2):
         if(_money >= 40):
@@ -299,13 +300,13 @@ def choice():
             available_options = 2
         elif(_money >= 22):
             available_options = 1
-        render_template('choice_R2.html',options = available_options,money = _money)
+        return render_template('choice_R2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 3):
-        render_template('choice_R3_1.html')
+        return render_template('choice_R3_1.html')
     elif(session['curr_round'] == 4):
-        render_template('choice_R4.html')
+        return render_template('choice_R4.html')
     elif(session['curr_round'] == 5):
-        render_template('choice_R5.html')
+        return render_template('choice_R5.html')
     else:
         return render_template('404.html',error = "some problem with round choice")
 
@@ -316,14 +317,21 @@ def updateChoice():
         conn=mysql.connect()
         try:
             cursor=conn.cursor()
-            cursor.execute("UPDATE players SET r1_res = %s", _answer)
+            print 'hey1 _',_answer
+            # print "UPDATE players SET r1_res = %s WHERE id = %s"
+
+            cursor.execute("UPDATE players SET r1_res = %s WHERE id = %s", (_answer,session['user_id']))
+            # cursor.execute("UPDATE scores SET points = %s WHERE id = %s", (str(score), str(money), session['correctly_answered'], session['user_id']))
+
+            print 'hey2 _ ',cursor.fetchall()
+
         except Exception as e:
             print str(e)
         finally:
             conn.close()
         reInitializeScore()
         session['curr_round'] = 0
-        render_template('dashboard.html')
+        return render_template('dashboard.html')
     elif(session['curr_round'] == 2):
         _answer = request.form['arch']
         points = 0
@@ -333,8 +341,8 @@ def updateChoice():
             cursor=conn.cursor()
             cursor2=conn.cursor()
 
-            cursor.execute("UPDATE players SET r1_res = %s", _answer)
-            cursor2.execute("SELECT * FROM scores WHERE id = %s", session['user_id'])
+            cursor.execute("UPDATE players SET r1_res = %s WHERE id = %s", (_answer,session['user_id']))
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
             for value in data:
                 points = int(value[1])
@@ -351,14 +359,14 @@ def updateChoice():
             updatePoints(new_points)
             reInitializeScore()
             session['curr_round'] = 0
-            render_template('scenario_2_1.html')
+            return render_template('scenario_2_1.html')
         elif(_answer == 'GreenDesignArchitect'):
             money = money - 30
             new_points = points + 3000 + money * 50 #round2 Judgement points
             updatePoints(new_points)
             reInitializeScore()
             session['curr_round'] = 0
-            render_template('scenario_2_1.html')
+            return render_template('scenario_2_1.html')
 
         elif(_answer == 'CommercialArchitect'):
             money = money - 32
@@ -366,16 +374,16 @@ def updateChoice():
             updatePoints(new_points)
             reInitializeScore()
             session['curr_round'] = 0
-            render_template('scenario_2_2.html')
+            return render_template('scenario_2_2.html')
         else:
             pass
-        render_template('404.html',error = "some error with scenario selection")
+        return render_template('404.html',error = "some error with scenario selection")
     elif(session['curr_round'] == 3):
-        render_template('choice_R3_1.html')
+        return render_template('choice_R3_1.html')
     elif(session['curr_round'] == 4):
-        render_template('choice_R4.html')
+        return render_template('choice_R4.html')
     elif(session['curr_round'] == 5):
-        render_template('choice_R5.html')
+        return render_template('choice_R5.html')
     else:
         return render_template('404.html',error = "some problem with round choice")
 
@@ -383,7 +391,7 @@ def updatePoints(new_Points):
     conn = mysql.connect()
     try:
         cursor = conn.cursor()
-        cursor.execute("UPDATE scores SET points = %s WHERE id = %s",str(new_Points), session['user_id'])
+        cursor.execute("UPDATE scores SET points = %s WHERE id = %s",str(new_Points), (session['user_id']))
     except Exception as e:
         print str(e)
     finally:
@@ -394,7 +402,9 @@ def reInitializeScore():
     conn=mysql.connect()
     try:
         cursor=conn.cursor()
-        cursor.execute("UPDATE scores SET money = '0', correctly_answered = '0' where id = %s", session['user_id'])
+        print 'hey3_',session['user_id']
+        cursor.execute("UPDATE scores SET money = '0', correctly_answered = '0' WHERE id = %s", (session['user_id']))
+        print 'hey4_',cursor.fetchall()
     except Exception as e:
         print str(e)
     finally:
