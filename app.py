@@ -169,7 +169,7 @@ def update():
         ques = int(ques) +1
         ques = '%02d' % ques
 
-        session['curr_ques_id'] = ro + '_' + ques
+        session['curr_ques_id'] = str(ro) + '_' + str(ques)
         conn = mysql.connect()
         try:
             cursor = conn.cursor()
@@ -191,15 +191,18 @@ def getQuestion():
             print str(e)
         data = cursor.fetchall()
         for value in data:
-            session['curr_ques_id'] = value[0]
+            # session['curr_ques_id'] = value[0]
             que = value[1]
+            q_img = value[2]
+            if(q_img == ''):
+                q_img = 'NULL'
             op1 = value[3]
             op2 = value[4]
             op3 = value[5]
             op4 = value[6]
             session['curr_ans'] = value[7]
             flag = value[8]
-        params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4}
+        params = {'que':que,'q_img':q_img, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4}
         return params
 
 @app.route('/question')

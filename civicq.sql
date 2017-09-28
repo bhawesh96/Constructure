@@ -78,6 +78,12 @@ call validate_login('abc@gmail.com','rahul13',@ans);
 
 select @ans;
 
+delimiter $$
+create trigger init_score after insert on players
+for each row
+insert into scores values (New.id,'0','0','0');
+$$
+delimiter ;
 
 
 
