@@ -12,7 +12,8 @@ CREATE TABLE players (
   `curr_ques_id` VARCHAR(20), -- xx_yy format xx corresponds to the round number and yy corresponds to the ques no.
   `r1_res` VARCHAR(20),
   `r2_res` VARCHAR(20),
-  `r3_res` VARCHAR(20),
+  `r31_res` VARCHAR(20),
+  `r32_res` VARCHAR(20),
   `r4_res` VARCHAR(20),
   `r5_res` VARCHAR(20),
   `r6_res` VARCHAR(20),
@@ -49,7 +50,7 @@ begin
 	if exists( SELECT ID FROM players WHERE  reg_no = p_regno) 
     then select 'Not unique';
 	else
-	insert into players(name,reg_no,email,mobile,password,college,ques_asked,curr_ques_id,r1_res,r2_res,r3_res,r4_res,r5_res,r6_res,curr_trial) values ( p_name,p_regno,p_email,p_mobile,p_password,p_college,'0','01_01',0,0,0,0,0,0,0);
+	insert into players(name,reg_no,email,mobile,password,college,ques_asked,curr_ques_id,r1_res,r2_res,r31_res,r32_res,r4_res,r5_res,r6_res,curr_trial) values ( p_name,p_regno,p_email,p_mobile,p_password,p_college,'0','01_01','0','0','0','0','0','0','0','0','0');
 	  end if;
 end$$
 delimiter ;
