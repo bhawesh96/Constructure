@@ -148,9 +148,11 @@ def updateScore():
     try:
         cursor.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
         data = cursor.fetchall()
+        print data,session['point_wt'],session['money_wt']
         score = '0'
         money = '0'
         for player in data:
+            print player[0],player[1],player[2],player[3]
             score = int(session['point_wt']) + int(player[1])
             money = int(session['money_wt']) + int(player[2])
             session['correctly_answered'] = str(int(player[3])+1)
@@ -256,7 +258,7 @@ def validate():
                 return redirect ('/question')
         else:
             go_to_new_round = update()
-            if(go_to_new):
+            if(go_to_new_round):
                 return redirect ('/choice')
             else:
                 return redirect ('/question')
@@ -279,7 +281,6 @@ def choice():
         _money = value[2]
         ansd_ques = int(value[3])
     available_options = 0
-    print ansd_ques
 
     if(session['curr_round'] == 1):
         if(ansd_ques >= 21):
@@ -317,13 +318,11 @@ def updateChoice():
         conn=mysql.connect()
         try:
             cursor=conn.cursor()
-            print 'hey1 _',_answer
             # print "UPDATE players SET r1_res = %s WHERE id = %s"
-
-            cursor.execute("UPDATE players SET r1_res = %s WHERE id = %s", (_answer,session['user_id']))
+            query = "UPDATE players SET r1_res = '{a}' WHERE id = {i};".format(a = _answer,i = session['user_id'])
+            cursor.execute(query)
+            conn.commit()
             # cursor.execute("UPDATE scores SET points = %s WHERE id = %s", (str(score), str(money), session['correctly_answered'], session['user_id']))
-
-            print 'hey2 _ ',cursor.fetchall()
 
         except Exception as e:
             print str(e)
@@ -342,6 +341,8 @@ def updateChoice():
             cursor2=conn.cursor()
 
             cursor.execute("UPDATE players SET r1_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
             for value in data:
@@ -392,6 +393,8 @@ def updatePoints(new_Points):
     try:
         cursor = conn.cursor()
         cursor.execute("UPDATE scores SET points = %s WHERE id = %s",str(new_Points), (session['user_id']))
+        conn.commit()
+
     except Exception as e:
         print str(e)
     finally:
@@ -402,9 +405,9 @@ def reInitializeScore():
     conn=mysql.connect()
     try:
         cursor=conn.cursor()
-        print 'hey3_',session['user_id']
         cursor.execute("UPDATE scores SET money = '0', correctly_answered = '0' WHERE id = %s", (session['user_id']))
-        print 'hey4_',cursor.fetchall()
+        conn.commit()
+
     except Exception as e:
         print str(e)
     finally:
