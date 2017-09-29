@@ -132,7 +132,7 @@ def validateLogin():
                     session['r4_res'] = str(data[0][13])
                     session['r5_res'] = str(data[0][14])
                     session['r6_res'] = str(data[0][15])
-                    session['curr_round'] = int(data[0][16])
+                    session['curr_round'] = int(data[0][17])
 
                     # ro = session['curr_ques_id'].split('_')[0]
                     # # session['curr_round'] = float(ro) -1
@@ -334,11 +334,11 @@ def choice():
             available_options = 1
         return render_template('choice_R2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 31):
-        if(_money >=12):
+        if(_money >=12.0):
             available_options = 3
-        elif(_money >=8):
+        elif(_money >=8.0):
             available_options = 2
-        elif(_money >=6):
+        elif(_money >=6.0):
             available_options = 1
         return render_template('choice_R3_1.html',options = available_options,money = _money)
     elif(session['curr_round'] == 32):
@@ -357,11 +357,20 @@ def choice():
         elif(_money >= .5):
             available_options = 2
         else:
-            available_options =0
+            available_options =1
         return render_template('scenario_3.html',options = available_options,money = _money)
     elif(session['curr_round'] == 4):
-        return render_template('choice_R4.html')
+        if(_money >=25):
+            available_options = 4
+        elif(_money >= 15):
+            available_options = 3
+        elif(_money >= 10):
+            available_options = 2
+        elif(_money >= 7):
+            available_options = 1
+        return render_template('choice_R4.html',options = available_options,money = _money)
     elif(session['curr_round'] == 5):
+
         return render_template('choice_R5.html')
     else:
         return render_template('404.html',error = "some problem with round choice")
@@ -471,6 +480,7 @@ def updateChoice():
         elif(_answer == 'InSituTesting'):
             new_points = points +4000
             money = money - 12
+        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 32
@@ -502,13 +512,13 @@ def updateChoice():
         new_points = 0
 
         if(_answer == 'SurveyorA'):
-            money = money - 6
+            money = money - 10
             new_points = points + 4000
         elif(_answer == 'SurveyorB'):
-            money = money - 8
+            money = money - 7
             new_points = points + 3000
         elif(_answer == 'SurveyorC'):
-            money = money - 12
+            money = money - 4
             new_points = points + 1000
         updatePoints(new_points)
         updateMoney(money)
@@ -527,9 +537,11 @@ def updateChoice():
             cursor2=conn.cursor()
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
+            print _answer
             for value in data:
                 points = float(value[1])
                 money = float(value[2])
+            print points,money
         except Exception as e:
             print str(e)
         finally:
@@ -543,8 +555,9 @@ def updateChoice():
         elif(_answer == 'compact'):
             money = money - .5
             new_points = points + 200
-
-        new_points += money * 118.4
+        else:
+            new_points = points
+        new_points = new_points +  money * 11.84
 
         updatePoints(new_points)
         reInitializeScore()
@@ -552,8 +565,53 @@ def updateChoice():
         updateRound(session['curr_round'])
         return render_template('dashboard.html')
     elif(session['curr_round'] == 4):
-        return render_template('choice_R4.html')
+        _answer = request.form['machine']
+        points = 0
+        money = 0
+        scenario = ''
+        conn=mysql.connect()
+        try:
+            cursor2=conn.cursor()
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            print _answer
+            for value in data:
+                points = float(value[1])
+                money = float(value[2])
+            print points,money
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        if(_answer  == 'modern'):
+            money = money - 15 -1.75
+            new_points = points + 320
+            scenario = 'scenario_4_1.html'
+        elif(_answer == 'medium'):
+            money = money - 10 -3.25
+            new_points = points + 200
+            scenario = 'scenario_4_2.html'
+
+        elif(_answer == 'wretched'):
+            money = money - 7 - 6.5
+            new_points = points + 100
+            scenario = 'scenario_4_3.html'
+            
+        elif(_answer == 'contract'):
+            money = money - 25 
+            new_points = points + 400
+            scenario = 'scenario_4_4.html'
+        else:
+            new_points = points
+
+        new_points = new_points +  money * 59.6
+        updatePoints(new_points)
+        reInitializeScore()
+        session['curr_round'] = 0
+        updateRound(session['curr_round'])
+        return render_template(scenario)
     elif(session['curr_round'] == 5):
+
         return render_template('choice_R5.html')
     else:
         return render_template('404.html',error = "some problem with round choice")
@@ -562,7 +620,7 @@ def updateRound(new_round):
     conn = mysql.connect()
     try:
         cursor = conn.cursor()
-        cursor.execute("UPDATE players SET curr_round = %s WHERE id = %s",str(new_round), (session['user_id']))
+        cursor.execute("UPDATE players SET curr_round = %s WHERE id = %s",(str(new_round), session['user_id']))
         conn.commit()
 
     except Exception as e:
@@ -576,7 +634,7 @@ def updateMoney(new_money):
     try:
         cursor = conn.cursor()
         print 'hey',new_money
-        cursor.execute("UPDATE scores SET money = %s WHERE id = %s",str(new_money), (session['user_id']))
+        cursor.execute("UPDATE scores SET money = %s WHERE id = %s",(str(new_money), session['user_id']))
         print 'hey',cursor.fetchall()
         conn.commit()
 
@@ -591,7 +649,7 @@ def updatePoints(new_Points):
     conn = mysql.connect()
     try:
         cursor = conn.cursor()
-        cursor.execute("UPDATE scores SET points = %s WHERE id = %s",str(new_Points), (session['user_id']))
+        cursor.execute("UPDATE scores SET points = %s WHERE id = %s",(str(new_Points), session['user_id']))
         conn.commit()
 
     except Exception as e:

@@ -20,13 +20,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
-<body onload="avaiable_options({{options}})">
+<body onload="available_options({{options}})">
   <script type="text/javascript">
   function available_options(op)
   {
     op2 = parseInt(op);
     switch(op2)
     {
+      case 0:
+        document.getElementById('check4').disabled = true;
       case 1:
         document.getElementById('check3').disabled = true;
       case 2:
@@ -108,8 +110,7 @@
         </div>
         <!-- overlay --> 
         </a>  <div class"selection">
-         <!-- <input type="checkbox" class="checkbox" id="check2" /> -->
-         <input type="radio" name="soilReport" class="radio" id="check1" value = "chemical"/>
+         <input type="radio" name="soilReport" class="radio" id="check2" value = "chemical"/>
 
        </div> 
       </div>
@@ -122,8 +123,8 @@
         </div>
         </a>
         <div class"selection">
-         <!-- <input type="checkbox" class="checkbox" id="check3" /> -->
-         <input type="radio" name="soilReport" class="radio" id="check1" value = "compact"/>
+ 
+         <input type="radio" name="soilReport" class="radio" id="check3" value = "compact"/>
 
        </div>  
       </div>
@@ -136,18 +137,17 @@
         </div>
         </a>
         <div class"selection">
-         <!-- <input type="checkbox" class="checkbox" id="check4" /> -->
-         <input type="radio" name="soilReport" class="radio" id="check1" value = "nothing"/>
+         <input type="radio" name="soilReport" class="radio" id="check4" value = "nothing"/>
 
        </div> 
       </div>
     </div>
   </div>
 <div id="buttons">
-        <!-- <a href="dashboard.html" class="btn orange">Proceed</a> -->
         <input type="submit" class ="btn orange" value="Finalize">
 
     </div>
+  </form>
 </section>
 
 <script src="../static/js/dash-jquery-2.1.4.js"></script>
