@@ -571,7 +571,12 @@ def updateChoice():
         scenario = ''
         conn=mysql.connect()
         try:
+            cursor=conn.cursor()
             cursor2=conn.cursor()
+            
+            cursor.execute("UPDATE players SET r4_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+            
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
             print _answer
