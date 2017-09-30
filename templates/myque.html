@@ -138,6 +138,10 @@ input[type="submit"] {
   <div class="myform">
     <p id="question">{{params.que}}</p>
     <form action="/question" method="POST">
+      {% if params.flag %}
+      <img src="../image_questions/{{params.id}}.jpg" alt="could not load image" height="30%" width="30%">
+      <br>
+      {% endif %}
     <input type='radio' name='choice' id="op1" value='op1'><label for="op1">{{params.op1}}</label>
     <input type='radio' name='choice' id="op2" value='op2'><label for="op2">{{params.op2}}</label>
     <input type='radio' name='choice' id="op3" value='op3'><label for="op3">{{params.op3}}</label>

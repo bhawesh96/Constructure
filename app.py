@@ -264,7 +264,7 @@ def getQuestion():
             flag = value[8]
             session['point_wt'] = value[9]
             session['money_wt'] = value[10]
-        params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4}
+        params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4,'flag':flag,'id':session['curr_ques_id']}
         conn.close()
         return params
 
