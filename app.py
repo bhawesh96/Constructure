@@ -201,25 +201,28 @@ def update():
         if(ro == '01' and ques == '25'):
             ro = '02'
             ques = 00
-            session["curr_round"] = 1;
+            session["curr_round"] = 1
         elif(ro=='02' and ques == '20'):
             ro = '03'
             ques = 00
-            session["curr_round"] = 2;
+            session["curr_round"] = 2
         elif(ro=='03' and ques == '20'):
             ro = '04'
             ques = 00
-            session["curr_round"] = 31;
+            session["curr_round"] = 31
         elif(ro=='04' and ques == '20'):
             ro = '05'
             ques = 00
-            session["curr_round"] = 4;
+            session["curr_round"] = 4
 
         elif(ro=='05' and ques == '20'):
             ro = '06'
             ques = 00
-            session["curr_round"] = 5;
-
+            session["curr_round"] = 5
+        elif(ro=='06' and ques == '25'):
+            ro = '01'
+            ques = 00
+            session['curr_round'] = 6
         else:
             go_to_new_round  = False
         ques = float(ques) + 1
@@ -370,8 +373,21 @@ def choice():
             available_options = 1
         return render_template('choice_R4.html',options = available_options,money = _money)
     elif(session['curr_round'] == 5):
-
-        return render_template('choice_R5.html')
+        if(_money >=84):
+            available_options =4
+        elif(_money >=80):
+            available_options =3
+        elif(_money >=75):
+            available_options =2
+        elif(_money >=70):
+            available_options =1
+        return render_template('choice_R5.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 51):
+        if(_money >=3):
+            available_options = 2
+        else:
+            available_options = 1
+        return render_template('scenario_5.html',options = available_options,money = _money)
     else:
         return render_template('404.html',error = "some problem with round choice")
 
@@ -616,8 +632,95 @@ def updateChoice():
         updateRound(session['curr_round'])
         return render_template(scenario)
     elif(session['curr_round'] == 5):
+        _answer = request.form['foundation']
+        points = 0
+        money = 0
+        r1_res = 'AlluvialSoil'
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor2=conn.cursor()
+            cursor3 = conn.cursor()
 
-        return render_template('choice_R5.html')
+            cursor.execute("UPDATE players SET r5_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+            
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+
+            cursor3.execute("SELECT r1_res FROM players where id = %s",(session['user_id']))
+            data2 = cursor3.fetchall()
+            print _answer
+
+            for value in data:
+                points = float(value[1])
+                money = float(value[2])
+            for value in data2:
+                print value
+                r1_res = str(value[0])
+
+            print points,money
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+
+        if(_answer == 'pile'):
+            money = money - 80
+            if(r1_res == 'AlluvialSoil'):
+                points = points + 3000
+        elif(_answer == 'stone'):
+            money = money - 70
+            if(r1_res == 'MountainSoil'):
+                points = points + 3000
+        elif(_answer == 'strip'):
+            money = money - 75
+            if(r1_res == 'BlackSoil'):
+                points = points + 3000
+        elif(_answer == 'raft'):
+            money = money - 84
+            if(r1_res == 'LateriteSoil'):
+                points = points + 3000
+        new_points = points + 1000
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 51
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+    elif(session['curr_round'] == 51):
+        _answer = request.form['FReport']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            cursor2=conn.cursor()
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            print _answer
+            for value in data:
+                points = float(value[1])
+                money = float(value[2])
+            print points,money
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        if(_answer  == 'increase'):
+            money = money - 3
+            new_points = points + 1000
+        elif(_answer == 'sit'):
+            money = money - 0
+            new_points = points + 100
+        else:
+            new_points = points
+        new_points = new_points +  money * 10.88
+
+        updatePoints(new_points)
+        reInitializeScore()
+        session['curr_round'] = 0
+        updateRound(session['curr_round'])
+        return render_template('dashboard.html')
+
     else:
         return render_template('404.html',error = "some problem with round choice")
 
