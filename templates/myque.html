@@ -139,7 +139,7 @@ input[type="submit"] {
     <p id="question">{{params.que}}</p>
     <form action="/question" method="POST">
       {% if params.flag %}
-      <img src="../image_questions/{{params.id}}.jpg" alt="could not load image" height="30%" width="30%">
+      <img src="../static/image/{{params.id}}.jpg" alt="could not load image" height="30%" width="30%">
       <br>
       {% endif %}
     <input type='radio' name='choice' id="op1" value='op1'><label for="op1">{{params.op1}}</label>
