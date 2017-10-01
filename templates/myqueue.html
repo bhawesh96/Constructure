@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="../static/css/mycss.css">
 
 <style type="text/css">
+  body{
+    background: url("../static/image/Stage3L.jpg");
+  }
   video {
      position: fixed;
   right: 0; 
@@ -20,6 +23,7 @@
   width: auto; 
   height: auto;
   z-index: -100;
+  opacity:.5;
   }
   #question {
     margin-bottom: 50px;
@@ -28,7 +32,7 @@
     position: relative;
     color: white;
     text-align: center;
-    background: rgba(40,57,101,.9);
+    background: rgba(40,57,101,.7);
     
     width: 50%;
     margin: 0px auto;
@@ -53,7 +57,7 @@ label{
     padding: 10px;
     width: 43%;
     margin: 10px 10px 10px 10px;
-    background-color: red;
+    background-color: blue;
     text-align: left;
     border-radius: 10px;
 }
@@ -62,17 +66,9 @@ input[type="submit"] {
   padding: 10px;
   margin-top: 70px;
   background-color: green;
-   border-radius: 10px;
+
   color:#fff;
-}
-input[type="submit skip"] {
-  width: 30%;
-  padding: 10px;
-  margin-top: 70px;
-  background-color: purple;
-   border-radius: 10px;
-  color:#fff;
-  text-align: center;
+  border-radius: 10px;
 }
 @media (max-width: 480px) {
   video {
@@ -144,19 +140,18 @@ input[type="submit skip"] {
 <div class="formContainer">
   <div class="myform">
     <p id="question">{{params.que}}</p>
-    <p id="question_img">{{params.img}}</p>
     <form action="/question" method="POST">
-    <input type="text" name="Answer"><br>
+    <input type='radio' name='choice' id="op1" value='op1'><label for="op1">{{params.op1}}</label>
+    <input type='radio' name='choice' id="op2" value='op2'><label for="op2">{{params.op2}}</label>
+    <input type='radio' name='choice' id="op3" value='op3'><label for="op3">{{params.op3}}</label>
+    <input type='radio' name='choice' id="op4" value='op4'><label for="op4">{{params.op4}}</label>
 
     <input type="submit" value="Submit and Next">
-    <input type="submit skip" value="Skip">
     </form>
   </div>
 </div>
 
-<video autoplay loop id="video-background" muted plays-inline width="100%" height="100%">
-  <source src="../static/video/file.mp4" type="video/mp4">
-</video>
+
 {% endblock %}
 {% block end_extJS %}
 <script src="../static/js/dash-jquery-2.1.1.js"></script>

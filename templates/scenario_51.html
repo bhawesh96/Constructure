@@ -21,17 +21,16 @@
 </head>
 
 <body onload="available_options({{options}})">
-<script type="text/javascript">
+  <script type="text/javascript">
   function available_options(op)
   {
     op2 = parseInt(op);
     switch(op2)
     {
-      case 1:
-        document.getElementById('check3').disabled = true;
-      case 2:
+      case 0:
         document.getElementById('check2').disabled = true;
-      case 3:
+
+      case 1:
         document.getElementById('check1').disabled = true;
       default:
         return;
@@ -60,59 +59,61 @@
     <div class="col-md-10 col-md-offset-1">
       <div class="banner-text text-center">
         <h1>ATTENTION!</h1>
-        <p>Jon Snow has started construction. All the materials have been gathered and a builder who lives far away from the plot has been hired along with his workers. The workers are skilled but at the same time costlier.
-Now, Queen Daenerys offers help, but on the condition that he has to hire all her people, present right here at the site of construction, as workers. They are unskilled but they are cheaper.
-But Snow has already given his word and signed a contract with the builder. He is in a dilemma about whom to choose.
-What do you advise him to do?
+        <p>Heavy snowstorms have hindered progress and postponing the deadline will be inconvenient for the workers. You have been advised by one of the chief-masons to reduce the number of days taken for the foundation process. What will be your course of action?
+        </br>
+        </br>
+        Option 1: Reduce the number of days taken for foundation by increasing the number of workers 
 
         </br>
         </br>
-        Option 1: Hire the Queen's followers at a cheaper rate.
-
-        </br>
-        </br>
-        Option 2: Hire the builder and his skilled workforce.
+        Option 2: Wait for the snowstorms to subside.
+      </br>
+    </br>
+   <b> Money: {{money}}</b>
         </p> 
     </div>
   </div>
 </section>
 <section id="works" class="works section no-padding">
   <form action="/choice" method="POST">
+
   <div class="container-fluid">
     <div class="row no-gutter">
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/scenario_6_1/work-1.jpg" alt="">
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/scenario_5/work-1.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
-            <h5>Accept Queen’s offer</h5>
-            <p>Price: 1.5 Crore</p>
+            <h5>Increase Workforce</h5>
+            <p>Price: 3 Lakh</p>
           </div>
         </div>
         <!-- overlay --> 
-        </a>
-         <div class"selection">
-         <input type="radio" name="hire" class="radio" id="check1" value = "Accept"/>
+        </a> 
+        <div class"selection">
+         <input type="radio" name="FReport" class="radio" id="check1" value = "increase"/>
+
        </div>  
-         </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/scenario_6_1/work-2.jpg" alt="">
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/scenario_5/work-2.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
-            <h5>Uphold the contract.</h5>
-            <p>Price: 2 Crore</p>
+            <h5>Sit Tight</h5>
+            <p>Price: 0 Lakh</p>
           </div>
         </div>
         <!-- overlay --> 
         </a>
-         <div class"selection">
-         <input type="radio" name="hire" class="radio" id="check2" value = "Uphold"/>
+          <div class"selection">
+         <input type="radio" name="FReport" class="radio" id="check2" value = "sit"/>
+
        </div>  
          </div>
     </div>
   </div>
-   <div id="buttons">
-        <!-- <a href="dashboard.html" class="btn orange">Proceed</a> -->
+     <div id="buttons">
         <input type="submit" class ="btn orange" value="Finalize">
+
     </div>
-</form>
+  </form>
 </section>
 <script src="../static/js/dash-jquery-2.1.4.js"></script>
 <script src="../static/js/dash-mainnav.js"></script>
