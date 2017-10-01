@@ -42,7 +42,6 @@ Main Components
   position: relative;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  margin-top: -19px;
 }
 .projects-container::before {
   /* never visible - this is used in jQuery to check the current MQ */
@@ -74,8 +73,8 @@ Main Components
   top: 0;
   left: 0;
   height: 25vh;
-  width:16vw;
-  background-image: url("../image/img-1-small.jpg");
+  width:100vw;
+  background-image: url("../image/Stage2.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -85,53 +84,53 @@ Main Components
 }
 .projects-container .cd-single-project::before {
   /* never visible - this is used in jQuery to detect if the background image has been loaded  */
-  content: '../static/image/img-1-small.jpg';
+  content: '../static/image/Stage2.jpg';
   display: none;
 }
 .projects-container .cd-single-project:nth-of-type(2) {
   top: 16vh;
 }
 .projects-container .cd-single-project:nth-of-type(2)::after {
-  background-image: url("../image/img-2-small.jpg");
+  background-image: url("../image/Stage1L.jpg");
 }
 .projects-container .cd-single-project:nth-of-type(2)::before {
-  content: '../static/image/img-2-small.jpg';
+  content: '../static/image/Stage1L.jpg';
 }
 .projects-container .cd-single-project:nth-of-type(3) {
   top: 33vh;
 }
 .projects-container .cd-single-project:nth-of-type(3)::after {
-  background-image: url("../image/img-3-small.jpg");
+  background-image: url("../image/Stage6L.jpg");
 }
 .projects-container .cd-single-project:nth-of-type(3)::before {
-  content: '../static/image/img-3-small.jpg';
+  content: '../static/image/Stage6L.jpg';
 }
 .projects-container .cd-single-project:nth-of-type(4) {
   top: 50vh;
 }
 .projects-container .cd-single-project:nth-of-type(4)::after {
-  background-image: url("../image/img-4-small.jpg");
+  background-image: url("../image/Stage4L.jpg");
 }
 .projects-container .cd-single-project:nth-of-type(4)::before {
-  content: '../static/image/img-4-small.jpg';
+  content: '../static/image/Stage4L.jpg';
 }
 .projects-container .cd-single-project:nth-of-type(5) {
   top: 67vh;
 }
 .projects-container .cd-single-project:nth-of-type(5)::after {
-  background-image: url("../image/img-4-small.jpg");
+  background-image: url("../image/Stage5L.jpg");
 }
 .projects-container .cd-single-project:nth-of-type(5)::before {
-  content: '../static/image/img-4-small.jpg';
+  content: '../static/image/Stage5L.jpg';
 }
 .projects-container .cd-single-project:nth-of-type(6) {
   top: 84vh;
 }
 .projects-container .cd-single-project:nth-of-type(6)::after {
-  background-image: url("../image/img-4-small.jpg");
+  background-image: url("../image/Stage3L.jpg");
 }
 .projects-container .cd-single-project:nth-of-type(6)::before {
-  content: '../static/image/img-4-small.jpg';
+  content: '../static/image/Stage3L.jpg';
 }
 .projects-container .cd-single-project.is-loaded {
   /* move items in the viewport when background images have been loaded */
@@ -176,10 +175,10 @@ Main Components
   }
   .projects-container .cd-single-project:first-of-type::before {
     width: 16vw;
-    content: '../static/image/img-1-large.jpg';
+    content: '../static/image/Stage2.jpg';
   }
   .projects-container .cd-single-project:first-of-type::after {
-    background-image: url("../image/img-1-large.jpg");
+    background-image: url("../image/Stage2.jpg");
   }
   .projects-container .cd-single-project:nth-of-type(2) {
     top: 0;
@@ -187,10 +186,10 @@ Main Components
     left: 16vw;
   }
   .projects-container .cd-single-project:nth-of-type(2)::before {
-    content: '../static/image/img-2-large.jpg';
+    content: '../static/image/Stage1L.jpg';
   }
   .projects-container .cd-single-project:nth-of-type(2)::after {
-    background-image: url("../image/img-2-large.jpg");
+    background-image: url("../image/Stage1L.jpg");
   }
   .projects-container .cd-single-project:nth-of-type(3) {
     top: 0;
@@ -198,10 +197,10 @@ Main Components
     left: 33vw;
   }
   .projects-container .cd-single-project:nth-of-type(3)::before {
-    content: '../static/image/img-3-large.jpg';
+    content: '../static/image/Stage6L.jpg';
   }
   .projects-container .cd-single-project:nth-of-type(3)::after {
-    background-image: url("../image/img-3-large.jpg");
+    background-image: url("../image/Stage6L.jpg");
   }
   .projects-container .cd-single-project:nth-of-type(4) {
     top: 0;
@@ -209,10 +208,10 @@ Main Components
     left: 50vw;
   }
   .projects-container .cd-single-project:nth-of-type(4)::before {
-    content: '../static/image/img-4-large.jpg';
+    content: '../static/image/Stage4L.jpg';
   }
   .projects-container .cd-single-project:nth-of-type(4)::after {
-    background-image: url("../image/img-4-large.jpg");
+    background-image: url("../image/Stage4L.jpg");
   }
    .projects-container .cd-single-project:nth-of-type(5) {
     top: 0;
@@ -220,10 +219,10 @@ Main Components
     left: 67vw;
   }
   .projects-container .cd-single-project:nth-of-type(5)::before {
-    content: '../static/image/img-4-large.jpg';
+    content: '../static/image/Stage5L.jpg';
   }
   .projects-container .cd-single-project:nth-of-type(5)::after {
-    background-image: url("../image/img-4-large.jpg");
+    background-image: url("../image/Stage5L.jpg");
   }
    .projects-container .cd-single-project:nth-of-type(6) {
     top: 0;
@@ -231,10 +230,10 @@ Main Components
     left: 84vw;
   }
   .projects-container .cd-single-project:nth-of-type(6)::before {
-    content: '../static/image/img-4-large.jpg';
+    content: '../static/image/Stage3L.jpg';
   }
   .projects-container .cd-single-project:nth-of-type(6)::after {
-    background-image: url("../image/img-4-large.jpg");
+    background-image: url("../image/Stage3L.jpg");
   }
   /*removed width to fix background sizes*/
   .projects-container .cd-single-project::after {
@@ -485,6 +484,35 @@ Main Components
   -o-transform: translateX(-50%) scale(1.2);
   transform: translateX(-50%) scale(1.2);
 }
+.btn {
+
+  border-radius: 10px;
+  padding: 15px 25px;
+  font-size: 22px;
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  position:absolute;
+  right:45%;
+  z-index: 2000;
+}
+
+.btn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+
+.orange {
+  background-color: rgba(40,57,101,1);
+}
+
+.orange:hover {
+  background-color: #101524;
+  color:#ffffff;
+}
+
 
 @-webkit-keyframes cd-translate {
   0% {
@@ -530,4 +558,8 @@ Main Components
     -o-transform: translateX(-50%) scale(1);
     transform: translateX(-50%) scale(1);
   }
+}
+
+.b2, .b3,.b4,.b5,.b6{
+  display: none;
 }

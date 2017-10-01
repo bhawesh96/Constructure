@@ -73,7 +73,7 @@ Main Components
   top: 0;
   left: 0;
   height: 25vh;
-  width:16vw;
+  width:100vw;
   background-image: url("../image/Stage2.jpg");
   background-repeat: no-repeat;
   background-position: center center;
@@ -570,4 +570,7 @@ Main Components
     -o-transform: translateX(-50%) scale(1);
     transform: translateX(-50%) scale(1);
   }
+}
+.b1, .b2,.b3,.b4,.b6{
+  display: none;
 }
