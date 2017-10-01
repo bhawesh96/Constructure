@@ -1,0 +1,165 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choice</title>
+<link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
+  <link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
+  <script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
+<link rel="stylesheet" href="../static/css/choice-bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/choice-R6.css">
+<link rel="stylesheet" href="../static/css/checkbox-button.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+
+<body onload="available_options({{options}})">
+<script type="text/javascript">
+  function available_options(op)
+  {
+    op2 = parseInt(op);
+    switch(op2)
+    {
+      case 1:
+        document.getElementById('check3').disabled = true;
+      case 2:
+        document.getElementById('check2').disabled = true;
+      case 3:
+        document.getElementById('check1').disabled = true;
+      default:
+        return;
+    }
+
+  }
+</script>
+  <header>
+  <nav class="cd-stretchy-nav">
+    <a class="cd-nav-trigger" href="#0">
+      <span aria-hidden="true"></span>
+    </a>
+
+    <ul>
+      <li><a href="dashboard.html" class="active"><span>Home</span></a></li>
+      <li><a href="Rules.html"><span>Rules</span></a></li>
+      <li><a href="login.html"><span>Logout</span></a></li>
+      
+    </ul>
+
+    <span aria-hidden="true" class="stretchy-nav-bg"></span>
+  </nav>
+</header>
+<section class="banner" role="banner">
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="banner-text text-center">
+        <h1>Make Selection:</h1>
+        <p>Now to mix proportions. There are five choices to make, to select the quality of five ingredients. We will successively make each choice, so ration your money carefully. Note that there is a different price for transporting the ingredients depending on thier quality.
+        </br>
+        Rate/truck/trip:</br>
+        Sandline Corporation: 11,360</br>
+        Pentos Limited: 8610</br>
+        Westeros & Esssos Co.: 7350</br>    
+        You have {{}} Gold Dragons left for this round. 
+        Select Super Placticizer Quality:</p>
+<table style="width:100%">
+  <tr>
+    <th>Cost(GD/KG)</th>
+    <th>Sandline Corporation</th> 
+    <th>Pentos Limited</th>
+    <th>Westeros & Esssos Co.</th>
+  </tr>
+  <tr>
+    <td>Cement</td>
+    <td>10</td> 
+    <td>8.5</td>
+    <td>6.7</td>
+  </tr>
+  <tr>
+    <td>Fine Aggregate</td>
+    <td>1.2</td> 
+    <td>1</td>
+    <td>0.8</td>
+  </tr>
+  <tr>
+    <td>Coarse Aggregate</td>
+    <td>1.7</td> 
+    <td>1.45</td>
+    <td>1.1</td>
+  </tr>
+  <tr>
+    <td>Fly Ash</td>
+    <td>2.1</td> 
+    <td>1.9</td>
+    <td>1.75</td>
+  </tr>
+  <tr>
+    <td>Super Placticizer</td>
+    <td>65</td> 
+    <td>55</td>
+    <td>47</td>
+  </tr>
+</table> 
+    </div>
+  </div>
+</section>
+<section id="works" class="works section no-padding">
+  <form action="/choice" method="POST">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="../image/work-1.jpg" class="work-box"> <img src="../static/image/choice_6_5/work-1.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Sandline Corporation</h5>
+            <p>Price: 65 GD/kg</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a>
+        <div class"selection">
+         <input type="radio" name="SuperPlasticizer" class="radio" id="check1" value = "SandlineCorporation"/>
+       </div>  
+         </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="../image/work-2.jpg" class="work-box"> <img src="../static/image/choice_6_5/work-2.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Pentos Limited</h5>
+            <p>Price: 55 GD/kg</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a> 
+        <div class"selection">
+         <input type="radio" name="SuperPlasticizer" class="radio" id="check2" value = "PentosLimited"/>
+       </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="../image/work-3.jpg" class="work-box"> <img src="../static/image/choice_6_5/work-3.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Westeros & Esssos Co.</h5>
+            <p>Price: 47 GD/kg</p>
+          </div>
+        </div>
+        </a> 
+        <div class"selection">
+         <input type="radio" name="SuperPlasticizer" class="radio" id="check3" value = "Westros&EsssosCo"/>
+       </div> 
+      </div>
+    </div>
+  </div>
+  <div id="buttons">
+        <!-- <a href="dashboard.html" class="btn orange">Proceed</a> -->
+        <input type="submit" class ="btn orange" value="Finalize">
+    </div>
+</form>
+</section>
+<script src="../static/js/dash-jquery-2.1.4.js"></script>
+<script src="../static/js/dash-mainnav.js"></script>
+</body>
+</html>
