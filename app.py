@@ -262,9 +262,14 @@ def getQuestion():
             op4 = value[6]
             session['curr_ans'] = value[7]
             flag = value[8]
+            image = False
+            if(flag == '0'):
+                image = False
+            else:
+                image=True
             session['point_wt'] = value[9]
             session['money_wt'] = value[10]
-        params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4,'flag':flag,'id':session['curr_ques_id']}
+        params = {'que':que, 'op1':op1, 'op2':op2, 'op3':op3, 'op4':op4,'flag':image,'id':session['curr_ques_id']}
         conn.close()
         return params
 
@@ -275,6 +280,7 @@ def question():
         return redirect ('/choice')
     elif(session.get('user_id')):
         params = getQuestion()
+        print params
     #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
         return render_template('myque.html', params = params)
     else:
