@@ -480,6 +480,14 @@ def retry(ques):
     session['curr_trail'] = int(session['curr_trail']) + 1
     session['curr_round'] = 0
     ro = session['curr_ques_id'].split('_')[0]
+    if(ro=='03'):
+        ro = '02'
+    elif(ro=='04'):
+        ro = '03'
+    elif(ro=='05'):
+        ro = '06'
+    elif(ro=='06'):
+        ro = '06'
     ques = 00
     print "ascvadfv:",session['curr_trail'],session['curr_round']
     ques = float(ques) + 1
@@ -1412,6 +1420,22 @@ def updateChoice():
         return redirect('/final')
     else:
         return render_template('404.html',error = "some problem with round choice")
+
+app.route('/final')
+def final():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        cursor.execute('select * from scores where id = %s', (session['user_id']))
+        data = cursor.fetchall()
+        for value in data:
+            points = value[1]
+
+    except Exception as e:
+        print str(e)
+    finally:
+        conn.close()
+    return render_template('thanks.html',name = session['name'].split(' ')[0],points = new_points)
 
 def updateRound(new_round):
     conn = mysql.connect()
