@@ -419,8 +419,8 @@ Main Components
 
 .projects-container .cd-close {
   position: fixed;
-  top: 30px;
-  right: 5%;
+   top: 10vh;
+  right: 12%;
   background: url("../image/cd-icon-close-mobile.svg") no-repeat center center;
   -webkit-transform: scale(0);
   -moz-transform: scale(0);
@@ -430,13 +430,15 @@ Main Components
 }
 @media only screen and (min-width: 1170px) {
   .projects-container .cd-close {
+       top:5vh;
+    right:5%;
     background-image: url("../image/cd-icon-close-desktop.svg");
   }
 }
 
 .projects-container .cd-scroll {
   position: absolute;
-  bottom: 30px;
+  bottom: 20vh;
   left: 50%;
   -webkit-transform: translateX(-50%) scale(0);
   -moz-transform: translateX(-50%) scale(0);
