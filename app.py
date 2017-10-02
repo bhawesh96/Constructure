@@ -376,15 +376,15 @@ def updateRapid():
         # if(session['curr_ques_id'] == session['curr_ques_id']):
         ro = session['curr_ques_id'].split('_')[0]
         ques = session['curr_ques_id'].split('_')[1]
-        if(ro=='02' and ques == '12'):
+        if(ro=='02' and ques >= '12'):
             rapidfireDone()
-        elif(ro=='03' and ques == '12'):
+        elif(ro=='03' and ques >= '12'):
             rapidfireDone()
-        elif(ro=='04' and ques == '12'):
+        elif(ro=='04' and ques >= '12'):
             rapidfireDone()
-        elif(ro=='05' and ques == '12'):
+        elif(ro=='05' and ques >= '12'):
             rapidfireDone()
-        elif(ro=='06' and ques == '12'):
+        elif(ro=='06' and ques >= '12'):
             rapidfireDone()
         else:
             go_to_new_round  = False
@@ -406,7 +406,7 @@ def updateRapid():
 def rapidfire():
     diff = float(time.time() - session['startTime'])
     print "diff:",diff
-    if(diff >= 600.0):
+    if(diff >= 180.0):
         if(not updateRapid()):
             rapidfireDone()
             return redirect('/choice')
@@ -421,12 +421,13 @@ def rapidfire():
 def rapidfireValidate():
     if(session.get('user_id')):
         diff = float(time.time() - session['startTime'])
-        if(diff >= 600.0):
+        if(diff >= 180.0):
             if(not updateRapid()):
                 rapidfireDone()
             return redirect('/choice')
         else:
             _answer = request.form['ans']
+            print _answer
             if(_answer == session['curr_ans']):
                 session['rapid'] += session['money_per']
             if(not updateRapid()):
@@ -497,22 +498,6 @@ def retry(ques):
     ro = session['curr_ques_id'].split('_')[0]
     ques = 00
     print "ascvadfv:",session['curr_trail'],session['curr_round']
-    # ques = session['curr_ques_id'].split('_')[1]
-    # if(ro=='02'):
-    #     ro = '02'
-    #     ques = 00
-    # elif(ro=='02'):
-    #     ro = '02'
-    #     ques = 00
-    # elif(ro=='03'):
-    #     ro = '03'
-    #     ques = 00
-    # elif(ro=='04'):
-    #     ro = '04'
-    #     ques = 00
-    # elif(ro=='05'):
-    #     ro = '05'
-    #     ques = 00
     ques = float(ques) + 1
     ques = '%02d' % ques 
     session['curr_ques_id'] = str(ro) + '_' + str(ques)
@@ -587,7 +572,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -601,7 +586,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -631,7 +616,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         return render_template('choice_R4.html',options = available_options,money = _money)
@@ -651,7 +636,7 @@ def choice():
             available_options =1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -662,6 +647,7 @@ def choice():
         else:
             available_options = 1
         return render_template('scenario_5.html',options = available_options,money = _money)
+
     elif(session['curr_round'] == 61 or session['curr_round'] == 60 ):
         if(session['curr_round'] == 60):
             session['curr_round'] = 61
@@ -675,7 +661,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -689,7 +675,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -703,7 +689,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -717,7 +703,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -731,7 +717,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -745,7 +731,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -759,7 +745,7 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
-                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         
@@ -1112,7 +1098,7 @@ def updateChoice():
             new_points = points + 100
         else:
             new_points = points
-        new_points = new_points +  money * 10.88
+        new_points = new_points +  money * 41.6
 
         updatePoints(new_points)
         reInitializeScore()
@@ -1137,7 +1123,7 @@ def updateChoice():
             data = cursor2.fetchall()
             for value in data:
                 points = float(value[1])
-                money = float(value[2]) * 2
+                money = float(value[2]) * 3
         except Exception as e:
             print str(e)
         finally:
@@ -1431,7 +1417,7 @@ def updateChoice():
             new_points = points + 500
             money = money - 1.75
         
-        new_points = new_points + money * 19.4
+        new_points = new_points + money * 10.88
         print new_points,money,session['curr_round']
         
 
