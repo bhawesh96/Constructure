@@ -51,7 +51,7 @@ def dashboard():
     if(session.get('user_id')):
         updateDashboardStyle()
 
-        return render_template('dashboard.html', name=session['name'].split(' ')[0],round = session['round_style'])
+        return render_template('dashboard.html', name=session['name'].split(' ')[0],round = session['round_style'],points = session['points'])
     else:
         return redirect('/signup')
 
@@ -102,11 +102,11 @@ def signUp():
 def validateLogin():
     conn = mysql.connect()
     cursor = conn.cursor()
+    cursor2 = conn.cursor()
     try:
         _email = request.form['inputEmail']
         _password = request.form['inputPassword']
        # captcha_response = request.form['g-recaptcha-response']
-
         # validate the received values
         if _email and _password:
 
@@ -143,27 +143,11 @@ def validateLogin():
                     session['curr_trail'] = int(data[0][20])
                     session['curr_round'] = int(data[0][21])
                     session['round_style'] = ""
-
-                    # ro = session['curr_ques_id'].split('_')[0]
-                    # # session['curr_round'] = float(ro) -1
-                    # if(session['curr_round'] == 1):
-                    #     if(session['r1_res'] != '0'):
-                    #         session['curr_round'] =0
-                    # elif(session['curr_round'] == 2):
-                    #     if(session['r2_res'] != '0'):
-                    #         session['curr_round'] =0
-                    # elif(session['curr_round'] == 31):
-                    #     if(session['r31_res'] != '0'):
-                    #         session['curr_round'] =0
-                    # elif(session['curr_round'] == 32):
-                    #     if(session['r32_res'] != '0'):
-                    #         session['curr_round'] =0
-                    # elif(session['curr_round'] == 4):
-                    #     if(session['r4_res'] != '0'):
-                    #         session['curr_round'] =0
-                    # elif(session['curr_round'] == 5):
-                    #     if(session['r5_res'] != '0'):
-                    #         session['curr_round'] =0
+                    cursor2.execute('select * from scores where id = ' + (session['user_id']))
+                    data2 = cursor2.fetchall()
+                    for value in data2:
+                        print value
+                        session['points'] = value[1]
 
 
                     return redirect('/dashboard')
