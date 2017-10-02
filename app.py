@@ -257,8 +257,8 @@ def update():
             cursor = conn.cursor()
             cursor.execute("UPDATE players SET curr_ques_id= %s,curr_round = %s WHERE id = %s", (session['curr_ques_id'],str(session['curr_round']), session['user_id']))
             conn.commit()
-        except:
-            pass
+        except Exception as e:
+            print str(e)
         return go_to_new_round
 
     
@@ -314,7 +314,7 @@ def getRapidFireParams():
         flag = value[5]
 
         image = False
-        if(flag == '0'):
+        if(flag == '0' or q_img == 'null'):
             image = False
         else:
             image=True
@@ -392,24 +392,28 @@ def updateRapid():
         ques = '%02d' % ques
         
         session['curr_ques_id'] = str(ro) + '_' + str(ques)
+        print "ques_id:",session['curr_ques_id']
         conn = mysql.connect()
         try:
             cursor = conn.cursor()
             cursor.execute("UPDATE players SET curr_ques_id= %s,curr_round = %s WHERE id = %s", (session['curr_ques_id'],str(session['curr_round']), session['user_id']))
             conn.commit()
-        except:
-            pass
+        except Exception as e:
+            print str(e)
         return go_to_new_round
 
 @app.route('/rapidfire')
 def rapidfire():
     diff = float(time.time() - session['startTime'])
+    print "diff:",diff
     if(diff >= 600.0):
         if(not updateRapid()):
             rapidfireDone()
+            return redirect('/choice')
     else:
         params = getRapidFireParams()
         print params
+        print "rapid",session["rapid"]
         return render_template('rapidfire.html',params = params)
 
 
@@ -420,12 +424,15 @@ def rapidfireValidate():
         if(diff >= 600.0):
             if(not updateRapid()):
                 rapidfireDone()
+            return redirect('/choice')
         else:
             _answer = request.form['ans']
             if(_answer == session['curr_ans']):
                 session['rapid'] += session['money_per']
             if(not updateRapid()):
                 return redirect('/rapidfire')
+            else:
+                return redirect('/choice')
     else:
         return redirect('/signup')
 
@@ -441,7 +448,7 @@ def rapidfireDone():
         for player in data:
             print player[0],player[1],player[2],player[3]
             score =float(player[1])
-            money = float(player[2]) + ((float(session['rapid']) / 100) * float(player[2]))
+            money = float(player[2]) + ((float(session['rapid']) / 10.0) * float(player[2]))
             # session['correctly_answered'] = str(float(player[3])+1)
             print 'error here'
         cursor.execute("UPDATE scores SET money = %s WHERE id = %s", (str(money),session['user_id']))
@@ -457,7 +464,7 @@ def rapidfireDone():
     elif(ro=='03'):
         ro = '04'
         ques = 00
-        session["curr_round"] = 3
+        session["curr_round"] = 31
     elif(ro=='04'):
         ro = '05'
         ques = 00
@@ -469,7 +476,7 @@ def rapidfireDone():
     elif(ro=='06'):
         ro = '088'
         ques = 00
-        session['curr_round'] = 6
+        session['curr_round'] = 61
     ques = float(ques) + 1
     ques = '%02d' % ques
     session['curr_ques_id'] = str(ro) + '_' + str(ques)
@@ -478,17 +485,18 @@ def rapidfireDone():
         cursor = conn.cursor()
         cursor.execute("UPDATE players SET curr_ques_id= %s,curr_round = %s WHERE id = %s", (session['curr_ques_id'],str(session['curr_round']), session['user_id']))
         conn.commit()
-    except:
-        pass
-    return redirect('/choice')
+    except Exception as e:
+        print str(e)
+    return
 
 @app.route('/retry/<ques>')
 def retry(ques):
     reInitializeScore()
-    session['curr_trail'] +=1
+    session['curr_trail'] = int(session['curr_trail']) + 1
     session['curr_round'] = 0
     ro = session['curr_ques_id'].split('_')[0]
     ques = 00
+    print "ascvadfv:",session['curr_trail'],session['curr_round']
     # ques = session['curr_ques_id'].split('_')[1]
     # if(ro=='02'):
     #     ro = '02'
@@ -511,10 +519,10 @@ def retry(ques):
     conn = mysql.connect()
     try:
         cursor = conn.cursor()
-        cursor.execute("UPDATE players SET curr_round = %s,curr_ques_id= %s,curr_trail=%d WHERE id = %s", (session['curr_round'],session['curr_ques_id'],session['curr_trail'], session['user_id']))
+        cursor.execute("UPDATE players SET curr_round = %s,curr_ques_id= %s,curr_trial=%s WHERE id = %s", (session['curr_round'],session['curr_ques_id'],int(session['curr_trail']), session['user_id']))
         conn.commit()
-    except:
-        pass
+    except Exception as e:
+        print str(e)
     return redirect('/dashboard')
 
 @app.route('/choice')
@@ -558,8 +566,11 @@ def choice():
             available_options = 1
         else:
             if(int(session['curr_trail']) <3):
+                print "abcd1"
                 return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
+                print "abcd2"
+
                 return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         return render_template('choice_R2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 31 or session['curr_round'] == 30 ):
