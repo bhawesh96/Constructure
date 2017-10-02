@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 body{
 	font:600 16px/18px 'Open Sans',sans-serif;
 }
-=======
->>>>>>> rahullocal
 .opening{
 	background: url(../image/cover.jpg) no-repeat fixed center;
 	background-size:100% 100%;
@@ -13,49 +10,28 @@ body{
   bottom: 0;
   min-width: 100%; 
   min-height: 100%;
-<<<<<<< HEAD
   width: 100%; 
   height: 100%;
-=======
-  width: 100vh; 
-  height: 100vh;
->>>>>>> rahullocal
 }
 .opening_text{
 	color: white;
 	font-style: bold;
 	font-size: 200%;
-<<<<<<< HEAD
-	
-=======
 	font-family: "Times New Roman", Times, serif;
->>>>>>> rahullocal
 	margin-left: 55%;
 	
 }
 #intro{
-<<<<<<< HEAD
 	background: url(../image/front3.jpg) no-repeat fixed center;
 	background-size: 100% 100%;
 	 transition: all 2s ease-in-out;
 	  position:	fixed;
-=======
-	background: url(../image/quadrants.jpg) no-repeat fixed center;
-	background-size: 100% 100%;
-	 transition: all 2s ease-in-out;
-	  position: relative;
->>>>>>> rahullocal
   right: 0; 
   top: 0;
   min-width: 100%; 
   min-height: 100%;
-<<<<<<< HEAD
   width: 100%; 
   height: 100%;
-=======
-  width: 100vh; 
-  height: 100vh;
->>>>>>> rahullocal
   z-index:-1;
 
 }
@@ -63,7 +39,6 @@ body{
 	transform: translate(0,-110%);
 	opacity:0;
 }
-<<<<<<< HEAD
 .btn {
 
   border-radius: 10px;
@@ -175,12 +150,3 @@ body{
   left:20vw;
 }
 }
-=======
-.next{
-	position: fixed;
-	bottom: 10%;
-	width:100%;
-	height:5%;
-	text-align: center;
-}
->>>>>>> rahullocal
