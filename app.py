@@ -57,7 +57,7 @@ def signUp():
     conn = mysql.connect()
     cursor = conn.cursor()
     try:
-        _name = request.form['inputName'].decode()
+        _name = request.form['inputName']
         _email = request.form['inputEmail']
         _password = request.form['inputPassword']
         _reg = request.form['inputRegno']
@@ -89,7 +89,7 @@ def signUp():
             return render_template('404.html',error = "Enter all the values. Please :(")
 
     except Exception as e:
-        return json.dumps({'errory':str(e)})
+        return json.dumps({'errorz':str(e)})
     finally:
         cursor.close()
         conn.close()
@@ -174,15 +174,15 @@ def validateLogin():
         conn.close()
 
 def updateDashboardStyle():
-    if(session['r5_res']!=0):
+    if(session['r5_res']!='0'):
         session['round_style'] = "-round6"
-    elif(session['r4_res']!=0):
+    elif(session['r4_res']!='0'):
         session['round_style'] = "-round5"             
-    elif(session['r32_res']!=0):
+    elif(session['r32_res']!='0'):
         session['round_style'] = "-round4"
-    elif(session['r2_res']!=0):
+    elif(session['r2_res']!='0'):
         session['round_style'] = "-round3"
-    elif(session['r1_res']!=0):
+    elif(session['r1_res']!='0'):
         session['round_style'] = "-round2"
                     
 
