@@ -27,12 +27,12 @@
     op2 = parseInt(op);
     switch(op2)
     {
-      case 1:
-        document.getElementById('check3').disabled = true;
-      case 2:
-        document.getElementById('check2').disabled = true;
-      case 3:
+      case 0:
         document.getElementById('check1').disabled = true;
+      case 1:
+        document.getElementById('check2').disabled = true;
+      case 2:
+        document.getElementById('check3').disabled = true;
       default:
         return;
     }
@@ -66,7 +66,8 @@
         Sandline Corporation: 11,360</br>
         Pentos Limited: 8610</br>
         Westeros & Esssos Co.: 7350</br>    
-        You have {{}} Gold Dragons left for this round. 
+        The Queen has been impressed by you dedication and has decided to reqard your for making it till the end by doubling your Gold Dragons.
+        You have {{money}} Gold Dragons left for this round. 
         Select Cement Quality:</p>
 <table style="width:100%">
   <tr>
@@ -148,7 +149,7 @@
         </div>
         </a>
          <div class"selection">
-         <input type="radio" name="cement" class="radio" id="check3" value = "Westros&EsssosCo"/>
+         <input type="radio" name="cement" class="radio" id="check3" value = "WestrosEsssosCo"/>
        </div> 
       </div>
     </div>

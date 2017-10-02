@@ -131,8 +131,14 @@ def validateLogin():
 
                     session['r4_res'] = str(data[0][13])
                     session['r5_res'] = str(data[0][14])
-                    session['r6_res'] = str(data[0][15])
-                    session['curr_round'] = int(data[0][17])
+                    session['r61_res'] = str(data[0][15])
+                    session['r62_res'] = str(data[0][16])
+                    session['r63_res'] = str(data[0][17])
+                    session['r64_res'] = str(data[0][18])
+                    session['r65_res'] = str(data[0][19])
+
+                    session['curr_trail'] = int(data[0][20])
+                    session['curr_round'] = int(data[0][21])
                     session['round_style'] = ""
 
                     updateDashboardStyle()
@@ -473,14 +479,74 @@ def choice():
         else:
             available_options = 1
         return render_template('scenario_5.html',options = available_options,money = _money)
-    elif(session['curr_round'] == 6 or session['curr_round'] == 60 ):
+    elif(session['curr_round'] == 61 or session['curr_round'] == 60 ):
         if(session['curr_round'] == 60):
-            session['curr_round'] = 6
+            session['curr_round'] = 61
             updateRound(session['curr_round'])
-
-        
-        return render_template('404.html',error = "some problem with round choice")
-
+        _money = _money * 2
+        if(_money >=412.72):
+            available_options = 3
+        elif(_money>=350.10):
+            available_options = 2
+        elif(_money>=276.35):
+            available_options = 1
+        return render_template('choice_R6_1.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 62):
+        if(_money >=179.70):
+            available_options = 3
+        elif(_money>=147.90):
+            available_options = 2
+        elif(_money>=119.32):
+            available_options = 1
+        return render_template('choice_R6_2.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 63):
+        if(_money >=310.98):
+            available_options = 3
+        elif(_money>=262.28):
+            available_options = 2
+        elif(_money>=201.22):
+            available_options = 1
+        return render_template('choice_R6_3.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 64):
+        if(_money >=39.52):
+            available_options = 3
+        elif(_money>=35.27):
+            available_options = 2
+        elif(_money>=32.32):
+            available_options = 1
+        return render_template('choice_R6_4.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 65):
+        if(_money >=75.3025):
+            available_options = 3
+        elif(_money>=63.7):
+            available_options = 2
+        elif(_money>=56.42):
+            available_options = 1
+        return render_template('choice_R6_5.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 66):
+        if(_money >=412.7248):
+            available_options = 3
+        elif(_money>=350.1048):
+            available_options = 2
+        elif(_money>=276.348):
+            available_options = 1
+        return render_template('scenario_6_1.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 67):
+        if(_money >=412.7248):
+            available_options = 3
+        elif(_money>=350.1048):
+            available_options = 2
+        elif(_money>=276.348):
+            available_options = 1
+        return render_template('scenario_6_2.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 68):
+        if(_money >=412.7248):
+            available_options = 3
+        elif(_money>=350.1048):
+            available_options = 2
+        elif(_money>=276.348):
+            available_options = 1
+        return render_template('scenario_6_3.html',options = available_options,money = _money)        
     else:
         return render_template('404.html',error = "some problem with round choice")
 
@@ -828,7 +894,327 @@ def updateChoice():
         session['curr_round'] = 0
         updateRound(session['curr_round'])
         return render_template('dashboard.html')
+    elif(session['curr_round'] == 61):
+        _answer = request.form['cement']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor2=conn.cursor()
 
+            cursor.execute("UPDATE players SET r61_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+            session['r61_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) * 2
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'SandlineCorporation'):
+            new_points = points + 3000
+            money = money - 412.72
+        elif(_answer == 'PentosLimited'):
+            new_points = points + 1750
+            money = money - 350.10
+        elif(_answer == 'WestrosEsssosCo'):
+            new_points = points + 900
+            money = money - 276.35
+        print new_points,money,session['curr_round']
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 62
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+
+    elif(session['curr_round'] == 62):
+        _answer = request.form['FineAggregate']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor2=conn.cursor()
+
+            cursor.execute("UPDATE players SET r62_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+            session['r62_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) 
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'SandlineCorporation'):
+            new_points = points + 3000
+            money = money - 179.7
+        elif(_answer == 'PentosLimited'):
+            new_points = points + 1750
+            money = money - 147.9
+        elif(_answer == 'WestrosEsssosCo'):
+            new_points = points + 900
+            money = money - 119.32
+        print new_points,money,session['curr_round']
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 63
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+
+    elif(session['curr_round'] == 63):
+        _answer = request.form['CoarseAggregate']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor2=conn.cursor()
+
+            cursor.execute("UPDATE players SET r63_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+            session['r63_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) 
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'SandlineCorporation'):
+            new_points = points + 3000
+            money = money - 310.98
+        elif(_answer == 'PentosLimited'):
+            new_points = points + 1750
+            money = money - 262.28
+        elif(_answer == 'WestrosEsssosCo'):
+            new_points = points + 900
+            money = money - 201.22
+        print new_points,money,session['curr_round']
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 64
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+
+    elif(session['curr_round'] == 64):
+        _answer = request.form['FlyAsh']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor2=conn.cursor()
+
+            cursor.execute("UPDATE players SET r64_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+            session['r64_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) 
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'SandlineCorporation'):
+            new_points = points + 3000
+            money = money - 39.52
+        elif(_answer == 'PentosLimited'):
+            new_points = points + 1750
+            money = money - 35.27
+        elif(_answer == 'WestrosEsssosCo'):
+            new_points = points + 900
+            money = money - 32.32
+        print new_points,money,session['curr_round']
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 65
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+
+    elif(session['curr_round'] == 65):
+        _answer = request.form['SuperPlasticizer']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            cursor=conn.cursor()
+            cursor2=conn.cursor()
+
+            cursor.execute("UPDATE players SET r65_res = %s WHERE id = %s", (_answer,session['user_id']))
+            conn.commit()
+            session['r65_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) 
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'SandlineCorporation'):
+            new_points = points + 3000
+            money = money - 75.30
+        elif(_answer == 'PentosLimited'):
+            new_points = points + 1750
+            money = money - 63.7
+        elif(_answer == 'WestrosEsssosCo'):
+            new_points = points + 900
+            money = money - 56.42
+        money = money - 24.15 - 16.2
+        print new_points,money,session['curr_round']
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 66
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+
+    elif(session['curr_round'] == 66):
+        _answer = request.form['hire']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            # cursor=conn.cursor()
+            cursor2=conn.cursor()
+
+            # cursor.execute("UPDATE players SET r66_res = %s WHERE id = %s", (_answer,session['user_id']))
+            # conn.commit()
+            session['r66_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) 
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'Accept'):
+            new_points = points + 100
+            money = money - 150
+        elif(_answer == 'Uphold'):
+            new_points = points + 2500
+            money = money - 200
+        print new_points,money,session['curr_round']
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 67
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+
+    elif(session['curr_round'] == 67):
+        _answer = request.form['negligence']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            # cursor=conn.cursor()
+            cursor2=conn.cursor()
+
+            # cursor.execute("UPDATE players SET r66_res = %s WHERE id = %s", (_answer,session['user_id']))
+            # conn.commit()
+            session['r67_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) 
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'Bribe'):
+            new_points = points + 100
+            money = money - 2
+        elif(_answer == 'Compensate'):
+            new_points = points + 600
+            money = money - 8
+        elif(_answer == 'CompensateIncrease'):
+            new_points = points + 1000
+            money = money - 15
+        print new_points,money,session['curr_round']
+        updatePoints(new_points)
+        updateMoney(money)
+        session['curr_round'] = 68
+        updateRound(session['curr_round'])
+        return redirect('/choice')
+
+    elif(session['curr_round'] == 68):
+        _answer = request.form['water']
+        points = 0
+        money = 0
+        conn=mysql.connect()
+        try:
+            # cursor=conn.cursor()
+            cursor2=conn.cursor()
+
+            # cursor.execute("UPDATE players SET r66_res = %s WHERE id = %s", (_answer,session['user_id']))
+            # conn.commit()
+            session['r68_res'] = _answer
+
+
+            cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+            data = cursor2.fetchall()
+            for value in data:
+                points = float(value[1])
+                money = float(value[2]) 
+        except Exception as e:
+            print str(e)
+        finally:
+            conn.close()
+        new_points = points
+        if(_answer == 'Ignore'):
+            new_points = points + 0
+            money = money - 0
+        elif(_answer == 'Share'):
+            new_points = points + 1000
+            money = money - 3
+        elif(_answer == 'Stop'):
+            new_points = points + 500
+            money = money - 1.75
+        
+        new_points = new_points + money * 19.4
+        print new_points,money,session['curr_round']
+        
+
+        updatePoints(new_points)
+        reInitializeScore()
+        session['curr_round'] = 0
+        updateRound(session['curr_round'])
+        return redirect('/final')
     else:
         return render_template('404.html',error = "some problem with round choice")
 
