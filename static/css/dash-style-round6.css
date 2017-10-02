@@ -455,6 +455,7 @@ Main Components
 }
 @media only screen and (min-width: 1170px) {
   .projects-container .cd-scroll {
+    bottom: 30vh;
     background-image: url("../image/cd-icon-arrow-desktop.svg");
   }
 }
@@ -578,4 +579,13 @@ Main Components
 }
 .b1, .b2,.b3,.b4,.b5{
   display: none;
+}
+.p1,.p2,.p3,.p4{
+  visibility: hidden;
+}
+.p5{
+  font-weight: bold;
+  font-family: "PT Sans", sans-serif;
+  margin: 0 15%;
+  font-size: 120%;
 }
