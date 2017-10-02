@@ -10,35 +10,39 @@
 <meta charset="utf-8">
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scenario</title>
+<title>Choice</title>
 <link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
   <link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
   <script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
 <link rel="stylesheet" href="../static/css/choice-bootstrap.min.css">
-<link rel="stylesheet" href="../static/css/choice-R5.css">
+<link rel="stylesheet" href="../static/css/choice-R4.css">
+
 <link rel="stylesheet" href="../static/css/checkbox-button.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
 <body onload="available_options({{options}})">
-<script type="text/javascript">
+  <script type="text/javascript">
   function available_options(op)
   {
-    op2 = parseInt(op);
+    op2 = parseInt(op)
     switch(op2)
     {
-      case 1:
+      case 0:
         document.getElementById('check3').disabled = true;
-      case 2:
+      case 1:
         document.getElementById('check2').disabled = true;
+      case 2:
+        document.getElementById('check1').disabled = true;      
       case 3:
-        document.getElementById('check1').disabled = true;
+        document.getElementById('check4').disabled = true;      
       default:
         return;
     }
 
   }
 </script>
+
   <header>
   <nav class="cd-stretchy-nav">
     <a class="cd-nav-trigger" href="#0">
@@ -59,60 +63,77 @@
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
       <div class="banner-text text-center">
-        <h1>ATTENTION!</h1>
-        <p>Jon Snow has started construction. All the materials have been gathered and a builder who lives far away from the plot has been hired along with his workers. The workers are skilled but at the same time costlier.
-Now, Queen Daenerys offers help, but on the condition that he has to hire all her people, present right here at the site of construction, as workers. They are unskilled but they are cheaper.
-But Snow has already given his word and signed a contract with the builder. He is in a dilemma about whom to choose.
-What do you advise him to do?
-
-        </br>
-        </br>
-        Option 1: Hire the Queen's followers at a cheaper rate.
-
-        </br>
-        </br>
-        Option 2: Hire the builder and his skilled workforce.
-        </p> 
+        <h1>Make Selection:</h1>
+        <p>Here you have to hire your labour and lease machinery on rent. After the end of the third round, you have amassed {{money}} Gold Dragons. Use them to select the machinery from the following options:</p> 
     </div>
   </div>
 </section>
 <section id="works" class="works section no-padding">
   <form action="/choice" method="POST">
+
   <div class="container-fluid">
     <div class="row no-gutter">
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/scenario_6_1/work-1.jpg" alt="">
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_4/work-1.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
-            <h5>Accept Queen’s offer</h5>
-            <p>Price: 1.5 Crore</p>
+            <h5>All Modern Machinery</h5>
+            <p>7 Days/15 Lakh</p>
           </div>
         </div>
         <!-- overlay --> 
+        </a> 
+
+<div class"selection">
+         <input type="radio" name="machine" class="radio" id="check1" value = "modern"/>
+
+       </div>  
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_4/work-2.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Medium Quality Machinery</h5>
+            <p>15 Days/10 Lakh</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a> 
+
+<div class"selection">
+         <input type="radio" name="machine" class="radio" id="check2" value = "medium"/>
+       </div>  
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_4/work-3.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Wretched Quality Machinery</h5>
+            <p>30 Days/7 Lakh</p>
+          </div>
+        </div>
         </a>
-         <div class"selection">
-         <input type="radio" name="hire" class="radio" id="check1" value = "Accept"/>
+        <div class"selection">
+         <input type="radio" name="machine" class="radio" id="check3" value = "wretched"/>
        </div>  
          </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/scenario_6_1/work-2.jpg" alt="">
+       <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_4/work-4.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
-            <h5>Uphold the contract.</h5>
-            <p>Price: 2 Crore</p>
+            <h5>Contract Labour Agreement</h5>
+            <p>5 Days/25 Lakh</p>
           </div>
         </div>
-        <!-- overlay --> 
         </a>
-         <div class"selection">
-         <input type="radio" name="hire" class="radio" id="check2" value = "Uphold"/>
+
+<div class"selection">
+         <input type="radio" name="machine" class="radio" id="check4" value = "contract"/>
        </div>  
          </div>
     </div>
   </div>
-   <div id="buttons">
-        <!-- <a href="dashboard.html" class="btn orange">Proceed</a> -->
+
+       <div id="buttons">
         <input type="submit" class ="btn orange" value="Finalize">
     </div>
-</form>
+  </form>
 </section>
 <script src="../static/js/dash-jquery-2.1.4.js"></script>
 <script src="../static/js/dash-mainnav.js"></script>

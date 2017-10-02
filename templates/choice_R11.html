@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- meta data -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="This is the official website of Constructure hosted by IE-Civil">
+<meta name="author" content="Bhawesh">
+<meta name="keywords" content="constructure, techtatva, iecivil, civil, manipal, tech tatva, mit, online game">
+<!-- end mata data -->
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choice</title>
+
+<link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
+  <link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
+  <script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
+<link rel="stylesheet" href="../static/css/choice-bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/checkbox-button.css">
+<link rel="stylesheet" href="../static/css/choice-R1.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+
+<body onload="available_options({{options}})">
+<script type="text/javascript">
+  function available_options(op)
+  {
+    op2 = parseInt(op);
+    switch(op2)
+    {
+      case 1:
+        document.getElementById('check3').disabled = true;
+      case 2:
+        document.getElementById('check2').disabled = true;
+      case 3:
+        document.getElementById('check1').disabled = true;
+      default:
+        return;
+    }
+
+  }
+</script>
+  <header>
+  <nav class="cd-stretchy-nav">
+    <a class="cd-nav-trigger" href="#0">
+      <span aria-hidden="true"></span>
+    </a>
+
+    <ul>
+      <li><a href="dashboard.html" class="active"><span>Home</span></a></li>
+      <li><a href="Rules.html"><span>Rules</span></a></li>
+      <li><a href="login.html"><span>Logout</span></a></li>
+      
+    </ul>
+
+    <span aria-hidden="true" class="stretchy-nav-bg"></span>
+  </nav>
+</header>
+<section class="banner" role="banner">
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="banner-text text-center">
+        <h1>Make Selection:</h1>
+        <p>The first choice you have to make is the basest of them all: The soil that makes up your plot of land. After the end of the first round, you have amassed {{money}} Gold Dragons. Use them to select a soil type from the choices below:
+        </br>
+        </br>
+        Alluvial Soil: Alluvial soils are compressible when loaded. Deep alluvial soils influence the performance of land, infrastructure, and buildings during strong earthquakes in two profound ways. They amplify the shaking and seismic forces for some structures, while for others they reduce or de-amplify the shaking.
+        </br>
+        </br>
+        Laterite Soil: The use of laterite soil has been found to promote the realization of decent housing and bridging the housing deficit. Lateritic soils have been described as highly weathered tropical residual soils with varying proportions of particle sizes ranging from clay size to gravel.
+        </br>
+        </br>
+        Black Soil: Black soil has a tendency to shrink and swell excessively. When these type of soil come in contact with water, they swell and shrinks when dry. This alternate process of swelling and shrinking results in the differential settlement of foundation which in turn causes cracks in building. The property of volumetric changes with the change of atmospheric conditions makes black cotton soil dangerous to be founded buildings.
+        </br>
+        </br>
+        Mountain Soil: These soils are heterogeneous in nature and their character changes with parent rocks and climate. These vary from sandy loam to loamy. Loam is great for supporting foundations because of its evenly balanced properties and have 32-41% water holding capacity.
+
+
+        </p> 
+    </div>
+  </div>
+</section>
+<section id="works" class="works section no-padding">
+  <form action="/choice" method="POST">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_1/work-1.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Alluvial Soil</h5>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a>
+        <div class"selection">
+         <input type="radio" name="soil" class="radio" id="check1" value = "AlluvialSoil"/>
+       </div>  
+         </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_1/work-2.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Laterite Soil</h5>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a>
+        <div class"selection">
+         <input type="radio" name="soil" class="radio" id="check2" value = "LateriteSoil" />
+       </div>  
+         </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_1/work-3.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Black Soil</h5>
+          </div>
+        </div>
+        </a> 
+        <div class"selection">
+         <input type="radio" name="soil" class="radio" id="check3" value = "BlackSoil" />
+       </div>  
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_1/work-4.jpg" alt="">
+        <div class="overlay">
+          <div class="overlay-caption">
+            <h5>Mountain Soil</h5>
+          </div>
+        </div>
+        </a> 
+        <div class"selection">
+         <input type="radio" name="soil" class="radio" id="check4" value = "MountainSoil" />
+       </div>  
+      </div>
+    </div>
+  </div>
+     <div id="buttons">
+        <!-- <a href="dashboard.html" class="btn orange">Proceed</a> -->
+        <input type="submit" class ="btn orange" value="Finalize">
+    </div>
+  </form>
+</section>
+<script src="../static/js/dash-jquery-2.1.4.js"></script>
+<script src="../static/js/dash-mainnav.js"></script>
+</body>
+</html>

@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scenario</title>
+<title>Choice</title>
 <link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
   <link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
   <script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
@@ -21,25 +21,25 @@
 </head>
 
 <body onload="available_options({{options}})">
-<script type="text/javascript">
+  <script type="text/javascript">
   function available_options(op)
   {
     op2 = parseInt(op);
     switch(op2)
     {
-      case 1:
-        document.getElementById('check3').disabled = true;
-      case 2:
-        document.getElementById('check2').disabled = true;
-      case 3:
+      case 0:
         document.getElementById('check1').disabled = true;
+      case 1:
+        document.getElementById('check2').disabled = true;
+      case 2:
+        document.getElementById('check3').disabled = true;
       default:
         return;
     }
 
   }
 </script>
-	<header>
+  <header>
   <nav class="cd-stretchy-nav">
     <a class="cd-nav-trigger" href="#0">
       <span aria-hidden="true"></span>
@@ -59,74 +59,76 @@
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
       <div class="banner-text text-center">
-        <h1>ATTENTION!</h1>
-        <p>The negligence of the personnel in charge of the construction towards the safety of the workers resulted in two fatalities. How would you cope with the situation?
-
+        <h1>Make Selection:</h1>
+        <p>Now, we choose one of the following methods for a Geo-Technical Engineer to test the land. After the end of the third round, you have amassed {{money}} Gold Dragons. Use them to select a method from the choices below:
         </br>
         </br>
-        Option 1: Pay off the local authorities and get away with it. 
-
+        Test Pits: Test pits are much like you would expect. A pit is dug either manually or with an excavator in order to reveal the sub-surface conditions to the depth desired.
         </br>
         </br>
-        Option 2: Compensate the families for their loss. 
+        Trenching: Trenching is similar to Test pits except that in this case, the pit is elongated over some distance in order to establish how the sub-surface conditions change over various parts of the work site. A range of soil samplers can be used to extract test samples including shovels, hand-driven augers, split-spoon samplers, modified California samplers and Shelby tube samplers.
         </br>
-        </br>
-        Option 3: Compensate the families for their loss and improve safety standards. 
+        </br>   
+        In-Situ Testing: In-situ testing methods include penetration tests such as Standard Penetration Tests (SPT), which penetrate via drilling, and various Cone Penetration Tests, which penetrate via direct push. These tests measure the physical properties of the subsurface soil directly, without removal. This provides the advantages of generating a more accurate reflection of conditions underground as well as avoiding the necessity of sending samples out for lab testing.
         </p> 
     </div>
   </div>
 </section>
 <section id="works" class="works section no-padding">
   <form action="/choice" method="POST">
+
   <div class="container-fluid">
     <div class="row no-gutter">
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="../image/work-1.jpg" class="work-box"> <img src="../static/image/scenario_6_2/work-1.jpg" alt="">
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_3_1/work-1.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
-            <h5>Bribe Local Authorities</h5>
-            <p>Price: 2 Lakh</p>
+            <h5>Test Pits</h5>
+            <p>Price: 6 Lakh</p>
           </div>
         </div>
         <!-- overlay --> 
         </a> 
-        <div class"selection">
-         <input type="radio" name="negligence" class="radio" id="check1" value = "Bribe"/>
-       </div> 
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="../image/work-2.jpg" class="work-box"> <img src="../static/image/scenario_6_2/work-2.jpg" alt="">
+<div class"selection">
+         <input type="radio" name="pits" class="radio" id="check1" value = "TestPits"/>
+       </div>  
+</div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_3_1/work-2.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
-            <h5>Compensate Families</h5>
+            <h5>Trenching</h5>
             <p>Price: 8 Lakh</p>
           </div>
         </div>
         <!-- overlay --> 
-        </a>
-         <div class"selection">
-         <input type="radio" name="negligence" class="radio" id="check2" value = "Compensate"/>
-       </div> 
-         </div>
-         <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="../image/work-3.jpg" class="work-box"> <img src="../static/image/scenario_6_2/work-3.jpg" alt="">
+        </a> 
+
+<div class"selection">
+         <input type="radio" name="pits" class="radio" id="check2" value = "Trenching"/>
+       </div>  
+
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_3_1/work-3.jpg" alt="">
         <div class="overlay">
           <div class="overlay-caption">
-            <h5>Compensate Families and Increase Safety</h5>
-            <p>Price: 15 Lakh</p>
+            <h5>In-Situ Testing</h5>
+            <p>Price: 12 Lakh</p>
           </div>
         </div>
-        <!-- overlay --> 
         </a> 
-         <div class"selection">
-         <input type="radio" name="negligence" class="radio" id="check3" value = "Compensate&Increase"/>
-       </div> 
-      </div>
 
+<div class"selection">
+         <input type="radio" name="pits" class="radio" id="check3" value = "InSituTesting"/>
+       </div>  
+
+      </div>
     </div>
   </div>
-  <div id="buttons">
-        <!-- <a href="dashboard.html" class="btn orange">Proceed</a> -->
+      <div id="buttons">
+        <!-- <a href="/dashboard.html" class="btn orange">Proceed</a> -->
         <input type="submit" class ="btn orange" value="Finalize">
+
     </div>
-</form>
+  </form>
 </section>
 <script src="../static/js/dash-jquery-2.1.4.js"></script>
 <script src="../static/js/dash-mainnav.js"></script>

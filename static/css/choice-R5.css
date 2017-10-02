@@ -12,6 +12,7 @@ body {
 	font-family: "Open Sans", Arial, sans-serif;
 	font-weight: 400;
 	color: #6c7279;
+	background-color: rgba(40,57,101,1);
 }
 ul, ol {
 	margin: 0;
@@ -116,6 +117,17 @@ ul li {
 	box-shadow: 0 0 0 1px #fff;
 	overflow: hidden;
 	position: relative;
+	left:22vw;
+}
+@media only screen and (max-width: 1100px){
+	.work {
+	-moz-box-shadow: 0 0 0 1px #fff;
+	-webkit-box-shadow: 0 0 0 1px #fff;
+	box-shadow: 0 0 0 1px #fff;
+	overflow: hidden;
+	position: relative;
+	left: 0;
+}
 }
 .work img {
 	width: 100%;
