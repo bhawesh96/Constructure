@@ -48,7 +48,7 @@ def rules():
 @app.route('/dashboard')
 def dashboard():
     if(session.get('user_id')):
-        return render_template('dashboard.html', name=session['name'].split(' ')[0])
+        return render_template('dashboard.html', name=session['name'].split(' ')[0],round = session['round_style'])
     else:
         return redirect('/signup')
 
@@ -133,7 +133,9 @@ def validateLogin():
                     session['r5_res'] = str(data[0][14])
                     session['r6_res'] = str(data[0][15])
                     session['curr_round'] = int(data[0][17])
+                    session['round_style'] = ""
 
+                    updateDashboardStyle()
                     # ro = session['curr_ques_id'].split('_')[0]
                     # # session['curr_round'] = float(ro) -1
                     # if(session['curr_round'] == 1):
@@ -171,6 +173,19 @@ def validateLogin():
         cursor.close()
         conn.close()
 
+def updateDashboardStyle():
+    if(session['r5_res']!=0):
+        session['round_style'] = "-round6"
+    elif(session['r4_res']!=0):
+        session['round_style'] = "-round5"             
+    elif(session['r32_res']!=0):
+        session['round_style'] = "-round4"
+    elif(session['r2_res']!=0):
+        session['round_style'] = "-round3"
+    elif(session['r1_res']!=0):
+        session['round_style'] = "-round2"
+                    
+
 def updateScore():
     conn = mysql.connect()
     cursor = conn.cursor()
@@ -203,26 +218,26 @@ def update():
             ques = 00
             session["curr_round"] = 1
         elif(ro=='02' and ques == '20'):
+            ro = '02'
+            ques = 00
+            session["curr_round"] = 20
+        elif(ro=='03' and ques == '20'):
             ro = '03'
             ques = 00
-            session["curr_round"] = 2
-        elif(ro=='03' and ques == '20'):
+            session["curr_round"] = 30
+        elif(ro=='04' and ques == '20'):
             ro = '04'
             ques = 00
-            session["curr_round"] = 31
-        elif(ro=='04' and ques == '20'):
-            ro = '05'
-            ques = 00
-            session["curr_round"] = 4
+            session["curr_round"] = 40
 
         elif(ro=='05' and ques == '20'):
+            ro = '05'
+            ques = 00
+            session["curr_round"] = 50
+        elif(ro=='06' and ques == '25'):
             ro = '06'
             ques = 00
-            session["curr_round"] = 5
-        elif(ro=='06' and ques == '25'):
-            ro = '01'
-            ques = 00
-            session['curr_round'] = 6
+            session['curr_round'] = 60
         else:
             go_to_new_round  = False
         ques = float(ques) + 1
@@ -273,16 +288,45 @@ def getQuestion():
         conn.close()
         return params
 
+def getRapidFireParams():
+    if(session.get(['user_id'])):
+        conn = mysql.connect()
+    try:
+            cursor=conn.cursor()
+            # cursor.execute("SELECT * FROM questions WHERE ques_id = (SELECT ques_id FROM players WHERE id = %s)", (session['user_id']))
+            cursor.execute("SELECT * FROM rapdiFire WHERE ques_id = %s", (session['curr_ques_id']))
+    except Exception as e:
+        print str(e)
+    data = cursor.fetchall()
+    for value in data:
+        que = value[1]
+        q_img = value[2]
+        session['curr_ans'] = value[3]
+        session['money_per'] = value[4]
+        flag = value[5]
+
+        image = False
+        if(flag == '0'):
+            image = False
+        else:
+            image=True
+    params = {'que':que, 'flag':image,'id':session['curr_ques_id']}
+    conn.close()
+    return params
+
 @app.route('/question')
 def question():
     print session['curr_round']
-    if(session['curr_round'] != 0):
-        return redirect ('/choice')
-    elif(session.get('user_id')):
-        params = getQuestion()
-        print params
-    #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
-        return render_template('myque.html', params = params)
+    if(session.get('user_id')):
+        if(session['curr_round'] == 0):
+            params = getQuestion()
+            print params
+        #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
+            return render_template('myque.html', params = params)
+        elif(session['curr_round'] == 20 or  session['curr_round'] == 30 or session['curr_round'] == 40 or session['curr_round'] == 50 or session['curr_round'] == 60 ):
+            return redirect('/rapidfire')
+        else:    
+            return redirect ('/choice')
     else:
         return redirect ('/signup')
 
@@ -304,6 +348,23 @@ def validate():
                 return redirect ('/question')
     else:
         return redirect('/signup')
+
+@app.route('/rapidfire')
+def rapidfire():
+    params = getRapidFireParams()
+    print params
+    return render_template('rapidfire.html',params = params)
+
+@app.route('/rapidfire', methods = ['POST'])
+def rapidfireValidate():
+    if(session.get(['user_id'])):
+        _answer = request.form['ans']
+        if(_answer == session['curr_ans']):
+            go_to_new_round = updateScore()
+            if(go_to_new_round):
+                return redirect('/choice')
+    else:
+        return redirect('/signUp')
 
 @app.route('/choice')
 def choice():
@@ -334,7 +395,11 @@ def choice():
 
         return render_template('choice_R1.html',  options = available_options)
 
-    elif(session['curr_round'] == 2):
+    elif(session['curr_round'] == 2 or session['curr_round'] == 20):
+        if(session['curr_round'] == 20):
+            session['curr_round'] = 2
+            updateRound(session['curr_round'])
+
         if(_money >= 40):
             available_options = 3
         elif(_money >=30):
@@ -342,7 +407,12 @@ def choice():
         elif(_money >= 22):
             available_options = 1
         return render_template('choice_R2.html',options = available_options,money = _money)
-    elif(session['curr_round'] == 31):
+    elif(session['curr_round'] == 31 or session['curr_round'] == 30 ):
+        if(session['curr_round'] == 30):
+            session['curr_round'] = 31
+            updateRound(session['curr_round'])
+
+        
         if(_money >=12.0):
             available_options = 3
         elif(_money >=8.0):
@@ -368,7 +438,11 @@ def choice():
         else:
             available_options =1
         return render_template('scenario_3.html',options = available_options,money = _money)
-    elif(session['curr_round'] == 4):
+    elif(session['curr_round'] == 4 or session['curr_round'] == 40 ):
+        if(session['curr_round'] == 40):
+            session['curr_round'] = 4
+            updateRound(session['curr_round'])
+
         if(_money >=25):
             available_options = 4
         elif(_money >= 15):
@@ -378,7 +452,12 @@ def choice():
         elif(_money >= 7):
             available_options = 1
         return render_template('choice_R4.html',options = available_options,money = _money)
-    elif(session['curr_round'] == 5):
+    elif(session['curr_round'] == 5 or session['curr_round'] == 50 ):
+        if(session['curr_round'] == 50):
+            session['curr_round'] = 5
+            updateRound(session['curr_round'])
+
+        
         if(_money >=84):
             available_options =4
         elif(_money >=80):
@@ -394,6 +473,14 @@ def choice():
         else:
             available_options = 1
         return render_template('scenario_5.html',options = available_options,money = _money)
+    elif(session['curr_round'] == 6 or session['curr_round'] == 60 ):
+        if(session['curr_round'] == 60):
+            session['curr_round'] = 6
+            updateRound(session['curr_round'])
+
+        
+        return render_template('404.html',error = "some problem with round choice")
+
     else:
         return render_template('404.html',error = "some problem with round choice")
 
@@ -408,6 +495,9 @@ def updateChoice():
             query = "UPDATE players SET r1_res = '{a}' WHERE id = {i};".format(a = _answer,i = session['user_id'])
             cursor.execute(query)
             conn.commit()
+            session['r1_res'] = _answer
+            updateDashboardStyle()
+
             # cursor.execute("UPDATE scores SET points = %s WHERE id = %s", (str(score), str(money), session['correctly_answered'], session['user_id']))
 
         except Exception as e:
@@ -430,6 +520,8 @@ def updateChoice():
 
             cursor.execute("UPDATE players SET r2_res = %s WHERE id = %s", (_answer,session['user_id']))
             conn.commit()
+            session['r2_res'] = _answer
+            updateDashboardStyle()
 
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
@@ -482,6 +574,8 @@ def updateChoice():
 
             cursor.execute("UPDATE players SET r31_res = %s WHERE id = %s", (_answer,session['user_id']))
             conn.commit()
+            session['r31_res'] = _answer
+
 
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
@@ -521,6 +615,9 @@ def updateChoice():
 
             cursor.execute("UPDATE players SET r32_res = %s WHERE id = %s", (_answer,session['user_id']))
             conn.commit()
+            session['r32_res'] = _answer
+            updateDashboardStyle()
+
 
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
@@ -598,6 +695,10 @@ def updateChoice():
             
             cursor.execute("UPDATE players SET r4_res = %s WHERE id = %s", (_answer,session['user_id']))
             conn.commit()
+            session['r4_res'] = _answer
+            updateDashboardStyle()
+
+
             
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
@@ -650,7 +751,8 @@ def updateChoice():
 
             cursor.execute("UPDATE players SET r5_res = %s WHERE id = %s", (_answer,session['user_id']))
             conn.commit()
-            
+            session['r5_res'] = _answer
+            updateDashboardStyle()            
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
 

@@ -24,21 +24,36 @@ create table questions
 (
   ques_id varchar(10) primary Key,
     question varchar(1000),
+    ques_image varchar(100)
     op1 varchar(500),
     op2 varchar(500),
     op3 varchar(500),
     op4 varchar(500),
     ans varchar(10),
+    flag varchar(20),
     point_wt varchar(10),
     moeny_wt varchar(10)
     
 );
 
-create table score
+create table civicq.rapidFire
 (
-  user_id int references players(id),
-    points int(100)
+  ques_id varchar(10) primary key,
+  question varchar(1000),
+  ques_image varchar(50),
+  ans varchar(100),
+  money_per varchar(10),
+  flag varchar(10)
 );
+
+drop table civicq.score;
+CREATE TABLE `civicq`.`score` (
+  `id` BIGINT REFERENCES `players` (`id`),
+  `points` BIGINT(30),
+  `money` varchar(30)
+  );
+
+
 ---CREATE PLAYER PROCEDURE
 ---SIGNS UP A USER IF NOT ALREADY EXISTS
 
@@ -64,7 +79,7 @@ select * from players;
 ---RETURNS 0 IN THE VARIABLE PASSED IF NOT FOUND AND THE ID OF THE PLAYER IF FOUND
 
 
-
+drop procedure if exists `validate_login`;
 delimiter $$
 create procedure civicq.validate_login(in e varchar(45), in p varchar(20))
 begin
@@ -75,7 +90,7 @@ delimiter ;
 
 
 -- set val = ifnull(val,0);
-call validate_login('abc@gmail.com','rahul13',@ans);
+-- call validate_login('abc@gmail.com','rahul13',@ans);
 
 select @ans;
 
@@ -85,7 +100,4 @@ for each row
 insert into scores values (New.id,'0','0','0');
 $$
 delimiter ;
-
-
-
 
