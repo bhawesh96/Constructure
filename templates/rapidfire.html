@@ -144,12 +144,20 @@ input[type="submit skip"] {
 <div class="formContainer">
   <div class="myform">
     <p id="question">{{params.que}}</p>
-    <p id="question_img">{{params.img}}</p>
-    <form action="/question" method="POST">
+    {% if params.flag %}
+      <img src="../static/image/rapid/{{params.id}}.png" alt="could not load image" height="30%" width="30%">
+      <br>
+      <br>
+      {% endif %}
+    <form action="/rapidfire" method="POST">
     <input type="text" name="Answer"><br>
 
     <input type="submit" value="Submit and Next">
-    <input type="submit skip" value="Skip">
+    <!-- <input type="submit skip" value="Skip"> -->
+    <!-- <button type="submit skip" value = "skip">SKIP</button> -->
+    <div id="buttons">
+        <a href="/rapidfire" class="btn orange">Skip</a>
+    </div>
     </form>
   </div>
 </div>

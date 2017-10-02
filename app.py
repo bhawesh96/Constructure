@@ -1,6 +1,7 @@
 import traceback, warnings
 warnings.filterwarnings("ignore")
 import requests
+import time
 
 from flask import Flask, render_template, redirect, json, request, session
 from flaskext.mysql import MySQL
@@ -48,6 +49,8 @@ def rules():
 @app.route('/dashboard')
 def dashboard():
     if(session.get('user_id')):
+        updateDashboardStyle()
+
         return render_template('dashboard.html', name=session['name'].split(' ')[0],round = session['round_style'])
     else:
         return redirect('/signup')
@@ -141,7 +144,6 @@ def validateLogin():
                     session['curr_round'] = int(data[0][21])
                     session['round_style'] = ""
 
-                    updateDashboardStyle()
                     # ro = session['curr_ques_id'].split('_')[0]
                     # # session['curr_round'] = float(ro) -1
                     # if(session['curr_round'] == 1):
@@ -253,7 +255,7 @@ def update():
         conn = mysql.connect()
         try:
             cursor = conn.cursor()
-            cursor.execute("UPDATE players SET curr_ques_id= %s WHERE id = %s", (session['curr_ques_id'], session['user_id']))
+            cursor.execute("UPDATE players SET curr_ques_id= %s,curr_round = %s WHERE id = %s", (session['curr_ques_id'],str(session['curr_round']), session['user_id']))
             conn.commit()
         except:
             pass
@@ -295,12 +297,12 @@ def getQuestion():
         return params
 
 def getRapidFireParams():
-    if(session.get(['user_id'])):
+    if(session.get('user_id')):
         conn = mysql.connect()
     try:
             cursor=conn.cursor()
             # cursor.execute("SELECT * FROM questions WHERE ques_id = (SELECT ques_id FROM players WHERE id = %s)", (session['user_id']))
-            cursor.execute("SELECT * FROM rapdiFire WHERE ques_id = %s", (session['curr_ques_id']))
+            cursor.execute("SELECT * FROM rapidFire WHERE ques_id = %s", (session['curr_ques_id']))
     except Exception as e:
         print str(e)
     data = cursor.fetchall()
@@ -308,7 +310,7 @@ def getRapidFireParams():
         que = value[1]
         q_img = value[2]
         session['curr_ans'] = value[3]
-        session['money_per'] = value[4]
+        session['money_per'] = float(value[4])
         flag = value[5]
 
         image = False
@@ -330,6 +332,8 @@ def question():
         #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
             return render_template('myque.html', params = params)
         elif(session['curr_round'] == 20 or  session['curr_round'] == 30 or session['curr_round'] == 40 or session['curr_round'] == 50 or session['curr_round'] == 60 ):
+            session['rapid'] = 0
+            session['startTime'] = time.time()
             return redirect('/rapidfire')
         else:    
             return redirect ('/choice')
@@ -343,34 +347,175 @@ def validate():
         if(_answer == session['curr_ans']):
             go_to_new_round = updateScore()
             if(go_to_new_round):
-                return redirect ('/choice')
+                if(session['curr_round'] == 20 or  session['curr_round'] == 30 or session['curr_round'] == 40 or session['curr_round'] == 50 or session['curr_round'] == 60 ):
+                    session['rapid'] = 0
+                    session['startTime'] = time.time()
+                    return redirect('/rapidfire')
+                else:
+                    return redirect ('/choice')
             else:
                 return redirect ('/question')
         else:
             go_to_new_round = update()
             if(go_to_new_round):
-                return redirect ('/choice')
+                if(session['curr_round'] == 20 or  session['curr_round'] == 30 or session['curr_round'] == 40 or session['curr_round'] == 50 or session['curr_round'] == 60 ):
+                    session['rapid'] = 0
+                    session['startTime'] = time.time()
+                    return redirect('/rapidfire')
+                else:
+                    return redirect ('/choice')
             else:
                 return redirect ('/question')
     else:
         return redirect('/signup')
 
+
+def updateRapid():
+    if(session.get('user_id')):
+        go_to_new_round  = True
+        # if(session['curr_ques_id'] == session['curr_ques_id']):
+        ro = session['curr_ques_id'].split('_')[0]
+        ques = session['curr_ques_id'].split('_')[1]
+        if(ro=='02' and ques == '12'):
+            rapidfireDone()
+        elif(ro=='03' and ques == '12'):
+            rapidfireDone()
+        elif(ro=='04' and ques == '12'):
+            rapidfireDone()
+        elif(ro=='05' and ques == '12'):
+            rapidfireDone()
+        elif(ro=='06' and ques == '12'):
+            rapidfireDone()
+        else:
+            go_to_new_round  = False
+        ques = float(ques) + 1
+        ques = '%02d' % ques
+        
+        session['curr_ques_id'] = str(ro) + '_' + str(ques)
+        conn = mysql.connect()
+        try:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE players SET curr_ques_id= %s,curr_round = %s WHERE id = %s", (session['curr_ques_id'],str(session['curr_round']), session['user_id']))
+            conn.commit()
+        except:
+            pass
+        return go_to_new_round
+
 @app.route('/rapidfire')
 def rapidfire():
-    params = getRapidFireParams()
-    print params
-    return render_template('rapidfire.html',params = params)
+    diff = float(time.time() - session['startTime'])
+    if(diff >= 600.0):
+        if(not updateRapid()):
+            rapidfireDone()
+    else:
+        params = getRapidFireParams()
+        print params
+        return render_template('rapidfire.html',params = params)
+
 
 @app.route('/rapidfire', methods = ['POST'])
 def rapidfireValidate():
-    if(session.get(['user_id'])):
-        _answer = request.form['ans']
-        if(_answer == session['curr_ans']):
-            go_to_new_round = updateScore()
-            if(go_to_new_round):
-                return redirect('/choice')
+    if(session.get('user_id')):
+        diff = float(time.time() - session['startTime'])
+        if(diff >= 600.0):
+            if(not updateRapid()):
+                rapidfireDone()
+        else:
+            _answer = request.form['ans']
+            if(_answer == session['curr_ans']):
+                session['rapid'] += session['money_per']
+            if(not updateRapid()):
+                return redirect('/rapidfire')
     else:
-        return redirect('/signUp')
+        return redirect('/signup')
+
+def rapidfireDone():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
+        data = cursor.fetchall()
+        print data,session['point_wt'],session['money_wt']
+        score = '0'
+        money = '0'
+        for player in data:
+            print player[0],player[1],player[2],player[3]
+            score =float(player[1])
+            money = float(player[2]) + ((float(session['rapid']) / 100) * float(player[2]))
+            # session['correctly_answered'] = str(float(player[3])+1)
+            print 'error here'
+        cursor.execute("UPDATE scores SET money = %s WHERE id = %s", (str(money),session['user_id']))
+        conn.commit()
+    except Exception as e:
+        print str(e)
+    ro = session['curr_ques_id'].split('_')[0]
+    ques = session['curr_ques_id'].split('_')[1]
+    if(ro=='02'):
+        ro = '03'
+        ques = 00
+        session["curr_round"] = 2
+    elif(ro=='03'):
+        ro = '04'
+        ques = 00
+        session["curr_round"] = 3
+    elif(ro=='04'):
+        ro = '05'
+        ques = 00
+        session["curr_round"] = 4
+    elif(ro=='05'):
+        ro = '06'
+        ques = 00
+        session["curr_round"] = 5
+    elif(ro=='06'):
+        ro = '088'
+        ques = 00
+        session['curr_round'] = 6
+    ques = float(ques) + 1
+    ques = '%02d' % ques
+    session['curr_ques_id'] = str(ro) + '_' + str(ques)
+    conn = mysql.connect()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE players SET curr_ques_id= %s,curr_round = %s WHERE id = %s", (session['curr_ques_id'],str(session['curr_round']), session['user_id']))
+        conn.commit()
+    except:
+        pass
+    return redirect('/choice')
+
+@app.route('/retry/<ques>')
+def retry(ques):
+    reInitializeScore()
+    session['curr_trail'] +=1
+    session['curr_round'] = 0
+    ro = session['curr_ques_id'].split('_')[0]
+    ques = 00
+    # ques = session['curr_ques_id'].split('_')[1]
+    # if(ro=='02'):
+    #     ro = '02'
+    #     ques = 00
+    # elif(ro=='02'):
+    #     ro = '02'
+    #     ques = 00
+    # elif(ro=='03'):
+    #     ro = '03'
+    #     ques = 00
+    # elif(ro=='04'):
+    #     ro = '04'
+    #     ques = 00
+    # elif(ro=='05'):
+    #     ro = '05'
+    #     ques = 00
+    ques = float(ques) + 1
+    ques = '%02d' % ques 
+    session['curr_ques_id'] = str(ro) + '_' + str(ques)
+    conn = mysql.connect()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE players SET curr_round = %s,curr_ques_id= %s,curr_trail=%d WHERE id = %s", (session['curr_round'],session['curr_ques_id'],session['curr_trail'], session['user_id']))
+        conn.commit()
+    except:
+        pass
+    return redirect('/dashboard')
 
 @app.route('/choice')
 def choice():
@@ -398,7 +543,6 @@ def choice():
             available_options =2
         else:
             available_options =1
-
         return render_template('choice_R1.html',  options = available_options)
 
     elif(session['curr_round'] == 2 or session['curr_round'] == 20):
@@ -412,6 +556,11 @@ def choice():
             available_options = 2
         elif(_money >= 22):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         return render_template('choice_R2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 31 or session['curr_round'] == 30 ):
         if(session['curr_round'] == 30):
@@ -425,6 +574,12 @@ def choice():
             available_options = 2
         elif(_money >=6.0):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R3_1.html',options = available_options,money = _money)
     elif(session['curr_round'] == 32):
         if(_money >=10):
@@ -433,6 +588,12 @@ def choice():
             available_options = 2
         elif(_money >=4):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R3_2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 33):
         if(_money >= 4):
@@ -457,6 +618,11 @@ def choice():
             available_options = 2
         elif(_money >= 7):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
         return render_template('choice_R4.html',options = available_options,money = _money)
     elif(session['curr_round'] == 5 or session['curr_round'] == 50 ):
         if(session['curr_round'] == 50):
@@ -472,6 +638,12 @@ def choice():
             available_options =2
         elif(_money >=70):
             available_options =1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R5.html',options = available_options,money = _money)
     elif(session['curr_round'] == 51):
         if(_money >=3):
@@ -490,6 +662,12 @@ def choice():
             available_options = 2
         elif(_money>=276.35):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R6_1.html',options = available_options,money = _money)
     elif(session['curr_round'] == 62):
         if(_money >=179.70):
@@ -498,6 +676,12 @@ def choice():
             available_options = 2
         elif(_money>=119.32):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R6_2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 63):
         if(_money >=310.98):
@@ -506,6 +690,12 @@ def choice():
             available_options = 2
         elif(_money>=201.22):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R6_3.html',options = available_options,money = _money)
     elif(session['curr_round'] == 64):
         if(_money >=39.52):
@@ -514,6 +704,12 @@ def choice():
             available_options = 2
         elif(_money>=32.32):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R6_4.html',options = available_options,money = _money)
     elif(session['curr_round'] == 65):
         if(_money >=75.3025):
@@ -522,6 +718,12 @@ def choice():
             available_options = 2
         elif(_money>=56.42):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('choice_R6_5.html',options = available_options,money = _money)
     elif(session['curr_round'] == 66):
         if(_money >=412.7248):
@@ -530,6 +732,12 @@ def choice():
             available_options = 2
         elif(_money>=276.348):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('scenario_6_1.html',options = available_options,money = _money)
     elif(session['curr_round'] == 67):
         if(_money >=412.7248):
@@ -538,6 +746,12 @@ def choice():
             available_options = 2
         elif(_money>=276.348):
             available_options = 1
+        else:
+            if(int(session['curr_trail']) <3):
+                return ("<script> alert('you dont have enough money to proceed'); window.location.href ='retry/'" + session['curr_ques_id'] + ";</script>")
+            else:
+                return("<script> alert('you dont have enough money to proceed'); window.location.href ='dashboard';</script>")
+        
         return render_template('scenario_6_2.html',options = available_options,money = _money)
     elif(session['curr_round'] == 68):
         if(_money >=412.7248):

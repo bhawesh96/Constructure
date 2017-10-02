@@ -12,11 +12,12 @@ with open('RapidFire.csv') as file:
 	readr = csv.reader(file)
 	for r in readr:
 		# print r
-		if(r[0] == "ROUND 6"):
+		if(r[0] == "ROUND1"):
 			flag =1
 			continue;
 		if(flag==1):
 			count +=1
+			# print r
 			# r[0] == ques_id			
 			# r[1] == ques in quotes		
 			# r[2] == ques_img 		
@@ -25,7 +26,7 @@ with open('RapidFire.csv') as file:
 			# r[5] == flag
 			# if(r[10] ==''):
 				# r[10] = 'null'
-			val = "('" +r[0] + "','" + r[1] +"','" + r[2] +"','" + r[3] +"','"+ r[4] +"','"+ r[5] + "')"
+			val = "('" +r[0] + "','" + r[1] +"','" + r[2] +"','" + r[3] +"','"+ r[5] +"','"+ r[6] + "')"
 			# print(val)
 			try:
 				print(c.execute(query + val + ";"))

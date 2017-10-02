@@ -69,7 +69,7 @@ begin
 	if exists( SELECT ID FROM players WHERE  reg_no = p_regno) 
     then select 'Not unique';
 	else
-	insert into players(name,reg_no,email,mobile,password,college,ques_asked,curr_ques_id,r1_res,r2_res,r31_res,r32_res,r4_res,r5_res,r61_res,r62_res,r63_res,r64_res,r65_res,curr_trial) values ( p_name,p_regno,p_email,p_mobile,p_password,p_college,'0','01_01','0','0','0','0','0','0','0','0','0','0','0','0');
+	insert into players(name,reg_no,email,mobile,password,college,ques_asked,curr_ques_id,r1_res,r2_res,r31_res,r32_res,r4_res,r5_res,r61_res,r62_res,r63_res,r64_res,r65_res,curr_trial,curr_round) values ( p_name,p_regno,p_email,p_mobile,p_password,p_college,'0','01_01','0','0','0','0','0','0','0','0','0','0','0','0',0);
 	  end if;
 end$$
 delimiter ;
@@ -104,4 +104,16 @@ for each row
 insert into scores values (New.id,'0','0','0');
 $$
 delimiter ;
+
+
+
+ALTER TABLE players
+ADD COLUMN `r61_res` varchar(20) AFTER `r6_res`,
+ADD COLUMN `r62_res` varchar(20) AFTER `r61_res`,
+ADD COLUMN `r63_res` varchar(20) AFTER `r62_res`,
+ADD COLUMN `r64_res` varchar(20) AFTER `r63_res`,
+ADD COLUMN `r65_res` varchar(20) AFTER `r64_res`;
+
+
+update players set r61_res = '0',r62_res = '0',r63_res = '0',r64_res = '0',r65_res = '0';
 
