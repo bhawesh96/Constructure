@@ -666,7 +666,7 @@ def choice():
         if(session['curr_round'] == 60):
             session['curr_round'] = 61
             updateRound(session['curr_round'])
-        _money = _money * 2
+        _money = _money * 3
         if(_money >=412.72):
             available_options = 3
         elif(_money>=350.10):
