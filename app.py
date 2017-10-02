@@ -21,12 +21,12 @@ app.secret_key = '8bf9547569cd5a638931a8639cf9f86237931e92'
 
 captcha_secret_key = '6Lf0jTEUAAAAAJKBTt9hO48cOOBX0dI1jWa-5x0a'
 
+app.route('/')
 @app.route('/home')
 def main():
     return render_template('home.html')
 
-@app.route('/')
-@app.route('/login')
+app.rroute('/login')
 def showSignUp():
     return render_template('login.html', signinCheck="checked", signupCheck="")
 
