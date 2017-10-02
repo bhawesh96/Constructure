@@ -10,4 +10,8 @@
 
 {% block body %}{% endblock %}  
 
+<<<<<<< HEAD
+{% block end_extJS %}{% endblock %}
+=======
 {% block end-extJS %}{% endblock %}
+>>>>>>> front-end

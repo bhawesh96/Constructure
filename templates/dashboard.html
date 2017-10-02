@@ -6,22 +6,14 @@
 
 {% block extStyle %}
 	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700|Merriweather:400italic,400' rel='stylesheet' type='text/css'>
+
   	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
-	<link rel="stylesheet" href="../static/css/dash-reset.css"> <!-- CSS reset -->
-	<link rel="stylesheet" href="../static/css/dash-style.css"> <!-- Resource style -->
-<style type="text/css">
-	@media (max-width: 480px){
-		.mobile-hide {
-			display: none;
-		}
-.projects-container .cd-single-project::after{
-	width: 100%;
-}
 
-	}
-</style>
+	<link rel="stylesheet" href="../static/css/dash-reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="../static/css/dash-style{{round}}.css"> <!-- Resource style --><!--Variable-->
+	
 {% endblock %}
 {% block extJS %}
 	<script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
@@ -37,6 +29,7 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Dashboard</a></li>
       <li><a href="/rules">Rules</a></li>
+      <li><a href="/question">Resume</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -48,20 +41,21 @@
 	<header>
 	<nav class="cd-stretchy-nav">
 		<a class="cd-nav-trigger" href="#0">
+			Menu
 			<span aria-hidden="true"></span>
 		</a>
 
 		<ul>
-			<li><a href="/dashboard" class="active"><span>Home</span></a></li>
-			<li><a href="/rules"><span>Rules</span></a></li>
-			<li><a href="/logout"><span>Logout</span></a></li>
+			<li><a href="/dashboard.html" class="active"><span>Home</span></a></li>
+			<li><a href="Rules.html"><span>Rules</span></a></li>
+			<li><a href="login.html"><span>Logout</span></a></li>
 			
 		</ul>
 
 		<span aria-hidden="true" class="stretchy-nav-bg"></span>
 	</nav>
 </header>
-	<div class="projects-container" style="margin-top: -20px;">
+	<div class="projects-container">
 		<ul>
 			<li class="cd-single-project">
 				<div class="cd-title">
@@ -73,7 +67,9 @@
 					<p>
 						Greetings!
 						The Mother of Dragons, Queen Daenerys, wants to construct the Dragon Pit (castle) to house her dragons. Jon Snow decided to help her find the perfect plot of land for her castle and thus, sent Maesters all over the country. You are one such Maester. 
-
+						<div id="buttons" class='b1'>
+  			<a href="dashboard.html" class="btn orange">Proceed</a>
+		</div>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
@@ -87,6 +83,9 @@
 				<div class="cd-project-info">
 					<p>
 						Let us seek the help of our architect friends. Well, what do architects do? They are responsible for designing structures. They shall help us with the design and aesthetic view of the castle, but they won’t do it for free. Thankfully, Greyworm and the Unsullied have returned from the siege of Casterly Rock and have enough gold to cover the costs.
+						<div id="buttons" class='b2'>
+  			<a href="dashboard.html" class="btn orange">Proceed</a>
+		</div>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
@@ -100,6 +99,9 @@
 				<div class="cd-project-info">
 					<p>
 						Now we move on to the next stage, where you need to consult a geotechnical engineer who will make sure that the castle possess certain features, like a strong foundation, safety from the winds of winter, stability in the Storm Lands and the hills of The Vale, etc. They test the soil, its bearing capacity, and the behavior of its constituents. A surveyor marks the boundaries of the castle walls. Surveying is done across the tract of land. Linear and angular measurements are taken. Land is examined on all accounts and a comprehensive view of structure is analyzed.
+						<div id="buttons" class='b3'>
+  			<a href="dashboard.html" class="btn orange">Proceed</a>
+		</div>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
@@ -116,7 +118,9 @@
 						Needless to say, we move on to the next stage of construction, excavating the land.
 
 						Seven hells, that was tough. Excavation is basically a making a cavity by either cutting, digging or scooping. 
-
+						<div id="buttons" class='b4'>
+  			<a href="dashboard.html" class="btn orange">Proceed</a>
+		</div>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
@@ -130,6 +134,9 @@
 				<div class="cd-project-info">
 					<p>
 						Now for the most important part: The foundation of the castle. (We’ll need a strong foundation if dragons are to roam these halls.) Choose the type of foundation you want to construct. Keep in mind the soil bearing capacity, nature of surveyed land, safety aspects, etc. 
+						<div id="buttons" class='b5'>
+  			<a href="dashboard.html" class="btn orange">Proceed</a>
+		</div>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
@@ -143,6 +150,9 @@
 				<div class="cd-project-info">
 					<p>
 						Mix proportion is the quantity of materials required to prepare concrete of required strength...we need tons of it to hold against the Army of the Dead. We need to mix cement, course aggregate, fine aggregate and water in a certain proportion. If only Bran the Builder were here to help. 
+						<div id="buttons" class='b6'>
+  			<a href="dashboard.html" class="btn orange">Proceed</a>
+		</div>
 					</p>
 				</div> <!-- .cd-project-info -->
 			</li>
@@ -151,6 +161,7 @@
 		<a href="#0" class="cd-scroll">Scroll</a>
 	</div> <!-- .project-container -->
 {% endblock %}
+
 {% block end_extJS %}
 <script src="../static/js/dash-jquery-2.1.1.js"></script>
 <script src="../static/js/dash-main.js"></script> <!-- Resource jQuery -->
