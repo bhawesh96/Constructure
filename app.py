@@ -325,6 +325,10 @@ def rapidTrack():
         session['rapidFlag'] = False
     return
 
+@app.route('/rapidfirerules')
+def rapid_rule():
+    return render_template('rapidfire_rules.html',name  = session['name'].split(' ')[0])
+
 @app.route('/question', methods=['POST'])
 def validate():
     if(session.get('user_id')):
@@ -337,7 +341,7 @@ def validate():
                 if(session['curr_round'] == 20 or  session['curr_round'] == 30 or session['curr_round'] == 40 or session['curr_round'] == 50 or session['curr_round'] == 60 ):
                     session['rapidFlag'] = True
                     rapidTrack()
-                    return render_template('rapidfire_rules.html',name  = session['name'].split(' ')[0])
+                    return redirect('/rapidfirerules')
                 else:
                     return redirect ('/choice')
             else:
@@ -348,7 +352,7 @@ def validate():
                 if(session['curr_round'] == 20 or  session['curr_round'] == 30 or session['curr_round'] == 40 or session['curr_round'] == 50 or session['curr_round'] == 60 ):
                     session['rapidFlag'] = True
                     rapidTrack()
-                    return render_template('rapidfire_rules.html',name  = session['name'].split(' ')[0])
+                    return redirect('/rapidfirerules')
                 else:
                     return redirect ('/choice')
             else:
