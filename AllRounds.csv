@@ -7,7 +7,7 @@ ROUND1,,,,,,,,,,,,
 1,01_01,"""The number that must be added to each of the number 5,27,14 and 37 to make the ratio of first two numbers equal to the ratio of the last two number is""",null,183,190,198,193,op4,50,0,0,
 2,01_02,"""In the CBSE boards exams last year,53% passed in Physics,61% passed in Maths,60% passed in Chemistry,24% passed in Physics and Maths,35% in Maths and Chemistry,27% Physics and Chemistry and 5% in none.
 If the number of students in the class is 300, what will be the % change in the number of passes in only two subjects, only if original number of students is 200?""",null,More than 50%,Less than 50%,50%,None of these,op3,100,0,0,
-3,01_03,"""DEPRL: LRDPED :: POCKET: ________""",null,TECHOP,TEKCOP,TELNOQ,TEKOCP,op2,50,0,0,
+3,01_03,"""DEPRL: LRPED :: POCKET: ________""",null,TECHOP,TEKCOP,TELNOQ,TEKOCP,op2,50,0,0,
 4,01_04,"""Seven persons consisting of two children Samyak and chinttu, two men chinki and Danny and three women Eshawari, Falguni and Ganga are sitting in a row. Chinki and danny have only one person that too a child sitting between them. Only Samyak sits between Ganga and Eshawari. No two children, no two males and no two females sit next to each other. Eshawari sits to immediate left of chinki. Who is sitting at the extreme left of the row?""",null,Ganga,Eshawari,Falguni,Chinki,op1,50,0,0,
 5,01_05,"Choose the image that completes the pattern
 ",01_05.png,A,B,C,D,op4,50,0,1,
