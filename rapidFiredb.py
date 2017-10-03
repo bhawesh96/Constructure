@@ -12,7 +12,7 @@ with open('RapidFire.csv') as file:
 	readr = csv.reader(file)
 	for r in readr:
 		# print r
-		if(r[0] == "ROUND1"):
+		if(r[0] == "ROUND 6"):
 			flag =1
 			continue;
 		if(flag==1):

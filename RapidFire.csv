@@ -5,31 +5,29 @@ roundNo_QuesNo,add a backslash to any quote singe or double inside the quesions,
 ,"""are you\'r correct maze""",,,,,,
 ,,,,,,,
 ROUND2,,,,,,,
-02_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d 
-a) Tokyo National Museum, Tokyo
-b) Prado Museum, Madrid
-c) Museo Nacional de Antropologia ,Mexico
+02_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d \n a) Tokyo National Museum, Tokyo \n
+b) Prado Museum, Madrid \n
+c) Museo Nacional de Antropologia ,Mexico \n
 d) Guggenheim Museum ,Bilbao""",02_01.png,d,,0.5,1,
 02_02,"""Guess the logo""",02_02.png,astonmartin,,0.2,1,
 02_03,"""Guess the logo""",02_03.png,magnum,,0.2,1,
 02_04,"""Guess the logo""",02_04.png,nutella,,0.2,1,
 02_05,"""Guess the logo""",02_05.png,nestle,,0.2,1,
 02_06,"""Guess the logo""",02_06.png,lacoste,,0.2,1,
-02_07,"“My life only last hours as I quickly become devoured. Fast or slow, wind is my foe. What am I?”",null,candle,,0.2,1,
-02_08,“What can go up and come down without moving?”,null,temperature,,0.2,0,
-02_09,"”Unscramble the word given below by using the description as the hint\n
+02_07,"""My life only last hours as I quickly become devoured. Fast or slow, wind is my foe. What am I?""",null,candle,,0.2,1,
+02_08,"""What can go up and come down without moving?""�",null,temperature,,0.2,0,
+02_09,"""Unscramble the word given below by using the description as the hint\n
 It is a British manufacturer of luxury sports car\n
-O S A N T   R A T M N I”",null,astonmartin,,0.2,0,
-02_10,“What gets wetter the more it dries?”,null,towel,,0.2,0,
-02_11,"“Forward I am heavy, but backward I am not. What am I?”
-ton",null,ton,,0.2,0,
+O S A N T   R A T M N I""",null,astonmartin,,0.2,0,
+02_10,"""What gets wetter the more it dries?""",null,towel,,0.2,0,
+02_11,"""Forward I am heavy, but backward I am not. What am I?""�",null,ton,,0.2,0,
 02_12,"""Solve the picture clue""",02_12.png,downpayment,,0.5,1,
 ,,,,,,,
 ROUND3,,,,,,,
-03_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d 
-a) Kansas City Library
-b) British Library
-c) Wren Library
+03_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d\n
+a) Kansas City Library\n
+b) British Library\n
+c) Wren Library\n
 d) Beinecke Library""
 ",03_01.png,a,,0.5,1,
 03_02,"""Guess the logo""",03_02.png,disneyland,,0.2,1,
@@ -38,23 +36,23 @@ d) Beinecke Library""
 03_05,"""Guess the logo""",03_05.png,wordpress,,0.2,1,
 03_06,"""Guess the logo""",03_06.png,"vistara
 ",,0.2,1,
-03_07,"“Minerals are found in me, and I am found in minerals?”",null,"
+03_07,"""Minerals are found in me, and I am found in minerals?""",null,"
 mine",,0.2,0,
-03_08,"“I have holes on the top and bottom. I have holes on my left and on my right. And I have holes in the middle, yet I still hold water. What am I?”",null,sponge,,0.2,0,
-03_09,"”Unscramble the word given below by using the description as the hint
+03_08,"""I have holes on the top and bottom. I have holes on my left and on my right. And I have holes in the middle, yet I still hold water. What am I?""",null,sponge,,0.2,0,
+03_09,"""�Unscramble the word given below by using the description as the hint\n
 
-The building was designed by the American architectural firm Gensler
-G A H A I N S H    O E W R T”
+The building was designed by the American architectural firm Gensler\n
+G A H A I N S H    O E W R T""
 ",null,shanghaitower,,0.2,0,
-03_10,"“My rings are not worth much, but they tell my age. What am I?”",null,tree,,0.2,0,
-03_11,“What goes up and never comes down? “,null,age,,0.2,0,
+03_10,"""My rings are not worth much, but they tell my age. What am I?""",null,tree,,0.2,0,
+03_11,"""What goes up and never comes down?""",null,age,,0.2,0,
 03_12,"""Solve the picture clue""",03_12.png,workingovertime,,0.5,1,
 ,,,,,,,
 ROUND 4,,,,,,,
-04_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d 
-a) The Shard
-b) Atomium
-c) Parthenon
+04_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d \n
+a) The Shard \n
+b) Atomium \n
+c) Parthenon \n
 d) 30 St Mary Axe""
 ",04_01.png,b,,0.5,1,
 04_02,"""Guess the logo""",04_02.png,kenwood,,0.2,1,
@@ -64,21 +62,21 @@ d) 30 St Mary Axe""
 04_06,"""Guess the logo""",04_06.png,"arsenal
 
 ",,0.2,1,
-04_07,“What has a foot on each side and one in the middle? “,null,yardstick,,0.2,0,
-04_08,“What goes around the world and stays in a corner?” ,null,stamp,,0.2,0,
-04_09,"”Unscramble the word given below by using the description as the hint
+04_07,"""What has a foot on each side and one in the middle?""",null,yardstick,,0.2,0,
+04_08,"""What goes around the world and stays in a corner?""",null,stamp,,0.2,0,
+04_09,"""�Unscramble the word given below by using the description as the hint \n
 
-A famous scientist
-T E A B L R    N E I N I T S E”",null,alberteinstein,,0.2,0,
-04_10,"“The more there is, the less you see.” ",null,darkness,,0.2,0,
-04_11,"“Remove the outside, cook the inside, eat the outside, throw away the inside.”",null,corn,,0.2,0,
+A famous scientist \n
+T E A B L R    N E I N I T S E""�",null,alberteinstein,,0.2,0,
+04_10,"""The more there is, the less you see.""",null,darkness,,0.2,0,
+04_11,"""Remove the outside, cook the inside, eat the outside, throw away the inside.""",null,corn,,0.2,0,
 04_12,"""Solve the picture clue""",04_12.png,minimize,,0.5,1,
 ,,,,,,,
 ROUND 5,,,,,,,
-05_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d 
-a) The Torre Glòries
-b) The Shard
-c) Space needle
+05_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d \n
+a) The Torre Glories \n
+b) The Shard \n
+c) Space needle \n
 d) CN Tower""
 ",05_01.png,c,,0.5,1,
 05_02,"""Guess the logo""",05_02.png,citibank,,0.2,1,
@@ -87,22 +85,22 @@ d) CN Tower""
 05_05,"""Guess the logo""",05_05.png,adecco,,0.2,1,
 05_06,"""Guess the logo""",05_06.png,"lego
 ",,0.2,1,
-05_07,"“Take one out and scratch my head, I am now black but once was red.”",null,matchstick,,0.2,0,
-05_08,“They come at night without being called and are lost in the day without being stolen.”,null,stars,,0.2,0,
-05_09,"”Unscramble the word given below by using the description as the hint
+05_07,"""Take one out and scratch my head, I am now black but once was red.""",null,matchstick,,0.2,0,
+05_08,"""They come at night without being called and are lost in the day without being stolen.""",null,stars,,0.2,0,
+05_09,"""�Unscramble the word given below by using the description as the hint \n
 
-It is a Japanese multinational company headquartered in Japan,
-I U Z S U K”
+It is a Japanese multinational company headquartered in Japan\n 
+I U Z S U K""
 ",null,suzuki,,0.2,0,
-05_10,"“Before Mount Everest was discovered, what was the highest mountain on Earth?”",null,mounteverest,,0.2,0,
-05_11,“What kind of room has no windows or doors?”,null,mushrooms,,0.2,0,
+05_10,"""Before Mount Everest was discovered, what was the highest mountain on Earth?""",null,mounteverest,,0.2,0,
+05_11,"""What kind of room has no windows or doors?""",null,mushrooms,,0.2,0,
 05_12,"""Solve the picture clue""",05_12.png,spaceship,,0.5,1,
 ,,,,,,,
 ROUND 6,,,,,,,
-06_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d 
-a) The Fuller Building
-b) The Plaza Hotel
-c) The Shard
+06_01,"""Guess the structure and type just the option in text box i.e. only a,b,c or d \n
+a) The Fuller Building \n
+b) The Plaza Hotel \n
+c) The Shard \n
 d) The Dakota apartment""
 ",06_01.png,c,,0.5,1,
 06_02,"""Guess the logo""",06_02.png,versace,"
@@ -111,12 +109,12 @@ d) The Dakota apartment""
 06_04,"""Guess the logo""",06_04.png,hardrockcafe,,0.2,1,
 06_05,"""Guess the logo""",06_05.png,karca,,0.2,1,
 06_06,"""Guess the logo""",06_06.png,tic tac,,0.2,1,
-06_07,"“If you have it, you want to share it. If you share it, you don\'t have it. What is it?”",null,secret,,0.2,0,
-06_08,"“I look at you, you look at me, I raise my right, and you raise your left. What is this object?”",null,mirror,,0.2,0,
-06_09,"”Unscramble the word given below by using the description as the hint
+06_07,"""If you have it, you want to share it. If you share it, you don\'t have it. What is it?""",null,secret,,0.2,0,
+06_08,"""I look at you, you look at me, I raise my right, and you raise your left. What is this object?""",null,mirror,,0.2,0,
+06_09,"""Unscramble the word given below by using the description as the hint\n
 
- It is an electronic/optical instrument used for surveying and building construction.
-L T T A O     T A S T N O I” ",null,totalstation,,0.2,0,
-06_10,“I am a kind of coat that can only put on when wet. What am I?”,null,paint,,0.2,0,
-06_11,“I must be broken before you can use me. What am I?”,null,egg,,0.2,0,
+ It is an electronic/optical instrument used for surveying and building construction. \n
+L T T A O     T A S T N O I""",null,totalstation,,0.2,0,
+06_10,"""I am a kind of coat that can only put on when wet. What am I?""",null,paint,,0.2,0,
+06_11,"""I must be broken before you can use me. What am I?""",null,egg,,0.2,0,
 06_12,"""Solve the picture clue""",06_12.png,addresses,,0.5,1,

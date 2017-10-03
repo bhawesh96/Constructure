@@ -570,7 +570,8 @@ Main Components
   display: none;
 }
 .p2,.p3,.p4,.p5{
-  visibility: hidden;
+  /*visibility: hidden;*/
+  display: none;
 }
 .p1{
   font-weight: bold;
