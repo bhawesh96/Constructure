@@ -29,9 +29,8 @@ def main():
 @app.route('/developers')
 def deveoplers():
     return render_template('dev.html')
-app.route('/login')
 
-
+@app.route('/login')
 def showSignUp():
     return render_template('login.html', signinCheck="checked", signupCheck="")
 
@@ -1471,10 +1470,33 @@ def reInitializeScore():
     finally:
         conn.close()
     return
+
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html',error = 404)
+    return render_template('error.html'), 404
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('error.html'), 500
+
+@app.errorhandler(501)
+def page_not_found(e):
+    return render_template('error.html'), 501
+
+@app.errorhandler(502)
+def page_not_found(e):
+    return render_template('error.html'), 502
+
+@app.errorhandler(503)
+def page_not_found(e):
+    return render_template('error.html'), 503
+
+@app.errorhandler(504)
+def page_not_found(e):
+    return render_template('error.html'), 504
+
+
 
 if __name__ == "__main__":
     app.run(debug=True,port=5005,use_evalex=False)
-    # app.run(debug=True,host='139.59.17.132',port=80,use_evalex=False)
+    #app.run(debug=True,host='192.168.43.220',port=8000,use_evalex=False)
