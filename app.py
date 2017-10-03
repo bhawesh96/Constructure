@@ -29,7 +29,7 @@ def main():
 
 @app.route('/developers')
 def deveoplers():
-    return render_template('developers.html')
+    return render_template('dev.html')
 app.route('/login')
 def showSignUp():
     return render_template('login.html', signinCheck="checked", signupCheck="")
