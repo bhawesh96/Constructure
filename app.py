@@ -147,14 +147,12 @@ def validateLogin():
                     cursor2.execute('select * from scores where id = ' + (session['user_id']))
                     data2 = cursor2.fetchall()
                     for value in data2:
-                        print value
                         session['points'] = value[1]
 
 
                     return redirect('/dashboard')
                 else:
-                    print 'not validated'
-                    return render_template('404.html', msg="not validated")            
+                    return ("<script> alert('Invalid UserName/Password'); window.loaction.href = 'signup'</script>")
             except Exception as e:
                 return json.dumps({'errory':str(e)})
         else:
@@ -185,15 +183,12 @@ def updateScore():
     try:
         cursor.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
         data = cursor.fetchall()
-        print data,session['point_wt'],session['money_wt']
         score = '0'
         money = '0'
         for player in data:
-            print player[0],player[1],player[2],player[3]
             score = float(session['point_wt']) + float(player[1])
             money = float(session['money_wt']) + float(player[2])
             session['correctly_answered'] = str(float(player[3])+1)
-            print 'error here'
         cursor.execute("UPDATE scores SET points = %s, money = %s, correctly_answered = %s WHERE id = %s", (str(score), str(money), session['correctly_answered'], session['user_id']))
         conn.commit()
     except Exception as e:
@@ -309,11 +304,9 @@ def getRapidFireParams():
 
 @app.route('/question')
 def question():
-    print session['curr_round']
     if(session.get('user_id')):
         if(session['curr_round'] == 0):
             params = getQuestion()
-            print params
         #params = {'que':'Who is the President of Unites States of Americal', 'op1':'Rahul', 'op2':'Bhawesh', 'op3':'Ishaan', 'op4':'Dheemahi'}
             return render_template('myque.html', params = params)
         elif(session['curr_round'] == 20 or  session['curr_round'] == 30 or session['curr_round'] == 40 or session['curr_round'] == 50 or session['curr_round'] == 60 ):
@@ -335,7 +328,9 @@ def rapidTrack():
 @app.route('/question', methods=['POST'])
 def validate():
     if(session.get('user_id')):
-        _answer = request.form['choice']
+        _answer = request.form.get('choice')
+        if(not _answer):
+            return ("<script> alert('choose one option!'); window.location.href = 'question';</script>")
         if(_answer == session['curr_ans']):
             go_to_new_round = updateScore()
             if(go_to_new_round):
@@ -384,7 +379,6 @@ def updateRapid():
             ques = '%02d' % ques
             
             session['curr_ques_id'] = str(ro) + '_' + str(ques)
-            print "ques_id:",session['curr_ques_id']
             conn = mysql.connect()
             try:
                 cursor = conn.cursor()
@@ -397,15 +391,12 @@ def updateRapid():
 @app.route('/rapidfire')
 def rapidfire():
     diff = float(time.time() - session['startTime'])
-    print "diff:",diff
-    if(diff >= 180.0):
+    if(diff >= 300.0):
         if(not updateRapid()):
             rapidfireDone()
             return redirect('/choice')
     else:
         params = getRapidFireParams()
-        print params
-        print "rapid",session["rapid"]
         return render_template('rapidfire.html',params = params)
 
 
@@ -413,13 +404,12 @@ def rapidfire():
 def rapidfireValidate():
     if(session.get('user_id')):
         diff = float(time.time() - session['startTime'])
-        if(diff >= 180.0):
+        if(diff >= 300.0):
             if(not updateRapid()):
                 rapidfireDone()
             return redirect('/choice')
         else:
             _answer = request.form['ans']
-            print _answer
             if(_answer == session['curr_ans']):
                 session['rapid'] += session['money_per']
             if(not updateRapid()):
@@ -435,15 +425,12 @@ def rapidfireDone():
     try:
         cursor.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
         data = cursor.fetchall()
-        print data,session['point_wt'],session['money_wt']
         score = '0'
         money = '0'
         for player in data:
-            print player[0],player[1],player[2],player[3]
             score =float(player[1])
             money = float(player[2]) + ((float(session['rapid']) / 10.0) * float(player[2]))
             # session['correctly_answered'] = str(float(player[3])+1)
-            print 'error here'
         cursor.execute("UPDATE scores SET money = %s WHERE id = %s", (str(money),session['user_id']))
         conn.commit()
     except Exception as e:
@@ -497,7 +484,6 @@ def retry(ques):
     elif(ro=='06'):
         ro = '05'
     ques = 00
-    print "ascvadfv:",session['curr_trail'],session['curr_round']
     ques = float(ques) + 1
     ques = '%02d' % ques 
     session['curr_ques_id'] = str(ro) + '_' + str(ques)
@@ -521,7 +507,6 @@ def choice():
 
         print str(e)
     data = cursor.fetchall()
-    print data
     for value in data:
         _money = float(value[2])
         ansd_ques = float(value[3])
@@ -550,11 +535,9 @@ def choice():
         elif(_money >= 22):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
-                print "abcd1"
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('You dont have enough money to proceed. You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
-                print "abcd2"
 
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
         return render_template('choice_R2.html',options = available_options,money = _money)
@@ -571,7 +554,7 @@ def choice():
         elif(_money >=6.0):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -585,7 +568,7 @@ def choice():
         elif(_money >=4):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -615,7 +598,7 @@ def choice():
         elif(_money >= 7):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -635,7 +618,7 @@ def choice():
         elif(_money >=70):
             available_options =1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -660,7 +643,7 @@ def choice():
         elif(_money>=276.35):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -674,7 +657,7 @@ def choice():
         elif(_money>=119.32):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -688,7 +671,7 @@ def choice():
         elif(_money>=201.22):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -702,7 +685,7 @@ def choice():
         elif(_money>=32.32):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -716,7 +699,7 @@ def choice():
         elif(_money>=56.42):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -730,7 +713,7 @@ def choice():
         elif(_money>=276.348):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -744,7 +727,7 @@ def choice():
         elif(_money>=276.348):
             available_options = 1
         else:
-            if(int(session['curr_trail']) <3):
+            if(int(session['curr_trail']) <5):
                 return ("<script> alert('you dont have enough money to proceed.  You are demoted to the same round'); window.location.href ='retry/" + session['curr_ques_id'] + "';</script>")
             else:
                 return("<script> alert('you dont have enough money and retires to proceed. Thanks For playing'); window.location.href ='final';</script>")
@@ -768,7 +751,6 @@ def updateChoice():
         conn=mysql.connect()
         try:
             cursor=conn.cursor()
-            # print "UPDATE players SET r1_res = %s WHERE id = %s"
             query = "UPDATE players SET r1_res = '{a}' WHERE id = {i};".format(a = _answer,i = session['user_id'])
             cursor.execute(query)
             conn.commit()
@@ -873,7 +855,6 @@ def updateChoice():
         elif(_answer == 'InSituTesting'):
             new_points = points +4000
             money = money - 12
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 32
@@ -933,11 +914,9 @@ def updateChoice():
             cursor2=conn.cursor()
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
-            print _answer
             for value in data:
                 points = float(value[1])
                 money = float(value[2])
-            print points,money
         except Exception as e:
             print str(e)
         finally:
@@ -980,11 +959,9 @@ def updateChoice():
             
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
-            print _answer
             for value in data:
                 points = float(value[1])
                 money = float(value[2])
-            print points,money
         except Exception as e:
             print str(e)
         finally:
@@ -1036,16 +1013,13 @@ def updateChoice():
 
             cursor3.execute("SELECT r1_res FROM players where id = %s",(session['user_id']))
             data2 = cursor3.fetchall()
-            print _answer
 
             for value in data:
                 points = float(value[1])
                 money = float(value[2])
             for value in data2:
-                print value
                 r1_res = str(value[0])
 
-            print points,money
         except Exception as e:
             print str(e)
         finally:
@@ -1082,11 +1056,9 @@ def updateChoice():
             cursor2=conn.cursor()
             cursor2.execute("SELECT * FROM scores WHERE id = %s", (session['user_id']))
             data = cursor2.fetchall()
-            print _answer
             for value in data:
                 points = float(value[1])
                 money = float(value[2])
-            print points,money
         except Exception as e:
             print str(e)
         finally:
@@ -1139,7 +1111,6 @@ def updateChoice():
         elif(_answer == 'WestrosEsssosCo'):
             new_points = points + 900
             money = money - 276.35
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 62
@@ -1179,7 +1150,6 @@ def updateChoice():
         elif(_answer == 'WestrosEsssosCo'):
             new_points = points + 900
             money = money - 119.32
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 63
@@ -1219,7 +1189,6 @@ def updateChoice():
         elif(_answer == 'WestrosEsssosCo'):
             new_points = points + 900
             money = money - 201.22
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 64
@@ -1259,7 +1228,6 @@ def updateChoice():
         elif(_answer == 'WestrosEsssosCo'):
             new_points = points + 900
             money = money - 32.32
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 65
@@ -1300,7 +1268,6 @@ def updateChoice():
             new_points = points + 900
             money = money - 56.42
         money = money - 24.15 - 16.2
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 66
@@ -1337,7 +1304,6 @@ def updateChoice():
         elif(_answer == 'Uphold'):
             new_points = points + 2500
             money = money - 200
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 67
@@ -1377,7 +1343,6 @@ def updateChoice():
         elif(_answer == 'CompensateIncrease'):
             new_points = points + 1000
             money = money - 15
-        print new_points,money,session['curr_round']
         updatePoints(new_points)
         updateMoney(money)
         session['curr_round'] = 68
@@ -1419,7 +1384,6 @@ def updateChoice():
             money = money - 1.75
         
         new_points = new_points + money * 10.88
-        print new_points,money,session['curr_round']
         
 
         updatePoints(new_points)
@@ -1439,7 +1403,6 @@ def final():
         data = cursor.fetchall()
         for value in data:
             points = value[1]
-        print "hey"
     except Exception as e:
         print str(e)
     finally:
@@ -1463,9 +1426,7 @@ def updateMoney(new_money):
     conn = mysql.connect()
     try:
         cursor = conn.cursor()
-        print 'hey',new_money
         cursor.execute("UPDATE scores SET money = %s WHERE id = %s",(str(new_money), session['user_id']))
-        print 'hey',cursor.fetchall()
         conn.commit()
 
     except Exception as e:
