@@ -171,5 +171,8 @@ body{
       display: none;
       visibility: hidden;
     }
-
+    .message{
+    	display: block;
+    	visibility: visible;
+    }
 }

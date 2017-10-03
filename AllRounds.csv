@@ -18,7 +18,7 @@ C: A is not the Truth-teller. I am not the Liar.
 Who among them is Liar?""",null,A,B,C,Cannot be determined,op2,100,0,0,
 7,01_07,"""Choose the image that completes the pattern""",01_07.jpg,A,B,C,D,op2,50,0,1,
 8,01_08,"""In a survey among students at all the IIM\'s it was found that 48% preferred cola,54% preferred coffee and 64% smoked .Of the total 28% liked cola and coffee,32% smoked and drank coffee and 30% smoked and drank cola. Only 6% did none of these. If the total students are 2000 then the percentage of those who like coffee and smoking but not cola is""",null,14,less than 14,14.9,more than 15,op1,100,0,0,
-9,01_09,"""Pointing to a person, Shyam said, he is the only brother of my father\'s mother\'s daugher. How is the person related to Shyam?""",null,Brother,Uncle,Uncle,Son,op2,50,0,0,
+9,01_09,"""Pointing to a person, Shyam said, he is the only brother of my father\'s mother\'s daugher. How is the person related to Shyam?""",null,Brother,Father,Uncle,Son,op2,50,0,0,
 10,01_10,"""A mixture contains alcohol and water in the ratio of 15:9. On adding 23 litres of water, the ratio of alcohol to water becomes 5:10. The quantity of alcohol in the mixture is""",null,18.76,19.38,14.9,16.43,op4,50,0,0,
 11,01_11,"""Two stations A and B are 520 km apart on a straight line. One train starts from A at 7 am and travels towards B at 50 kmph. Another train starts from B at 8 am and travels towards A at a speed of 45 kmph. At what time will they meet?""",null,12:00 AM,11:00 AM,11:30 AM,11:26 AM,op1,50,0,0,
 12,01_12,"""Which of the following sets are logically related
@@ -210,7 +210,7 @@ The influence line for reaction at B is given by""",04_08.png,A,B,C,D,op2,0,1.65
 10,04_10,"""Which of the following is odd one?""",null,quintet,solo,choir,crescendo,op2,0,1.25,0,
 11,04_11,"""Two trains are running at 50 km/hr and 22 km/hr respectively in the same direction. Fast train completely passes a man sitting in the slower train in 6 secs. What is the length of the fast train?""
 ",null,50.22 m,46.66 m,48.33 m,49.22 m,op2,0,1.25,0,
-12,04_12,"""Carry-over factor CAB for the beam shown in the figure is""",04_12.png,0.75,1,0.50,0.25,op2,0,1.65,,
+12,04_12,"""Carry-over factor CAB for the beam shown in the figure is""",04_12.png,0.75,1,0.5,0.25,op2,0,1.65,,
 13,04_13,"""The product of three consecutive natural numbers, the first of which is an even number, is always divisible by""",null,24,8,12,All of these,op4,0,0.75,0,
 14,04_14,"""Five boys P, Q, R,S and T stand at various points in a playground. A person O has to supply them with water. O can go directly to P and then to S. O can go directly to Q and then to T. O can go directly to R and then to P or Q. Which of the following is definitely TRUE?""",null,O cannot supply water to all of them without touching at least one person twice,O can reach all of them without touching any of them twice,O must touch R to go to S,O must touch R to go to Q,op1,0,2.25,0,
 15,04_15,"""Which figure will replace the question mark ?"" ",04_15.PNG,A,B,C,D,op4,0,1.25,1,
