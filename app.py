@@ -26,6 +26,10 @@ captcha_secret_key = '6Lf0jTEUAAAAAJKBTt9hO48cOOBX0dI1jWa-5x0a'
 def main():
     return render_template('home.html')
 
+
+@app.route('/developers')
+def deveoplers():
+    return render_template('developers.html')
 app.route('/login')
 def showSignUp():
     return render_template('login.html', signinCheck="checked", signupCheck="")
@@ -771,7 +775,7 @@ def updateChoice():
         session['curr_round'] = 0
         updateRound(session['curr_round'])
 
-        return render_template('dashboard.html')
+        return redirect('/dashboard')
     elif(session['curr_round'] == 2):
         _answer = request.form['arch']
         points = 0
