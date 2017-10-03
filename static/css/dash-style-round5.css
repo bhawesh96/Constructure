@@ -578,7 +578,8 @@ Main Components
   display: none;
 }
 .p1,.p2,.p3,.p5{
-  visibility: hidden;
+  display: none;
+  /*visibility: hidden;*/
 }
 .p4{
   font-weight: bold;
