@@ -39,7 +39,15 @@ body{
 	opacity:0;
 }
 .btn {
-
+  -webkit-border-radius: 10px;
+-webkit-padding: 15px 25px;
+-webkit-font-size: 150%;
+-webkit-text-decoration: none;
+-webkit-bottom:8vh;
+-webkit-color: #fff;
+-webkit-display: inline-block;
+-webkit-position:absolute;
+-webkit-left:42%;
   border-radius: 10px;
   padding: 15px 25px;
   font-size: 150%;
@@ -50,6 +58,7 @@ body{
   position:absolute;
   left:42%;
   z-index: 2;
+-webkit-z-index: 2;
 }
 
 .btn:active {
@@ -123,6 +132,15 @@ body{
 	opacity:0;
 }
 .btn {
+	  -webkit-border-radius: 10px;
+-webkit-padding: 2% 2%;
+-webkit-font-size: 4vh;
+-webkit-text-decoration: none;
+-webkit-bottom:8vh;
+-webkit-color: #fff;
+-webkit-display: inline-block;
+-webkit-position:absolute;
+-webkit-left:40vw;
   border-radius: 10px;
   padding: 2% 2%;
   font-size: 4vh;
@@ -132,6 +150,7 @@ body{
   display: inline-block;
   position:absolute;
   left:40vw;
+-webkit-z-index: -1;
   z-index: -1;
 }
 
