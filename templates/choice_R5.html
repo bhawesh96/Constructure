@@ -1,0 +1,159 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choice</title>
+<link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
+  <link rel="stylesheet" href="../static/css/dash-stylenav.css"> <!-- Resource style -->
+  <script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
+<link rel="stylesheet" href="../static/css/choice-bootstrap.min.css">
+<link rel="stylesheet" href="../static/css/choice-R5.css">
+<link rel="stylesheet" href="../static/css/checkbox-button.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body onload="available_options({{options}})">
+  <script type="text/javascript">
+  function available_options(op)
+  {
+    op2 = parseInt(op)
+    switch(op2)
+    {
+      case 0:
+        document.getElementById('check2').disabled = true;
+      case 1:
+        document.getElementById('check3').disabled = true;
+      case 2:
+        document.getElementById('check1').disabled = true;      
+      case 3:
+        document.getElementById('check4').disabled = true;      
+      default:
+        return;
+    }
+
+  }
+</script>
+  <header>
+  <nav class="cd-stretchy-nav">
+    <a class="cd-nav-trigger" href="#0">
+      <span aria-hidden="true"></span>
+    </a>
+
+    <ul>
+      <li><a href="dashboard.html" class="active"><span>Home</span></a></li>
+      <li><a href="Rules.html"><span>Rules</span></a></li>
+      <li><a href="login.html"><span>Logout</span></a></li>
+      
+    </ul>
+
+    <span aria-hidden="true" class="stretchy-nav-bg"></span>
+  </nav>
+</header>
+<section class="banner" role="banner">
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="banner-text text-center">
+        <h1>Make Selection:</h1>
+        <p>We're also going to pick one of three potential surveyors. You have {{money}} Gold Dragons left after paying the Geotechnical Engineer. Use them to select a surveyor from the choices below:
+        </br>
+        </br>
+        Pile Foundation: Piles are structural members that are made of steel, concrete, and/or timber.
+When the upper soil layer is highly compressible and too weak to support
+the load transmitted by the superstructure, piles are used to transmit the load to
+underlying bedrocks or a stronger soil layer.
+
+        </br>
+        </br>
+        Continuous Stone Masonry Foundation: The craft of stonemasonry (or stone craft) has existed since humanity could use and
+make tools creating buildings, structures, and sculpture using stone from the earth. The
+construction of stones bonded together with mortar is termed as stone masonry where the stones are available in a abundance in nature, on cutting and dressing to the proper shape.
+        </br>
+        </br>
+        Strip Foundation: Strip foundations are used where the soil is of good bearing capacity. The key sizes of a strip foundation for concrete cavity wall construction and timber frame cavity wall construction are similar. The size and position of the strip is directly related to the overall width of the wall. Strip foundation protection should be made around external walls with its slope away from the wall so that the moisture does not penetrate the foundation during rainy season.
+                </br>
+        </br>
+        Raft Foundation: Raft foundation is a large concrete slab which can support a number of columns and walls. The slab is spread out under the entire building or at least a large part of it which lowers the contact pressure compared to the traditionally used strip or trench footings
+         </br>
+        </br>
+        </p> 
+    </div>
+  </div>
+</section>
+<section id="works" class="works section no-padding">
+  <form action="/choice" method="POST">
+
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_5/work-1.jpg" alt="">
+        <div class="overlay" onclick="document.getElementById('check1').checked = true">
+          <div class="overlay-caption">
+            <h5>Pile Foundation</h5>
+            <p>Price: 80 GD</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a> 
+        <div class"selection">
+         <input type="radio" name="foundation" class="radio" id="check1" value = "pile"/>
+
+       </div>  
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_5/work-2.jpg" alt="">
+        <div class="overlay" onclick="document.getElementById('check2').checked = true">
+          <div class="overlay-caption">
+            <h5>Continuous Stone Masonry</h5>
+            <p>Price: 70 GD</p>
+          </div>
+        </div>
+        <!-- overlay --> 
+        </a>
+        <div class"selection">
+         <input type="radio" name="foundation" class="radio" id="check2" value = "stone"/>
+
+       </div>  
+         </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_5/work-3.jpg" alt="">
+        <div class="overlay" onclick="document.getElementById('check3').checked = true">
+          <div class="overlay-caption">
+            <h5>Strip Foundation</h5>
+            <p>Price: 75 GD</p>
+          </div>
+        </div>
+        </a> 
+        <div class"selection">
+         <input type="radio" name="foundation" class="radio" id="check3" value = "strip"/>
+
+       </div>  
+      </div>
+         <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="#0" class="work-box"> <img src="../static/image/choice_5/work-4.jpg" alt="">
+        <div class="overlay" onclick="document.getElementById('check4').checked = true">
+          <div class="overlay-caption">
+            <h5>Raft Foundation</h5>
+            <p>Price: 84 GD</p>
+          </div>
+        </div>
+        </a>
+        <div class"selection">
+         <input type="radio" name="foundation" class="radio" id="check4" value = "raft"/>
+
+       </div>  
+         </div>  
+    </div>
+  </div>
+     <div id="buttons">
+        <input type="submit" class ="btn orange" value="Finalize">
+
+    </div>
+  </form>
+</section>
+<script src="../static/js/dash-jquery-2.1.4.js"></script>
+<script src="../static/js/dash-mainnav.js"></script>
+</body>
+</html>

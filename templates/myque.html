@@ -11,27 +11,34 @@
   <link rel="stylesheet" href="../static/css/mycss.css">
 
 <style type="text/css">
-  video {
-    position: relative;
-    z-index: -100;
+  body{
+    background: url("../static/image/Stage3L.jpg");
   }
-
+  video {
+     position: fixed;
+  right: 0; 
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+  width: auto; 
+  height: auto;
+  z-index: -100;
+  opacity:.5;
+  }
   #question {
     margin-bottom: 50px;
   }
-
   .myform {
     position: relative;
     color: white;
     text-align: center;
-    background: rgba(40,57,101,.9);
+    background: rgba(40,57,101,.7);
     
     width: 50%;
     margin: 0px auto;
     margin-top: 70px;
     padding: 20px;
   }
-
   .formContainer {
     position: absolute;
     width: 100%;
@@ -43,27 +50,26 @@
 input[type="radio"] {
   visibility: hidden;
 }
-
 input[type="radio"]:checked+label {
-  background-color: #093965;
+  background-color: purple;
 }
 label{
     padding: 10px;
     width: 43%;
     margin: 10px 10px 10px 10px;
-    background-color: red;
+    background-color: blue;
     text-align: left;
+    border-radius: 10px;
 }
-
 input[type="submit"] {
   width: 30%;
   padding: 10px;
   margin-top: 70px;
+  background-color: green;
 
-  background-color: blue;
-  border: none;
+  color:#fff;
+  border-radius: 10px;
 }
-
 @media (max-width: 480px) {
   video {
     display: none;
@@ -75,15 +81,12 @@ input[type="submit"] {
     width: 100%;
     margin-top: 30%;
   }
-
   .cd-stretchy-nav {
     margin-top: -70px;
   }
-
   label {
     width: 80%
   }
-
   input[type="submit"] {
     width: 80%;
   }
@@ -138,6 +141,10 @@ input[type="submit"] {
   <div class="myform">
     <p id="question">{{params.que}}</p>
     <form action="/question" method="POST">
+      {% if params.flag %}
+      <img src="../static/image/{{params.id}}.jpg" alt="could not load image" height="30%" width="30%">
+      <br>
+      {% endif %}
     <input type='radio' name='choice' id="op1" value='op1'><label for="op1">{{params.op1}}</label>
     <input type='radio' name='choice' id="op2" value='op2'><label for="op2">{{params.op2}}</label>
     <input type='radio' name='choice' id="op3" value='op3'><label for="op3">{{params.op3}}</label>
@@ -148,9 +155,7 @@ input[type="submit"] {
   </div>
 </div>
 
-<video autoplay loop id="video-background" muted plays-inline width="100%" height="100%">
-  <source src="../static/video/file.mp4" type="video/mp4">
-</video>
+
 {% endblock %}
 {% block end_extJS %}
 <script src="../static/js/dash-jquery-2.1.1.js"></script>
