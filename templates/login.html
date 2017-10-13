@@ -1,0 +1,78 @@
+{% extends "theme.html" %}
+  
+{% block title %}Login{% endblock %}
+  
+  {% block extJS %}
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  {% endblock %}
+  {% block extStyle %}
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+  {% endblock %}
+
+{% block body %}
+
+  <div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" {{signinCheck}}><label for="tab-1" class="tab">Sign In</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up" {{signupCheck}}><label for="tab-2" class="tab">Sign Up</label>
+		<div class="login-form">
+		<form action="/login" method="POST">
+			<div class="sign-in-htm">
+				<div class="group">
+					<label for="user" class="label">Email</label>
+					<input id="user" type="text" class="input" name="inputEmail">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="pass" type="password" class="input" name="inputPassword" data-type="password">
+					<p> To reset password drop a mail with details at vkrahulagarwal@gmail.com</p>
+				</div>
+				<div class="group">
+					<input type="submit" class="button" value="Sign In">
+				</div>
+				<!-- <div class="g-recaptcha" data-sitekey="6Le2lxoUAAAAAAn8ZAoymwmbDJKKkFu6gEC_IvGy"></div> -->
+				<div class="hr"></div>
+			</form>
+			</div>
+			<div class="sign-up-htm">
+			<form action="/signup" method="POST">
+				<div class="group">
+					<label for="user" class="label">Name</label>
+					<input id="user" type="text" class="input" name='inputName'>
+				</div>
+					<div class="group">
+					<label for="user" class="label">Email Id</label>
+					<input id="regno" type="text" class="input" name='inputEmail'>
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Registration Number</label>
+					<input id="regno" type="text" class="input" name='inputRegno'>
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="pass" type="password" class="input" data-type="password" name='inputPassword'>
+				</div>
+				<div class="group">
+					<label for="phone" class="label">Contact Number</label>
+					<input id="phone" type="text" class="input" name='inputPhone'>
+				</div>
+				<div class="group">
+					<label for="pass" class="label">College</label>
+					<input id="pass" type="text" class="input" name='inputCollege'>
+				</div>
+				<div class="g-recaptcha" data-sitekey="6Lf0jTEUAAAAAJd0vmXTZ21rfxsZv_SEzvsocte3"></div>
+				<div class="group">
+					<input type="submit" class="button" value="Sign Up">
+				</div>
+			</form>
+				<div class="hr"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<video autoplay loop id="video-background" muted plays-inline>
+  <source src="../static/video/file.mp4" type="video/mp4">
+</video>
+  
+{% endblock %}}

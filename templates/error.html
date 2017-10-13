@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />	
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../static/css/style-error.css">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<script src="../static/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../static/js/jquery.shuffleLetters.js"></script>
+	<script language="Javascript" type="text/javascript" src="../static/js/jquery.lwtCountdown-1.0.js"></script>
+	<script language="Javascript" type="text/javascript" src="../static/js/misc.js"></script>
+	<link rel="Stylesheet" type="text/css" href="../static/css/main-error.css"></link>
+
+	<script>
+	/*timer setting*/
+		var end_day=10;	/* Day of end date.*/
+		var end_month=1;	/*Month of end date .*/
+		var end_year=2015; /* Year of end date.*/
+		var end_hour=11; /* Hour of end date.*/
+		var end_min=0; /* Min of end date.*/
+		var end_sec=0; /* Second of end date.*/
+	</script>
+	
+<head>
+<body>
+	<div id="front">
+
+				<div class="wrap">
+					
+					<div id="intro" style="margin-left: -100px">
+						<h1><span class="shuffle">UH-HUH! ACCIDENT OCCURED</span><br><span style="color: yellow;"><a href="/dashboard">CLICK HERE</a></span></h1>
+					</div><!--intro-->
+						<!-- Countdown dashboard start -->
+						<div id="countdown_dashboard">
+						
+						
+
+						</div>
+						<!-- Countdown dashboard end -->
+		<script language="javascript" type="text/javascript">
+
+		function resizer(){
+			var width=$(window).width();
+				var height=$(window).height();
+				if(height < width){
+					$('body').css('font-size','1vh');
+					//alert('height');
+				}
+				else{
+				$('body').css('font-size','1vw');
+				//alert('width');
+				}
+		}// resizer
+		jQuery(window).resize(function() {
+		
+		resizer();
+		});
+			jQuery(document).ready(function() {
+			
+			/*countdown timer*/
+				$('#countdown_dashboard').countDown({
+					targetDate: {
+						'day': 	end_day,
+						'month': end_month,
+						'year': end_year,
+						'hour': end_hour,
+						'min': end_min,
+						'sec': end_sec
+					},
+					omitWeeks: true
+				});
+				
+				$('#email_field').focus(email_focus).blur(email_blur);
+				$('#subscribe_form').bind('submit', function() { return false; });
+				resizer();
+				/*suffle text*/
+				$(".shuffle").shuffleLetters();
+				/*-------------------Socila ----------------*/
+				$('.twitter').click(function(){
+					window.open(twitter, '_blank');
+					event.preventDefault();
+				});
+				$('.facebook').click(function(){
+					window.open(facebook, '_blank');
+					event.preventDefault();
+				});
+				$('.google').click(function(){
+					window.open(google, '_blank');
+					event.preventDefault();
+				});
+				
+			}); /*ends doc ready*/
+
+		</script>		
+		<video autoplay loop id="video-background" muted plays-inline>
+  <source src="../static/video/file.mp4" type="video/mp4">
+</video>
+</body>
+</html>

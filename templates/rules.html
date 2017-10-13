@@ -1,0 +1,126 @@
+{% extends "theme.html" %}
+
+{% block title %}Rules{% endblock %}
+
+{% block font %}{% endblock %}
+
+{% block extStyle %}
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700|Merriweather:400italic,400' rel='stylesheet' type='text/css'>
+	<link rel="shortcut icon" href="../favicon.ico"> 
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../static/css/rules-resetnav.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="../static/css/rules-stylenav.css"> <!-- Resource style -->
+	<link rel="stylesheet" href="../static/css/rules-style.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/rules-jquery.jscrollpane.custom.css" />
+	<link rel="stylesheet" type="text/css" href="../static/css/rules-bookblock.css" />
+	<link rel="stylesheet" type="text/css" href="../static/css/rules-custom.css" />
+{% endblock %}
+
+{% block extJS %}
+	<script src="../static/js/rules-modernizrnav.js"></script> <!-- For Nav-->
+	<script src="../static/js/rules-modernizr.custom.79639.js"></script>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Welcome {{name}}</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li class="active"><a href="/rules">Rules</a></li>
+      <li><a href="#">Page 2</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<header>
+	<nav class="cd-stretchy-nav">
+		<a class="cd-nav-trigger" href="#0">
+			
+			<span aria-hidden="true"></span>
+		</a>
+
+		<ul>
+			<li><a href="/dashboard" ><span>Home</span></a></li>
+			<li><a href="/rules" class="active"><span>Rules</span></a></li>
+			<li><a href="/logout"><span>Logout</span></a></li>
+			
+		</ul>
+
+		<span aria-hidden="true" class="stretchy-nav-bg"></span>
+	</nav>
+</header>
+		<div id="buttons">
+  			<a href="/dashboard" class="btn orange">Proceed</a>
+		</div>
+		<div id="container" class="container">	
+			<div class="bb-custom-wrapper">
+				<div id="bb-bookblock" class="bb-bookblock">
+					<div class="bb-item" id="item1">
+						<div class="content">
+							<div class="scroller">
+								<h2>Rules</h2>
+								<p>
+									Hello, and welcome to CiviQ! I am ArchMaester Marwyn, from The Citadel. Here’s some things you should know before you undertake the task of raising a castle fit for the rightful Queen of the second kingdom, Daenarys Targaryen, and the King in the North, Jon Snow. 
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="bb-item" id="item2">
+						<div class="content">
+							<div class="scroller">
+								<h2>Rules</h2>
+								<p>
+									Construction shall take place over the course of 6 stages. Each stage revolves around a particular activity that can be performed in multiple ways. Not all of these options are optimal. You will be judged on how well your choices work together. 
+								</p>
+								<p>
+									Over the course of each round, you will earn Gold Dragons, the currency of Westeros, based on how many multiple choice questions you have answered correctly. At the end of a round, you will use these Gold Dragons to select an option from those you can afford. 
+								</p>
+								<p>
+									Note that these coins do not carry forward to the next round. If you have not used up all the Gold Dragons while selecting an option, the remainder will enhance your judgement score. 
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="bb-item" id="item3">
+						<div class="content">
+							<div class="scroller">
+								<h2>Rules</h2>
+							<p>
+								Starting from Round 2, there will be a rapid-fire bonus round at the end of each stage. The questions maybe image prompted, riddles, or word scrambles. The number of questions you can answer in the stipulated time bestow extra rewards. Make note that you cannot log out during the rapid fire round. Doing so would result in you losing the extra Gold Dragons you may have earned.
+							</p>
+							<p>
+								If, at the end of a given round, you do not have enough currency to buy even the cheapest option available to you, then the round can be restarted. Be warned however, that you only have 3 retries. Our Queen does not take kindly to failing too many times.
+							</p>
+						</div>
+					</div>
+				</div>
+				<nav>
+					<span id="bb-nav-prev">&larr;</span>
+					<span id="bb-nav-next">&rarr;</span>
+				</nav>
+			</div>
+		</div><!-- /container -->
+{% endblock %}
+
+{% block end_extJS %}
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="../static/js/rules-jquery.mousewheel.js"></script>
+	<script src="../static/js/rules-jquery.jscrollpane.min.js"></script>
+	<script src="../static/js/rules-jquerypp.custom.js"></script>
+	<script src="../static/js/rules-jquery.bookblock.js"></script>
+	<script src="../static/js/rules-page.js"></script>
+	<script>
+		$(function() {
+
+			Page.init();
+
+		});
+	</script>
+	<script src="../static/js/rules-jquery-2.1.4.js"></script>
+	<script src="../static/js/rules-mainnav.js"></script>
+{% endblock %}

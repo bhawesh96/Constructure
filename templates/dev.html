@@ -1,0 +1,107 @@
+{% extends "theme.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block font %}{% endblock %}
+
+{% block extStyle %}
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="../static/css/dash-resetnav.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="../static/css/rules-stylenav.css"> <!-- Resource style -->
+	 <link rel="stylesheet" href="../static/css/dev.css"> 
+{% endblock %}
+{% block extJS %}
+	<script src="../static/js/dash-modernizrnav.js"></script> <!-- For Nav-->
+	<script src="../static/js/dash-modernizr.js"></script> <!-- Modernizr -->
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-inverse mobile-hide">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Credits</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/rules">Rules</a></li>
+      <li><a href="/question">Resume</a></li>
+      <li class ="active"><a href="#">Developers</a></li>
+
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> LogOut</a></li>
+    </ul>
+  </div>
+</nav>
+
+	<header>
+	<nav class="cd-stretchy-nav">
+		<a class="cd-nav-trigger" href="#0">
+			<span aria-hidden="true"></span>
+		</a>
+
+		<ul>
+			<li><a href="/dashboard"><span>Home</span></a></li>
+			<li><a href="/Rules"><span>Rules</span></a></li>
+			<li><a href="/logout"><span>Logout</span></a></li>
+			
+		</ul>
+
+		<span aria-hidden="true" class="stretchy-nav-bg"></span>
+	</nav>
+</header>
+	<div class="side"></div>
+	<div class="container">
+	<div class="heading">	<h1>Our Team</h1>
+		<hr>
+	</div>
+		<table>
+		<tr>
+		<td>
+		</td>
+		<td>
+		</td>
+		</tr>
+			<tr>
+				<td>
+					<img src="../static/image/ishan.jpg"><br>
+					Ishan Vaidya<br>
+					<hr><p class="blur">
+						Front-End
+					</p>
+					
+				</td>
+					<td>
+					<img src="../static/image/bhavesh.png" height="200"><br>
+					Bhawesh Bhansali<br>
+					<hr>
+					<p class="blur">
+						Back-End
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="../static/image/dheemahi.jpeg" height="200"><br>
+					Dheemahi Turaga<br>
+					<hr>
+					<p class="blur">
+						Front-End
+					</p>
+				</td>
+					<td>
+					<img src="../static/image/rahul.jpg" height="200"><br>
+					Rahul Agarwal<br>
+					<hr>
+					<p class="blur">
+						Back-End
+					</p>
+				</td>
+			</tr>
+	</div>
+{% endblock %}
+
+{% block end_extJS %}
+	<script src="../static/js/dash-jquery-2.1.4.js"></script>
+<script src="../static/js/dash-mainnav.js"></script>
+{% endblock %}
